@@ -13,7 +13,7 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
         {
             NetworkObject playerObject = Runner.Spawn(
                 PlayerPrefab,
-                new Vector3(0, 1, 0),
+                new Vector3(0, 0, 0),
                 Quaternion.identity
             );
 

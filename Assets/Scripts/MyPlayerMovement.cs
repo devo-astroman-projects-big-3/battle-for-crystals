@@ -6,15 +6,22 @@ public class MyPlayerMovement : NetworkBehaviour
 {
     private Vector3 _velocity;
     private bool _jumpPressed;
-    public Camera Camera;
     private CharacterController _controller;
 
-    public float PlayerSpeed = 2f;
+    public Camera Camera;
 
+    [Header("Movement")]
+    public float PlayerSpeed = 2f;
+    public float RotationSpeed = 12f;
+
+    [Header("Jump / Gravity")]
     public float JumpForce = 5f;
     public float GravityValue = -9.81f;
 
-    private  CinemachineVirtualCamera _virtualCamera;
+    [Header("Camera")]
+    [SerializeField] private ThirdPersonCameraPivot _cameraPivotController;
+
+    private CinemachineVirtualCamera _virtualCamera;
 
     private void Awake()
     {
@@ -23,6 +30,9 @@ public class MyPlayerMovement : NetworkBehaviour
 
     private void Update()
     {
+        if (!HasStateAuthority)
+            return;
+
         if (Input.GetButtonDown("Jump"))
         {
             _jumpPressed = true;
@@ -31,27 +41,47 @@ public class MyPlayerMovement : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        // FixedUpdateNetwork is only executed on the StateAuthority
+        if (!HasStateAuthority)
+            return;
 
-        if (_controller.isGrounded)
+        if (_controller.isGrounded && _velocity.y < 0f)
         {
-            _velocity = new Vector3(0, -1, 0);
+            _velocity.y = -1f;
         }
 
-        Quaternion cameraRotationY = Quaternion.Euler(0, Camera.transform.rotation.eulerAngles.y, 0);
-        Vector3 move = cameraRotationY * new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * Runner.DeltaTime * PlayerSpeed;
+        float horizontal = Input.GetAxis("Horizontal");
+        float vertical = Input.GetAxis("Vertical");
+
+        Transform camRoot = _cameraPivotController != null ? _cameraPivotController.CameraRoot : null;
+
+        Vector3 forward = camRoot != null ? camRoot.forward : transform.forward;
+        Vector3 right = camRoot != null ? camRoot.right : transform.right;
+
+        forward.y = 0f;
+        right.y = 0f;
+        forward.Normalize();
+        right.Normalize();
+
+        Vector3 moveDirection = (forward * vertical + right * horizontal).normalized;
+        Vector3 move = moveDirection * PlayerSpeed * Runner.DeltaTime;
 
         _velocity.y += GravityValue * Runner.DeltaTime;
+
         if (_jumpPressed && _controller.isGrounded)
         {
-            _velocity.y += JumpForce;
+            _velocity.y = JumpForce;
         }
 
         _controller.Move(move + _velocity * Runner.DeltaTime);
 
-        if (move != Vector3.zero)
+        if (moveDirection.sqrMagnitude > 0.0001f)
         {
-            gameObject.transform.forward = move;
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation,
+                targetRotation,
+                RotationSpeed * Runner.DeltaTime
+            );
         }
 
         _jumpPressed = false;
@@ -59,13 +89,28 @@ public class MyPlayerMovement : NetworkBehaviour
 
     public override void Spawned()
     {
-        if (HasStateAuthority == false)
+        if (!HasStateAuthority)
             return;
 
         Camera = Camera.main;
-        //Camera.GetComponent<FirstPersonCamera>().Target = transform;
-        Camera.GetComponent<CameraManager>().SetVirtualFollow(transform);
-        _virtualCamera = Camera.GetComponent<CameraManager>().GetVirtualCamera();
-        
+
+        CameraManager cameraManager = Camera != null ? Camera.GetComponent<CameraManager>() : null;
+
+        //_cameraPivotController = cameraManager.GetThirdPersonCameraPivot();
+
+        if (cameraManager != null && _cameraPivotController != null)
+        {
+            cameraManager.SetVirtualTargets(
+                _cameraPivotController.CameraPivot,
+                _cameraPivotController.CameraPivot
+            );
+
+            _virtualCamera = cameraManager.GetVirtualCamera();
+        }
+        else
+        {
+            Debug.Log("FLAG_1" + cameraManager);
+            Debug.Log("FLAG_1" + _cameraPivotController);
+        }
     }
 }

@@ -3,15 +3,28 @@ using UnityEngine;
 
 public class CameraManager : MonoBehaviour
 {
-    [SerializeField] CinemachineVirtualCamera _virtualCamera;
-    
-    public void SetVirtualFollow(Transform target)
+    [SerializeField] private CinemachineVirtualCamera _virtualCamera;
+    [SerializeField] private ThirdPersonCameraPivot _thirdPersonCameraPivot;
+
+    public void SetVirtualTargets(Transform followTarget, Transform lookAtTarget = null)
     {
-        _virtualCamera.Follow = target;
+        if (_virtualCamera == null)
+        {
+            Debug.LogWarning("Virtual camera is not assigned.");
+            return;
+        }
+        Debug.Log("Flag!!!");
+        _virtualCamera.Follow = followTarget;
+        _virtualCamera.LookAt = lookAtTarget != null ? lookAtTarget : followTarget;
     }
 
     public CinemachineVirtualCamera GetVirtualCamera()
     {
         return _virtualCamera;
+    }
+
+    public ThirdPersonCameraPivot GetThirdPersonCameraPivot()
+    {
+        return _thirdPersonCameraPivot;
     }
 }
