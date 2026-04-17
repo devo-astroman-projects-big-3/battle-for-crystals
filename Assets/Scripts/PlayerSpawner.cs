@@ -5,11 +5,23 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
 {
     public GameObject PlayerPrefab;
 
+    [SerializeField] private Transform _playerParent;
+
     void IPlayerJoined.PlayerJoined(PlayerRef player)
     {
         if (player == Runner.LocalPlayer)
         {
-            Runner.Spawn(PlayerPrefab, new Vector3(0, 1, 0), Quaternion.identity);
+            NetworkObject playerObject = Runner.Spawn(
+                PlayerPrefab,
+                new Vector3(0, 1, 0),
+                Quaternion.identity
+            );
+
+            // Set parent AFTER spawn
+            if (_playerParent != null)
+            {
+                playerObject.transform.SetParent(_playerParent);
+            }
         }
     }
 }

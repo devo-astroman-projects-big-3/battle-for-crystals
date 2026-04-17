@@ -1,5 +1,6 @@
 using Fusion;
 using UnityEngine;
+using Cinemachine;
 
 public class MyPlayerMovement : NetworkBehaviour
 {
@@ -12,6 +13,8 @@ public class MyPlayerMovement : NetworkBehaviour
 
     public float JumpForce = 5f;
     public float GravityValue = -9.81f;
+
+    private  CinemachineVirtualCamera _virtualCamera;
 
     private void Awake()
     {
@@ -60,7 +63,9 @@ public class MyPlayerMovement : NetworkBehaviour
             return;
 
         Camera = Camera.main;
-        Camera.GetComponent<FirstPersonCamera>().Target = transform;
+        //Camera.GetComponent<FirstPersonCamera>().Target = transform;
+        Camera.GetComponent<CameraManager>().SetVirtualFollow(transform);
+        _virtualCamera = Camera.GetComponent<CameraManager>().GetVirtualCamera();
         
     }
 }
