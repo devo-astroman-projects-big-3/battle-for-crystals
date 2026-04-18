@@ -48,6 +48,7 @@ GameObject:
   - component: {fileID: 6690041806681674811}
   - component: {fileID: 891572961367811191}
   - component: {fileID: 6007205808458913617}
+  - component: {fileID: 3092725375323709543}
   m_Layer: 0
   m_Name: HeroPlayerCharacter
   m_TagString: Untagged
@@ -91,6 +92,7 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 4349642921547374447}
   - {fileID: 3178748062670222280}
+  - {fileID: 3092725375323709543}
   ForceRemoteRenderTimeframe: 0
 --- !u!114 &4349642921547374447
 MonoBehaviour:
@@ -243,6 +245,25 @@ MonoBehaviour:
   _mouseSensitivity: 3
   _minPitch: -35
   _maxPitch: 70
+--- !u!114 &3092725375323709543
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6749350899906829801}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc89b51bd2e63a748867a42053fb9870, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectileSpeed: 20
+  lifeTime: 6
+  targetLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  visualPrefab: {fileID: 1266034491991669443, guid: bca10c501351d2d49a5d1139d3d9ff9e,
+    type: 3}
 --- !u!1 &8952718364572104964
 GameObject:
   m_ObjectHideFlags: 0

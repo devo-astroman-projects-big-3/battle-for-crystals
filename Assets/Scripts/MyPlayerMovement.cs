@@ -6,6 +6,7 @@ public class MyPlayerMovement : NetworkBehaviour
 {
     private Vector3 _velocity;
     private bool _jumpPressed;
+    private bool _firePressed;
     private CharacterController _controller;
 
     public Camera Camera;
@@ -20,8 +21,10 @@ public class MyPlayerMovement : NetworkBehaviour
 
     [Header("Camera")]
     [SerializeField] private ThirdPersonCameraPivot _cameraPivotController;
+    [SerializeField] private FireShoot _fireShoot;
 
-    private CinemachineVirtualCamera _virtualCamera;
+    [SerializeField] private Transform _muzzle;
+    [SerializeField] private Transform _target;
 
     private void Awake()
     {
@@ -39,12 +42,23 @@ public class MyPlayerMovement : NetworkBehaviour
         {
             _jumpPressed = true;
         }
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            _firePressed = true;
+        }
     }
 
     public override void FixedUpdateNetwork()
     {
         if (!HasStateAuthority)
             return;
+
+        if (_firePressed)
+        {
+            _fireShoot.Fire(_muzzle.position, _target.position - _muzzle.position);
+            _firePressed = false;
+        }
 
         if (_controller.isGrounded && _velocity.y < 0f)
         {
@@ -98,21 +112,13 @@ public class MyPlayerMovement : NetworkBehaviour
 
         CameraManager cameraManager = Camera != null ? Camera.GetComponent<CameraManager>() : null;
 
-        //_cameraPivotController = cameraManager.GetThirdPersonCameraPivot();
-
         if (cameraManager != null && _cameraPivotController != null)
         {
             cameraManager.SetVirtualTargets(
                 _cameraPivotController.CameraPivot,
                 _cameraPivotController.CameraPivot
             );
-
-            _virtualCamera = cameraManager.GetVirtualCamera();
         }
-        else
-        {
-            Debug.Log("FLAG_1" + cameraManager);
-            Debug.Log("FLAG_1" + _cameraPivotController);
-        }
+        
     }
 }
