@@ -12,7 +12,7 @@ public class FireShoot : NetworkBehaviour
 
     [Networked] private NetworkArray<ProjectileData> _projectilesBuffer { get; }
 
-    private int _totalFiredCount {get; set;}
+    [Networked] private int _totalFiredCount {get; set;}
 
     private int _visualsCreated;
 
