@@ -8,7 +8,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Lab1.unity
     guid: 16d81c6601fc038489b52b5a4dea5cc4
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Lab.unity
     guid: 943451b1b43935e48b12c8a98e5b9f34
   - enabled: 1
