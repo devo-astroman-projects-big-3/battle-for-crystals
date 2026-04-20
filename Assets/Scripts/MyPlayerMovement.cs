@@ -1,6 +1,7 @@
 using Fusion;
 using UnityEngine;
 using Cinemachine;
+using System;
 
 public class MyPlayerMovement : NetworkBehaviour
 {
@@ -10,6 +11,8 @@ public class MyPlayerMovement : NetworkBehaviour
     private CharacterController _controller;
 
     public Camera Camera;
+
+    public Action JustSpawnAction;
 
     [Header("Movement")]
     public float PlayerSpeed = 2f;
@@ -24,7 +27,10 @@ public class MyPlayerMovement : NetworkBehaviour
     [SerializeField] private FireShoot _fireShoot;
 
     [SerializeField] private Transform _muzzle;
-    [SerializeField] private Transform _target;
+
+    [SerializeField] private ThirdPersonAim _thirdPersonAim;
+
+    
 
     private void Awake()
     {
@@ -56,7 +62,10 @@ public class MyPlayerMovement : NetworkBehaviour
 
         if (_firePressed)
         {
-            _fireShoot.Fire(_muzzle.position, _target.position - _muzzle.position);
+            Vector3 aimPoint = _thirdPersonAim.GetAimPoint();
+            Vector3 fireDirection = (aimPoint - _muzzle.position).normalized;
+
+            _fireShoot.Fire(_muzzle.position, fireDirection);
             _firePressed = false;
         }
 
@@ -119,6 +128,8 @@ public class MyPlayerMovement : NetworkBehaviour
                 _cameraPivotController.CameraPivot
             );
         }
+
+        JustSpawnAction?.Invoke();
         
     }
 }

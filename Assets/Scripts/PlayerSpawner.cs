@@ -6,6 +6,7 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
     public GameObject PlayerPrefab;
 
     [SerializeField] private Transform _playerParent;
+    [SerializeField] private Camera _camera;
 
     void IPlayerJoined.PlayerJoined(PlayerRef player)
     {
@@ -21,6 +22,7 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
             if (_playerParent != null)
             {
                 playerObject.transform.SetParent(_playerParent);
+                playerObject.GetComponent<MainHeroPlayerCharacter>().SetCamera(_camera);
             }
         }
     }
