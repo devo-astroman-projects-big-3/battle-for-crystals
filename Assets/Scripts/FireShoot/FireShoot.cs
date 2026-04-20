@@ -66,16 +66,19 @@ public class FireShoot : NetworkBehaviour
     {
         for (int i = 0; i < _totalFiredCount; i++)
         {
+            
             var entryIndex = i % _projectilesBuffer.Length;
             var bufferData = _projectilesBuffer[entryIndex];
 
             if (!bufferData.IsAlive) continue;
 
+            
+
             var currentPos = GetPosition(bufferData, Runner.Tick);
             var nextPos = GetPosition(bufferData, Runner.Tick + 1);
             var moveDirection = nextPos - currentPos;
 
-            /* for later
+            
             if (Runner.GetPhysicsScene().Raycast(
                     currentPos,
                     moveDirection.normalized,
@@ -83,7 +86,12 @@ public class FireShoot : NetworkBehaviour
                     moveDirection.magnitude,
                     targetLayer))
             {
-                var player =
+                Debug.Log("FlagHIT " + hit);
+                
+                var damageableObject = hit.collider.GetComponentInParent<IDamageable>();
+                damageableObject.TakeDamage(1);
+
+                /* var player =
                     hit.collider.GetComponentInParent<Player>();
 
                 if (player != null &&
@@ -95,14 +103,20 @@ public class FireShoot : NetworkBehaviour
                 }
 
                 bufferData.IsAlive = false;
-                _projectilesBuffer.Set(entryIndex, bufferData);
+                _projectilesBuffer.Set(entryIndex, bufferData); */
             }
             else if ((Runner.Tick - bufferData.FireTick)
                     * Runner.DeltaTime > lifeTime)
             {
+                
+
                 bufferData.IsAlive = false;
                 _projectilesBuffer.Set(entryIndex, bufferData);
-            } */
+            }
+            else
+            {
+                
+            }
         }
     }
 
