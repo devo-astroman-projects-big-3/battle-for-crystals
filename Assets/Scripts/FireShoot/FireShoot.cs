@@ -9,8 +9,9 @@ public class FireShoot : NetworkBehaviour
     [SerializeField] private float lifeTime = 6f;
     [SerializeField] private LayerMask targetLayer;
     [SerializeField] private GameObject visualPrefab;
+    [SerializeField] private ObjectPool _bulletPool;    
 
-    [Networked] private NetworkArray<ProjectileData> _projectilesBuffer { get; }
+    [Networked, Capacity(10)] private NetworkArray<ProjectileData> _projectilesBuffer { get; }
 
     [Networked] private int _totalFiredCount {get; set;}
 
@@ -32,6 +33,12 @@ public class FireShoot : NetworkBehaviour
         public int BufferIndex;
     }
 
+    public void SetBulletPool(ObjectPool bulletPool)
+    {
+        _bulletPool = bulletPool;
+    }
+
+
     public void Fire(Vector3 firePosition, Vector3 fireDirection)
     {
         var entry = _totalFiredCount % _projectilesBuffer.Length;
@@ -40,7 +47,7 @@ public class FireShoot : NetworkBehaviour
         {
             FireTick = Runner.Tick,
             FirePosition = firePosition,
-            FireVelocity = fireDirection * projectileSpeed,
+            FireVelocity = fireDirection.normalized * projectileSpeed,
             IsAlive = true
         };
 
@@ -66,19 +73,19 @@ public class FireShoot : NetworkBehaviour
     {
         for (int i = 0; i < _totalFiredCount; i++)
         {
-            
             var entryIndex = i % _projectilesBuffer.Length;
             var bufferData = _projectilesBuffer[entryIndex];
 
-            if (!bufferData.IsAlive) continue;
-
-            
+            if (!bufferData.IsAlive)
+                continue;
 
             var currentPos = GetPosition(bufferData, Runner.Tick);
             var nextPos = GetPosition(bufferData, Runner.Tick + 1);
             var moveDirection = nextPos - currentPos;
 
-            
+            if (moveDirection.sqrMagnitude <= 0.000001f)
+                continue;
+
             if (Runner.GetPhysicsScene().Raycast(
                     currentPos,
                     moveDirection.normalized,
@@ -86,36 +93,21 @@ public class FireShoot : NetworkBehaviour
                     moveDirection.magnitude,
                     targetLayer))
             {
-                Debug.Log("FlagHIT " + hit);
-                
+                Debug.Log("FlagHIT " + hit.collider.name);
+
                 var damageableObject = hit.collider.GetComponentInParent<IDamageable>();
-                damageableObject.TakeDamage(1);
-
-                /* var player =
-                    hit.collider.GetComponentInParent<Player>();
-
-                if (player != null &&
-                    player.Object.InputAuthority != Object.InputAuthority)
+                if (damageableObject != null)
                 {
-                    player.Health.TakeHit(
-                        damage: 1,
-                        reportKill: true);
+                    damageableObject.TakeDamage(1);
                 }
-
-                bufferData.IsAlive = false;
-                _projectilesBuffer.Set(entryIndex, bufferData); */
-            }
-            else if ((Runner.Tick - bufferData.FireTick)
-                    * Runner.DeltaTime > lifeTime)
-            {
-                
 
                 bufferData.IsAlive = false;
                 _projectilesBuffer.Set(entryIndex, bufferData);
             }
-            else
+            else if ((Runner.Tick - bufferData.FireTick) * Runner.DeltaTime > lifeTime)
             {
-                
+                bufferData.IsAlive = false;
+                _projectilesBuffer.Set(entryIndex, bufferData);
             }
         }
     }
@@ -134,7 +126,7 @@ public class FireShoot : NetworkBehaviour
 
             VisualProjectileData data = new VisualProjectileData()
             {
-                gameObject = Instantiate(visualPrefab),
+                gameObject = _bulletPool.GetObject(),
                 BufferIndex = entry,
             };
 
@@ -151,19 +143,24 @@ public class FireShoot : NetworkBehaviour
 
             if (!bufferData.IsAlive)
             {
-                Destroy(visual.gameObject);
+                _bulletPool.ReturnObject(visual.gameObject);
                 _currentActiveVisuals.RemoveAt(i);
                 continue;
             }
 
-            if (elapsed <= 0f) continue;
+            if (elapsed <= 0f)
+                continue;
 
             var position = bufferData.FirePosition +
                         (Vector3)bufferData.FireVelocity * elapsed;
 
             visual.gameObject.transform.position = position;
-            visual.gameObject.transform.rotation =
-                Quaternion.LookRotation((Vector3)bufferData.FireVelocity);
+
+            Vector3 velocity = (Vector3)bufferData.FireVelocity;
+            if (velocity.sqrMagnitude > 0.0001f)
+            {
+                visual.gameObject.transform.rotation = Quaternion.LookRotation(velocity);
+            }
         }
     }
 
@@ -174,7 +171,7 @@ public class FireShoot : NetworkBehaviour
             if (_currentActiveVisuals[i].BufferIndex == index)
             {
                 if (_currentActiveVisuals[i].gameObject != null)
-                    Destroy(_currentActiveVisuals[i].gameObject);
+                    _bulletPool.ReturnObject(_currentActiveVisuals[i].gameObject);
 
                 _currentActiveVisuals.RemoveAt(i);
             }

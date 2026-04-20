@@ -4,6 +4,7 @@ public class MainHeroPlayerCharacter : MonoBehaviour
 {
     #region Fields
     [SerializeField] ThirdPersonAim _thirdPersonAim;
+    [SerializeField] FireShoot _fireShoot;
     #endregion
 
     #region Private Fields
@@ -17,6 +18,13 @@ public class MainHeroPlayerCharacter : MonoBehaviour
     {
        _thirdPersonAim.SetCamera(camera);
     }
+
+    public void SetBulletPool(ObjectPool bulletPool)
+    {
+       _fireShoot.SetBulletPool(bulletPool);
+    }
+
+    
     #endregion
 
     #region Private Methods

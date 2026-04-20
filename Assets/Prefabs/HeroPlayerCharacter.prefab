@@ -476,6 +476,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _thirdPersonAim: {fileID: 502609136928195582}
+  _fireShoot: {fileID: 3092725375323709543}
 --- !u!114 &3104442528763553046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -670,6 +671,7 @@ MonoBehaviour:
     m_Bits: 64
   visualPrefab: {fileID: 1266034491991669443, guid: bca10c501351d2d49a5d1139d3d9ff9e,
     type: 3}
+  _bulletPool: {fileID: 0}
 --- !u!1 &7943936998563016587
 GameObject:
   m_ObjectHideFlags: 0
