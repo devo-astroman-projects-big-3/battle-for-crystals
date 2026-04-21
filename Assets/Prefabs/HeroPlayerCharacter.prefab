@@ -438,7 +438,7 @@ GameObject:
   - component: {fileID: 3092725375323709543}
   m_Layer: 0
   m_Name: HeroPlayerCharacter
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -532,6 +532,8 @@ MonoBehaviour:
   RotationSpeed: 12
   JumpForce: 50
   GravityValue: -100
+  CoyoteTime: 0.12
+  JumpBufferTime: 0.12
   _cameraPivotController: {fileID: 6007205808458913617}
   _fireShoot: {fileID: 3092725375323709543}
   _muzzle: {fileID: 4883221729751479770}
@@ -664,7 +666,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc89b51bd2e63a748867a42053fb9870, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectileSpeed: 15
+  projectileSpeed: 30
   lifeTime: 6
   targetLayer:
     serializedVersion: 2

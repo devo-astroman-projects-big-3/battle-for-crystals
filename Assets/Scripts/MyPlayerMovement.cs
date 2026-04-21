@@ -10,6 +10,9 @@ public class MyPlayerMovement : NetworkBehaviour
     private bool _firePressed;
     private CharacterController _controller;
 
+    private float _coyoteTimeCounter;
+    private float _jumpBufferCounter;
+
     public Camera Camera;
 
     public Action JustSpawnAction;
@@ -22,15 +25,15 @@ public class MyPlayerMovement : NetworkBehaviour
     public float JumpForce = 5f;
     public float GravityValue = -9.81f;
 
+    [Header("Jump Feel")]
+    public float CoyoteTime = 0.12f;
+    public float JumpBufferTime = 0.12f;
+
     [Header("Camera")]
     [SerializeField] private ThirdPersonCameraPivot _cameraPivotController;
     [SerializeField] private FireShoot _fireShoot;
-
     [SerializeField] private Transform _muzzle;
-
     [SerializeField] private ThirdPersonAim _thirdPersonAim;
-
-    
 
     private void Awake()
     {
@@ -47,6 +50,7 @@ public class MyPlayerMovement : NetworkBehaviour
         if (Input.GetButtonDown("Jump"))
         {
             _jumpPressed = true;
+            _jumpBufferCounter = JumpBufferTime;
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -69,9 +73,25 @@ public class MyPlayerMovement : NetworkBehaviour
             _firePressed = false;
         }
 
-        if (_controller.isGrounded && _velocity.y < 0f)
+        bool isGrounded = _controller.isGrounded;
+
+        if (isGrounded)
         {
-            _velocity.y = -1f;
+            _coyoteTimeCounter = CoyoteTime;
+
+            if (_velocity.y < 0f)
+            {
+                _velocity.y = -1f;
+            }
+        }
+        else
+        {
+            _coyoteTimeCounter -= Runner.DeltaTime;
+        }
+
+        if (_jumpBufferCounter > 0f)
+        {
+            _jumpBufferCounter -= Runner.DeltaTime;
         }
 
         float horizontal = Input.GetAxis("Horizontal");
@@ -90,12 +110,15 @@ public class MyPlayerMovement : NetworkBehaviour
         Vector3 moveDirection = (forward * vertical + right * horizontal).normalized;
         Vector3 move = moveDirection * PlayerSpeed * Runner.DeltaTime;
 
-        _velocity.y += GravityValue * Runner.DeltaTime;
-
-        if (_jumpPressed && _controller.isGrounded)
+        if (_jumpBufferCounter > 0f && _coyoteTimeCounter > 0f)
         {
             _velocity.y = JumpForce;
+            _jumpBufferCounter = 0f;
+            _coyoteTimeCounter = 0f;
+            _jumpPressed = false;
         }
+
+        _velocity.y += GravityValue * Runner.DeltaTime;
 
         _controller.Move(move + _velocity * Runner.DeltaTime);
 
@@ -130,6 +153,5 @@ public class MyPlayerMovement : NetworkBehaviour
         }
 
         JustSpawnAction?.Invoke();
-        
     }
 }

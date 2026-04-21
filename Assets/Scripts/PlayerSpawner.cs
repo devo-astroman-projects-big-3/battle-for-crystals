@@ -28,6 +28,13 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
 
                 
             }
+
         }
+        else
+        {
+            
+        }
+
+
     }
 }

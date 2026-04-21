@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using Fusion;
 using UnityEngine;
@@ -8,16 +7,13 @@ public class FireShoot : NetworkBehaviour
     [SerializeField] private float projectileSpeed = 20f;
     [SerializeField] private float lifeTime = 6f;
     [SerializeField] private LayerMask targetLayer;
-    [SerializeField] private GameObject visualPrefab;
-    [SerializeField] private ObjectPool _bulletPool;    
+    [SerializeField] private ObjectPool _bulletPool;
 
     [Networked, Capacity(10)] private NetworkArray<ProjectileData> _projectilesBuffer { get; }
-
-    [Networked] private int _totalFiredCount {get; set;}
+    [Networked] private int _totalFiredCount { get; set; }
 
     private int _visualsCreated;
-
-    private List<VisualProjectileData> _currentActiveVisuals = new List<VisualProjectileData>();
+    private readonly List<VisualProjectileData> _currentActiveVisuals = new();
 
     private struct ProjectileData : INetworkStruct
     {
@@ -33,14 +29,32 @@ public class FireShoot : NetworkBehaviour
         public int BufferIndex;
     }
 
+    private void Awake()
+    {
+        if (_bulletPool == null)
+        {
+            _bulletPool = FindFirstObjectByType<ObjectPool>();
+        }
+    }
+
+    public override void Spawned()
+    {
+        if (_bulletPool == null)
+        {
+            _bulletPool = FindFirstObjectByType<ObjectPool>();
+        }
+    }
+
     public void SetBulletPool(ObjectPool bulletPool)
     {
         _bulletPool = bulletPool;
     }
 
-
     public void Fire(Vector3 firePosition, Vector3 fireDirection)
     {
+        if (!HasStateAuthority)
+            return;
+
         var entry = _totalFiredCount % _projectilesBuffer.Length;
 
         var data = new ProjectileData()
@@ -52,7 +66,6 @@ public class FireShoot : NetworkBehaviour
         };
 
         _projectilesBuffer.Set(entry, data);
-
         _totalFiredCount++;
     }
 
@@ -61,12 +74,9 @@ public class FireShoot : NetworkBehaviour
         var elapsed = (tick - data.FireTick) * Runner.DeltaTime;
 
         if (elapsed <= 0f)
-        {
             return data.FirePosition;
-        }
 
-        return data.FirePosition +
-            (Vector3)data.FireVelocity * elapsed;
+        return data.FirePosition + (Vector3)data.FireVelocity * elapsed;
     }
 
     public override void FixedUpdateNetwork()
@@ -114,6 +124,12 @@ public class FireShoot : NetworkBehaviour
 
     public override void Render()
     {
+        if (_bulletPool == null)
+        {
+            Debug.LogWarning("FireShoot.Render: _bulletPool is null");
+            return;
+        }
+
         var renderTime = HasStateAuthority
             ? Runner.LocalRenderTime
             : Runner.RemoteRenderTime;
@@ -152,7 +168,7 @@ public class FireShoot : NetworkBehaviour
                 continue;
 
             var position = bufferData.FirePosition +
-                        (Vector3)bufferData.FireVelocity * elapsed;
+                           (Vector3)bufferData.FireVelocity * elapsed;
 
             visual.gameObject.transform.position = position;
 
