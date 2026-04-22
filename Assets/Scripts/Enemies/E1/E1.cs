@@ -21,6 +21,7 @@ public class E1 : MonoBehaviour
 
     public void Fire()
     {
+        Debug.Log("Fire!!!!");
         _animatorE1.PlayFire();
     }
 

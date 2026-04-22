@@ -1,6 +1,6 @@
 using KevinCastejon.FiniteStateMachine;
 using UnityEngine;
-using System;
+
 public class DepsE1FSM
 {    
     public int id;
@@ -29,7 +29,11 @@ public class E1FSM : AbstractFiniteStateMachine
     };
 
     private void Awake()
-    {        
+    {
+        deps.id = 0;
+        deps.e1 = _e1;
+        deps.fsm = this;
+
         E1HideState e1Hide = AbstractState.Create<E1HideState, E1States>(E1States.HIDE_STATE, this);
         e1Hide.Setup(ref deps);
 
@@ -48,4 +52,28 @@ public class E1FSM : AbstractFiniteStateMachine
         Init(E1States.HIDE_STATE, e1Hide, e1Show, e1Attack, e1ReceiveHit, e1Die);
     }
 
+    public void GoShow()
+    {
+        TransitionToState(E1States.SHOW_STATE);
+    }
+
+    public void GoAttack()
+    {
+        TransitionToState(E1States.ATTACK_STATE);
+    }
+
+    public void GoReceiveHit()
+    {
+        TransitionToState(E1States.RECEIVE_HIT_STATE);
+    }
+
+    public void GoHide()
+    {
+        TransitionToState(E1States.HIDE_STATE);
+    }
+
+    public void GoDie()
+    {
+        TransitionToState(E1States.DIE_STATE);
+    }
 }
