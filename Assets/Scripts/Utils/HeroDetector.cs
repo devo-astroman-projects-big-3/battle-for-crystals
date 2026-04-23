@@ -48,6 +48,7 @@ public class HeroDetector : MonoBehaviour
     {
         if (IsHero(other.gameObject))
         {
+            Debug.Log("UNDETECTED HERO!!!!!!!!");
             undetectedAction?.Invoke();
         }
     }

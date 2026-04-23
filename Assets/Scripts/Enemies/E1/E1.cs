@@ -15,20 +15,30 @@ public class E1 : MonoBehaviour
     #endregion
     #region Public Fields
     public Action<GameObject> PlayerDetectedAction;
+    public Action PlayerUndetectedAction;
+    
     public Action MiddleFireEventAction;
+    public Action FireAnimationEndsAction;    
     #endregion
 
     #region Unity Callbacks
     void Start()
     {
         _playerRadarE1.PlayerDetectedAction += HandlePlayerDetected;
+        _playerRadarE1.PlayerUndetectedAction += HandlePlayerUndetected;
         _fireEventHandler.MiddleFireEventAction += HandleMiddleFireEvent;
+        _animatorE1.FireAnimationEndsAction += HandleFireAnimationEnds;
+
+        
+        
     }
 
     void OnDestroy()
     {
         _playerRadarE1.PlayerDetectedAction -= HandlePlayerDetected;
+        _playerRadarE1.PlayerUndetectedAction -= HandlePlayerUndetected;
         _fireEventHandler.MiddleFireEventAction -= HandleMiddleFireEvent;
+        _animatorE1.FireAnimationEndsAction -= HandleFireAnimationEnds;
     }
     #endregion
     #region Public Methods
@@ -44,7 +54,6 @@ public class E1 : MonoBehaviour
 
     public void Fire()
     {
-        Debug.Log("Fire!!!!");
         _animatorE1.PlayFire();
     }
 
@@ -62,8 +71,14 @@ public class E1 : MonoBehaviour
     {
         _rootHeadTransform.LookAt(_target);
     }
+    public bool IsTargetNull()
+    {
+        return _target == null;
+    }
+
     public void FireBullet()
     {
+        Debug.DrawRay(_muzzle.position, (_target.position - _muzzle.position).normalized * 3f, Color.yellow, 1f);
         _fireShoot.Fire(_muzzle.position, _target.position - _muzzle.position);
     }
     #endregion
@@ -73,9 +88,23 @@ public class E1 : MonoBehaviour
         PlayerDetectedAction?.Invoke(playerDetected);
     }
 
+    private void HandlePlayerUndetected()
+    {
+        PlayerUndetectedAction?.Invoke();
+    }
+
+
+
     private void HandleMiddleFireEvent()
     {
         MiddleFireEventAction?.Invoke();
     }
+
+    private void HandleFireAnimationEnds()
+    {
+        FireAnimationEndsAction?.Invoke();
+    }
+
+    
     #endregion
 }

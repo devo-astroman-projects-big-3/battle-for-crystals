@@ -6,7 +6,15 @@ public class SetTimeoutUtility : IDisposable
 {
     private MonoBehaviour context;
     private Coroutine runningCoroutine;
+
     private bool disposed = false;
+    private bool paused = false;
+
+    private Action storedCallback;
+
+    private float totalDelay;
+    private float remainingDelay;
+    private float startTime;
 
     public SetTimeoutUtility(MonoBehaviour c)
     {
@@ -15,25 +23,95 @@ public class SetTimeoutUtility : IDisposable
 
     public void SetTimeout(Action fn, float delay)
     {
-        if (disposed) 
+        if (disposed)
         {
             Debug.LogWarning("SetTimeoutUtility: Attempted to use after Dispose(). Ignored.");
             return;
         }
 
-        StopTimeout(); // ensure only 1 timeout at a time
-        runningCoroutine = context.StartCoroutine(_SetTimeout(fn, delay));
+        StopTimeout();
+
+        storedCallback = fn;
+
+        totalDelay = delay;
+        remainingDelay = delay;
+        paused = false;
+
+        StartTimer(remainingDelay);
     }
 
-    private IEnumerator _SetTimeout(Action callback, float delay)
+    private void StartTimer(float delay)
+    {
+        startTime = Time.time;
+        runningCoroutine = context.StartCoroutine(_SetTimeout(delay));
+    }
+
+    private IEnumerator _SetTimeout(float delay)
     {
         yield return new WaitForSeconds(delay);
-        if (!disposed)
+
+        if (!disposed && !paused)
         {
-            callback?.Invoke();
+            storedCallback?.Invoke();
         }
-        runningCoroutine = null; // Auto-clear when done
+
+        runningCoroutine = null;
     }
+
+    // -------------------------
+    // Pause
+    // -------------------------
+
+    public void Pause()
+    {
+        if (paused || runningCoroutine == null)
+            return;
+
+        float elapsed = Time.time - startTime;
+        remainingDelay -= elapsed;
+
+        StopTimeout();
+
+        paused = true;
+    }
+
+    // -------------------------
+    // Resume
+    // -------------------------
+
+    public void Resume()
+    {
+        if (!paused || disposed)
+            return;
+
+        paused = false;
+
+        StartTimer(remainingDelay);
+    }
+
+    // -------------------------
+    // Reset
+    // -------------------------
+
+    public void Reset()
+    {
+        if (disposed)
+            return;
+
+        StopTimeout();
+
+        paused = false;
+        remainingDelay = totalDelay;
+
+        if (storedCallback != null)
+        {
+            StartTimer(totalDelay);
+        }
+    }
+
+    // -------------------------
+    // Stop
+    // -------------------------
 
     public void StopTimeout()
     {
@@ -44,15 +122,19 @@ public class SetTimeoutUtility : IDisposable
         }
     }
 
+    // -------------------------
+    // Dispose
+    // -------------------------
+
     public void Dispose()
     {
-        if (disposed) return;
+        if (disposed)
+            return;
 
-        // Stop running coroutine safely
         StopTimeout();
 
-        // Release reference to MonoBehaviour
         context = null;
+        storedCallback = null;
 
         disposed = true;
     }

@@ -14,6 +14,8 @@ public class E1AttackState : AbstractState
         Debug.Log("AttackState - OnEnter");
 
         _dependencies.e1.MiddleFireEventAction += HandleMiddleFireEvent;
+        _dependencies.e1.FireAnimationEndsAction += HandleFireAnimationEnds;
+        _dependencies.e1.PlayerUndetectedAction += HandlePlayerUndetected;
         _dependencies.e1.Fire();
 
         /* 
@@ -22,24 +24,24 @@ public class E1AttackState : AbstractState
          */
     }
 
-    public override void OnUpdate()
-    {
-        // When key "1" is pressed
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            Debug.Log("Key 1 pressed → GoShow");
-            _dependencies.fsm.GoShow();
-        }
-    }
-
     public override void OnExit()
     {
         Debug.Log("AttackState - OnExit");
         _dependencies.e1.MiddleFireEventAction -= HandleMiddleFireEvent;
+        _dependencies.e1.FireAnimationEndsAction -= HandleFireAnimationEnds;
+        _dependencies.e1.PlayerUndetectedAction -= HandlePlayerUndetected;
     }
 
     private void HandleMiddleFireEvent()
     {
         _dependencies.e1.FireBullet();
+    }
+    private void HandleFireAnimationEnds()
+    {
+        _dependencies.fsm.GoShow();
+    }
+    private void HandlePlayerUndetected()
+    {
+        _dependencies.e1.SetTarget(null);     
     }
 }

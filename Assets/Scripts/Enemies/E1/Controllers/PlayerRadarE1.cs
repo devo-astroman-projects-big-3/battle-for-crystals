@@ -8,17 +8,20 @@ public class PlayerRadarE1 : MonoBehaviour
     #endregion
     #region Public Fields
     public Action<GameObject> PlayerDetectedAction;
+    public Action PlayerUndetectedAction;
     #endregion
 
     #region Unity Callbacks
     void Start()
     {
         _heroDetector.detectedAction += HandleDetectedAction;
+        _heroDetector.undetectedAction += HandleUndetectedAction;
     }
 
     void OnDestroy()
     {
         _heroDetector.detectedAction -= HandleDetectedAction;
+        _heroDetector.undetectedAction -= HandleUndetectedAction;
     }
     #endregion
     #region Public Methods
@@ -29,6 +32,15 @@ public class PlayerRadarE1 : MonoBehaviour
     {
         PlayerDetectedAction?.Invoke(playerDetected);
     }
+
+    private void HandleUndetectedAction()
+    {
+        PlayerUndetectedAction?.Invoke();
+    }
+
+
+
+    
     #endregion
 
     
