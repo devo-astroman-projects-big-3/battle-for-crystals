@@ -13,23 +13,22 @@ public class E1HideState : AbstractState
     public override void OnEnter()
     {
         Debug.Log("HideState - OnEnter");
-        //_dependencies.e1.HideEnemy();
+        _dependencies.e1.PlayerDetectedAction += HandlePlayerDetected;
+        
 
-    }
-
-    public override void OnUpdate()
-    {
-        // When key "1" is pressed
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            Debug.Log("Key 1 pressed → GoShow");
-            _dependencies.e1.ShowEnemy();
-            _dependencies.fsm.GoShow();
-        }
     }
 
     public override void OnExit()
     {
         Debug.Log("HideState - OnExit");
+        _dependencies.e1.PlayerDetectedAction -= HandlePlayerDetected;
+    }
+
+    private void HandlePlayerDetected(GameObject playerDetected)
+    {
+        _dependencies.e1.ShowEnemy();
+        _dependencies.e1.SetTarget(playerDetected.transform);
+        _dependencies.fsm.GoShow();
+
     }
 }
