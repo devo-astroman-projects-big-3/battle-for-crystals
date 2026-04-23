@@ -5,7 +5,8 @@ public class DepsE1FSM
 {    
     public int id;
     public E1 e1;
-    public E1FSM fsm;    
+    public E1FSM fsm;
+    public SetTimeoutUtility preattackTimeout;
 }
 
 public class E1FSM : AbstractFiniteStateMachine
@@ -26,6 +27,7 @@ public class E1FSM : AbstractFiniteStateMachine
         id = 0,                
         e1 = null,
         fsm = null,
+        preattackTimeout = null,
     };
 
     private void Awake()
@@ -33,6 +35,7 @@ public class E1FSM : AbstractFiniteStateMachine
         deps.id = 0;
         deps.e1 = _e1;
         deps.fsm = this;
+        deps.preattackTimeout = new SetTimeoutUtility(this);
 
         E1HideState e1Hide = AbstractState.Create<E1HideState, E1States>(E1States.HIDE_STATE, this);
         e1Hide.Setup(ref deps);

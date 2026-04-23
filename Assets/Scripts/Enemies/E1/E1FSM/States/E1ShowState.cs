@@ -11,10 +11,14 @@ public class E1ShowState : AbstractState
 
     public override void OnEnter()
     {
-        Debug.Log("ShowState - OnEnter");        
+        Debug.Log("ShowState - OnEnter");
+        _dependencies.preattackTimeout.SetTimeout(() =>
+        {
+            _dependencies.fsm.GoAttack();        
+        },1f);
     }
 
-        public override void OnUpdate()
+    public override void OnUpdate()
     {
         // When key "1" is pressed
         _dependencies.e1.LookAtTarget();

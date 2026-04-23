@@ -12,7 +12,9 @@ public class E1AttackState : AbstractState
     public override void OnEnter()
     {
         Debug.Log("AttackState - OnEnter");
-        //_dependencies.e1.Fire();
+
+        _dependencies.e1.MiddleFireEventAction += HandleMiddleFireEvent;
+        _dependencies.e1.Fire();
 
         /* 
             Should fire and on detect when the animation has finished and should go back to show
@@ -33,5 +35,11 @@ public class E1AttackState : AbstractState
     public override void OnExit()
     {
         Debug.Log("AttackState - OnExit");
+        _dependencies.e1.MiddleFireEventAction -= HandleMiddleFireEvent;
+    }
+
+    private void HandleMiddleFireEvent()
+    {
+        _dependencies.e1.FireBullet();
     }
 }

@@ -27,7 +27,6 @@ public class PlayerRadarE1 : MonoBehaviour
     #region Private Methods
     private void HandleDetectedAction(GameObject playerDetected)
     {
-        Debug.Log("PlayerDetected");
         PlayerDetectedAction?.Invoke(playerDetected);
     }
     #endregion
