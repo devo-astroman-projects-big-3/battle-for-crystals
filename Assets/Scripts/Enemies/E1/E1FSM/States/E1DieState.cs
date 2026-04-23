@@ -11,11 +11,11 @@ public class E1DieState : AbstractState
 
     public override void OnEnter()
     {
-        Debug.Log("DieState - OnEnter");
+        /* Debug.Log("DieState - OnEnter"); */
     }
 
     public override void OnExit()
     {
-        Debug.Log("DieState - OnExit");
+        /* Debug.Log("DieState - OnExit"); */
     }
 }

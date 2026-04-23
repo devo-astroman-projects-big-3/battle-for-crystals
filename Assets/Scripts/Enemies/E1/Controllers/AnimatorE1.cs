@@ -8,6 +8,7 @@ public class AnimatorE1 : MonoBehaviour
     #endregion
     #region Public Fields
     public Action FireAnimationEndsAction;
+    public Action ReceiveHitAnimationEndsAction;
     #endregion
 
     #region Unity Callbacks
@@ -51,6 +52,9 @@ public class AnimatorE1 : MonoBehaviour
         if(stateName == "FireEditable")
         {
             FireAnimationEndsAction?.Invoke();
+        }else if (stateName == "ReceiveDamage")
+        {
+            ReceiveHitAnimationEndsAction?.Invoke();
         }
     }
     #endregion

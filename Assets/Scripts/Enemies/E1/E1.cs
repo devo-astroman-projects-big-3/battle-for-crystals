@@ -8,8 +8,10 @@ public class E1 : MonoBehaviour
     [SerializeField] private PlayerRadarE1 _playerRadarE1;
     [SerializeField] private Transform _rootHeadTransform;
     [SerializeField] private FireEventHandler _fireEventHandler;
-    [SerializeField] private FireShoot _fireShoot;
+    [SerializeField] private EnemyFireShoot _enemyFireShoot;
     [SerializeField] private Transform _muzzle;
+    [SerializeField] private EObjectCollider _eObjectCollider;
+    [SerializeField] private HealthE1 _healthE1;
     
     private Transform _target;
     #endregion
@@ -18,7 +20,11 @@ public class E1 : MonoBehaviour
     public Action PlayerUndetectedAction;
     
     public Action MiddleFireEventAction;
-    public Action FireAnimationEndsAction;    
+    public Action FireAnimationEndsAction;
+    public Action ReceiveHitAnimationEndsAction;
+    public Action<int> ReceiveHitAction;
+    
+    
     #endregion
 
     #region Unity Callbacks
@@ -28,7 +34,10 @@ public class E1 : MonoBehaviour
         _playerRadarE1.PlayerUndetectedAction += HandlePlayerUndetected;
         _fireEventHandler.MiddleFireEventAction += HandleMiddleFireEvent;
         _animatorE1.FireAnimationEndsAction += HandleFireAnimationEnds;
+        _animatorE1.ReceiveHitAnimationEndsAction += HandleReceiveHitAnimationEnds;
 
+        
+        _eObjectCollider.ReceiveHitAction += HandleReceiveHit;
         
         
     }
@@ -39,6 +48,8 @@ public class E1 : MonoBehaviour
         _playerRadarE1.PlayerUndetectedAction -= HandlePlayerUndetected;
         _fireEventHandler.MiddleFireEventAction -= HandleMiddleFireEvent;
         _animatorE1.FireAnimationEndsAction -= HandleFireAnimationEnds;
+        _animatorE1.ReceiveHitAnimationEndsAction -= HandleReceiveHitAnimationEnds;
+        _eObjectCollider.ReceiveHitAction -= HandleReceiveHit;
     }
     #endregion
     #region Public Methods
@@ -57,9 +68,15 @@ public class E1 : MonoBehaviour
         _animatorE1.PlayFire();
     }
 
-    public void ReceiveDamage()
+    public void ReceiveDamage(int amount)
     {
         _animatorE1.PlayReceiveDamage();
+        _healthE1.DealDamageRpc(amount);        
+    }
+
+    public int GetLife()
+    {   
+        return _healthE1.NetworkedHealth;
     }
 
     public void SetTarget(Transform target)
@@ -79,7 +96,11 @@ public class E1 : MonoBehaviour
     public void FireBullet()
     {
         Debug.DrawRay(_muzzle.position, (_target.position - _muzzle.position).normalized * 3f, Color.yellow, 1f);
-        _fireShoot.Fire(_muzzle.position, _target.position - _muzzle.position);
+        _enemyFireShoot.Fire(_muzzle.position, _target.position - _muzzle.position);
+    }
+    public void Die()
+    {   
+        Debug.Log("E1 Die");
     }
     #endregion
     #region Private Methods
@@ -105,6 +126,14 @@ public class E1 : MonoBehaviour
         FireAnimationEndsAction?.Invoke();
     }
 
-    
+    private void HandleReceiveHitAnimationEnds()
+    {
+        ReceiveHitAnimationEndsAction?.Invoke();
+    }
+
+    private void HandleReceiveHit(int amount)
+    {
+        ReceiveHitAction?.Invoke(amount);
+    }
     #endregion
 }

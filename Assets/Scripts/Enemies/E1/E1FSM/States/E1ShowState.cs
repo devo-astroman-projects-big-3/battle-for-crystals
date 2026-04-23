@@ -12,9 +12,10 @@ public class E1ShowState : AbstractState
 
     public override void OnEnter()
     {
-        Debug.Log("ShowState - OnEnter");
+        /* Debug.Log("ShowState - OnEnter"); */
         _dependencies.preattackTimeout.Reset();
         _dependencies.e1.PlayerUndetectedAction += HandlePlayerUndetected;
+        _dependencies.e1.ReceiveHitAction += HandleReceiveHit;
 
         _dependencies.preattackTimeout.SetTimeout(() =>
         {
@@ -39,17 +40,31 @@ public class E1ShowState : AbstractState
 
     public override void OnExit()
     {
-        Debug.Log("ShowState - OnExit");
+        /* Debug.Log("ShowState - OnExit"); */
         _dependencies.e1.PlayerUndetectedAction -= HandlePlayerUndetected;
+        _dependencies.e1.ReceiveHitAction -= HandleReceiveHit;
         _dependencies.preattackTimeout.Pause();
     }
 
     private void HandlePlayerUndetected()
     {
-        Debug.Log("GO HIDE");
+        /* Debug.Log("GO HIDE"); */
         _dependencies.e1.HideEnemy();
         _dependencies.e1.SetTarget(null);
         _dependencies.fsm.GoHide();
     }
+
+    private void HandleReceiveHit(int amount)
+    {
+        _dependencies.e1.ReceiveDamage(amount);
+        //check life 
+        //life > 0
+        _dependencies.fsm.GoReceiveHit();
+        
+        //life == 0
+        //_dependencies.fsm.GoDie();
+    }
+
+    
 
 }

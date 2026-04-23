@@ -24,7 +24,7 @@ public class E1FSM : AbstractFiniteStateMachine
 
     public DepsE1FSM deps = new DepsE1FSM
     {
-        id = 0,                
+        id = 0,
         e1 = null,
         fsm = null,
         preattackTimeout = null,

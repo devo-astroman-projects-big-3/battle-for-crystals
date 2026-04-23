@@ -1,5 +1,6 @@
 using UnityEngine;
 using KevinCastejon.FiniteStateMachine;
+using Unity.VisualScripting;
 public class E1ReceiveHitState : AbstractState
 {
     private DepsE1FSM _dependencies;
@@ -11,20 +12,29 @@ public class E1ReceiveHitState : AbstractState
 
     public override void OnEnter()
     {
-        Debug.Log("ReceiveState - OnEnter");
+        /* Debug.Log("ReceiveState - OnEnter"); */
+        _dependencies.e1.ReceiveHitAnimationEndsAction += HandleReceiveHitAnimationEnds;        
     }
-    public override void OnUpdate()
-    {
-        // When key "1" is pressed
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            Debug.Log("Key 1 pressed → GoShow");
-            _dependencies.fsm.GoShow();
-        }
-    }
+
 
     public override void OnExit()
     {
-        Debug.Log("ReceiveState - OnExit");
+        /* Debug.Log("ReceiveState - OnExit"); */
+        _dependencies.e1.ReceiveHitAnimationEndsAction -= HandleReceiveHitAnimationEnds;
+    }
+
+    private void HandleReceiveHitAnimationEnds()
+    {
+        if(_dependencies.e1.GetLife() > 0)
+        {
+            _dependencies.fsm.GoShow();
+        }
+        else
+        {
+            _dependencies.e1.Die();
+            _dependencies.fsm.GoDie();
+        }
+        
+
     }
 }

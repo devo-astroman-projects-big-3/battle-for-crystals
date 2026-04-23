@@ -5,6 +5,9 @@ public class MainHeroPlayerCharacter : MonoBehaviour
     #region Fields
     [SerializeField] ThirdPersonAim _thirdPersonAim;
     [SerializeField] FireShoot _fireShoot;
+    [SerializeField] HeroHealth _heroHealth;
+
+    
     #endregion
 
     #region Private Fields
@@ -24,7 +27,15 @@ public class MainHeroPlayerCharacter : MonoBehaviour
        _fireShoot.SetBulletPool(bulletPool);
     }
 
-    
+   public void ReceiveDamage(int damageValue)
+    {
+       _heroHealth.DecreaseLife(1);
+
+      if(_heroHealth.Life == 0)
+      {
+         Debug.Log("Hero Dead");
+      }
+    }
     #endregion
 
     #region Private Methods

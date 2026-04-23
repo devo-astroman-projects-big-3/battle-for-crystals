@@ -342,6 +342,51 @@ MonoBehaviour:
   _aimLayerMask:
     serializedVersion: 2
     m_Bits: 51
+--- !u!1 &5514498958821355026
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 347443723028429406}
+  - component: {fileID: 6594425913925843118}
+  m_Layer: 0
+  m_Name: HeroHealth
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &347443723028429406
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5514498958821355026}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4773897845383654906}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6594425913925843118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5514498958821355026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae06515a64e88644e8bc853d2a216338, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxLife: 3
 --- !u!1 &5723933878442278491
 GameObject:
   m_ObjectHideFlags: 0
@@ -436,7 +481,7 @@ GameObject:
   - component: {fileID: 891572961367811191}
   - component: {fileID: 6007205808458913617}
   - component: {fileID: 3092725375323709543}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: HeroPlayerCharacter
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -477,6 +522,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _thirdPersonAim: {fileID: 502609136928195582}
   _fireShoot: {fileID: 3092725375323709543}
+  _heroHealth: {fileID: 6594425913925843118}
 --- !u!114 &3104442528763553046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -670,9 +716,7 @@ MonoBehaviour:
   lifeTime: 6
   targetLayer:
     serializedVersion: 2
-    m_Bits: 64
-  visualPrefab: {fileID: 1266034491991669443, guid: bca10c501351d2d49a5d1139d3d9ff9e,
-    type: 3}
+    m_Bits: 320
   _bulletPool: {fileID: 0}
 --- !u!1 &7943936998563016587
 GameObject:
@@ -704,6 +748,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1976078925095641147}
+  - {fileID: 347443723028429406}
   m_Father: {fileID: 491544664556505404}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8952718364572104964
