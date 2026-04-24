@@ -13,7 +13,7 @@ public class CameraManager : MonoBehaviour
             Debug.LogWarning("Virtual camera is not assigned.");
             return;
         }
-        Debug.Log("Flag!!!");
+        
         _virtualCamera.Follow = followTarget;
         _virtualCamera.LookAt = lookAtTarget != null ? lookAtTarget : followTarget;
     }

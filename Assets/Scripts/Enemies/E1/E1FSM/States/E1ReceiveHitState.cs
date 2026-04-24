@@ -1,6 +1,6 @@
 using UnityEngine;
 using KevinCastejon.FiniteStateMachine;
-using Unity.VisualScripting;
+
 public class E1ReceiveHitState : AbstractState
 {
     private DepsE1FSM _dependencies;
@@ -12,20 +12,23 @@ public class E1ReceiveHitState : AbstractState
 
     public override void OnEnter()
     {
-        /* Debug.Log("ReceiveState - OnEnter"); */
-        _dependencies.e1.ReceiveHitAnimationEndsAction += HandleReceiveHitAnimationEnds;        
+        /* Debug.Log("ReceiveHitState - OnEnter"); */
+        _dependencies.e1.ReceiveHitAnimationEndsAction += HandleReceiveHitAnimationEnds;
+        _dependencies.e1.ReceiveDamage();
     }
 
 
     public override void OnExit()
     {
-        /* Debug.Log("ReceiveState - OnExit"); */
+        /* Debug.Log("ReceiveHitState - OnExit"); */
         _dependencies.e1.ReceiveHitAnimationEndsAction -= HandleReceiveHitAnimationEnds;
     }
 
     private void HandleReceiveHitAnimationEnds()
-    {
-        if(_dependencies.e1.GetLife() > 0)
+    {        
+        _dependencies.fsm.GoShowNetwork();
+
+        /* if(_dependencies.e1.GetLife() > 0)
         {
             //_dependencies.fsm.GoShow();
             _dependencies.fsm.GoShowNetwork();
@@ -35,7 +38,7 @@ public class E1ReceiveHitState : AbstractState
             _dependencies.e1.Die();
             //_dependencies.fsm.GoDie();
             _dependencies.fsm.GoDieNetwork();
-        }
+        } */
         
 
     }

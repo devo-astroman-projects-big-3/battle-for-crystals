@@ -72,10 +72,9 @@ public class E1 : MonoBehaviour
         _animatorE1.PlayFire();
     }
 
-    public void ReceiveDamage(int amount)
+    public void ReceiveDamage()
     {
-        _animatorE1.PlayReceiveDamage();
-        _healthE1.DealDamageRpc(amount);        
+         _animatorE1.PlayReceiveDamage();
     }
 
     public int GetLife()
@@ -121,6 +120,11 @@ public class E1 : MonoBehaviour
     {   
         Debug.Log("E1 Die");
     }
+
+    /* public int SetNHits(int nHits)
+    {   
+        return _healthE1.NetworkedHealth;
+    } */
     #endregion
     #region Private Methods
     private void HandlePlayerDetected(GameObject playerDetected)
@@ -146,7 +150,7 @@ public class E1 : MonoBehaviour
     }
 
     private void HandleReceiveHitAnimationEnds()
-    {
+    {     
         ReceiveHitAnimationEndsAction?.Invoke();
     }
 

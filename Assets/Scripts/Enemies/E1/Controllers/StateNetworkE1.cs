@@ -27,14 +27,14 @@ public class StateNetworkE1 : NetworkBehaviour
 
     public void ChangeFsmState(int newState)
     {
-        if (Object == null || !Object.HasStateAuthority)
+        if (Object == null || !Object.HasStateAuthority)            
             return;
 
         FsmState = newState;
     }
 
     private void OnFsmStateChanged()
-    {
+    {        
         FsmChangedAction?.Invoke(FsmState);
     }
 
@@ -62,8 +62,7 @@ public class StateNetworkE1 : NetworkBehaviour
 
         RPC_ReceiveHit();
     }
-
-
+    
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     private void RPC_ReceiveHit()
     {

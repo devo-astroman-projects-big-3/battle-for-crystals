@@ -51,7 +51,7 @@ public class E1FSM : AbstractFiniteStateMachine
         E1ReceiveHitState e1ReceiveHit = AbstractState.Create<E1ReceiveHitState, E1States>(E1States.RECEIVE_HIT_STATE, this);
         e1ReceiveHit.Setup(ref deps);
 
-        E1DieState e1Die = AbstractState.Create<E1DieState, E1States>(E1States.RECEIVE_HIT_STATE, this);
+        E1DieState e1Die = AbstractState.Create<E1DieState, E1States>(E1States.DIE_STATE, this);
         e1Die.Setup(ref deps);
 
         Init(E1States.HIDE_STATE, e1Hide, e1Show, e1Attack, e1ReceiveHit, e1Die);
@@ -179,8 +179,9 @@ public class E1FSM : AbstractFiniteStateMachine
     }
 
     private void HandleNHitsReceivedChanged(int nHits)
-    {
-        //check health if > 0 go receive hit 
+    {   
+        //check health if > 0 go receive hit
+        //_e1.ReceiveDamage();
         GoReceiveHitNetwork();
         //check health if == 0 go die
     }

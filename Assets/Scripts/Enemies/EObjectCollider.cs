@@ -19,7 +19,6 @@ public class EObjectCollider : MonoBehaviour, IDamageable
     #region Public Methods
     public void TakeDamage(int amount)
     {
-        Debug.Log("___TakeDamage____" + amount);
         ReceiveHitAction?.Invoke(amount);
     }
     #endregion

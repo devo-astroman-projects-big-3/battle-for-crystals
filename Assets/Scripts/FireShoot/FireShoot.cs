@@ -103,7 +103,6 @@ public class FireShoot : NetworkBehaviour
                     moveDirection.magnitude,
                     targetLayer))
             {
-                Debug.Log("FlagHIT " + hit.collider.name);
 
                 var damageableObject = hit.collider.GetComponentInParent<IDamageable>();
                 if (damageableObject != null)
