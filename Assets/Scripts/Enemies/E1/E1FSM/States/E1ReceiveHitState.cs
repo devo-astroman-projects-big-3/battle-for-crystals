@@ -27,12 +27,14 @@ public class E1ReceiveHitState : AbstractState
     {
         if(_dependencies.e1.GetLife() > 0)
         {
-            _dependencies.fsm.GoShow();
+            //_dependencies.fsm.GoShow();
+            _dependencies.fsm.GoShowNetwork();
         }
         else
         {
             _dependencies.e1.Die();
-            _dependencies.fsm.GoDie();
+            //_dependencies.fsm.GoDie();
+            _dependencies.fsm.GoDieNetwork();
         }
         
 

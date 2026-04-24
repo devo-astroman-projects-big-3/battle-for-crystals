@@ -28,7 +28,8 @@ public class E1HideState : AbstractState
     {
         _dependencies.e1.ShowEnemy();
         _dependencies.e1.SetTarget(playerDetected.transform);
-        _dependencies.fsm.GoShow();
+        //_dependencies.fsm.GoShow();
+        _dependencies.fsm.GoShowNetwork();
 
     }
 }

@@ -40,17 +40,19 @@ public class E1AttackState : AbstractState
     }
     private void HandleFireAnimationEnds()
     {
-        _dependencies.fsm.GoShow();
+        //_dependencies.fsm.GoShow();
+        _dependencies.fsm.GoShowNetwork();
     }
 
     private void HandleReceiveHitAnimationEnds()
     {
-        _dependencies.fsm.GoReceiveHit();
+        //_dependencies.fsm.GoReceiveHit();
+        _dependencies.fsm.GoReceiveHitNetwork();
     }
 
     private void HandlePlayerUndetected()
     {
-        _dependencies.e1.SetTarget(null);     
+        _dependencies.e1.SetTarget(null);
     }
 
     private void HandleReceiveHit(int amount)
@@ -58,7 +60,8 @@ public class E1AttackState : AbstractState
         _dependencies.e1.ReceiveDamage(amount);
         //check life 
         //life > 0
-        _dependencies.fsm.GoReceiveHit();
+        //_dependencies.fsm.GoReceiveHit();
+        _dependencies.fsm.GoReceiveHitNetwork();
         
         //life == 0
         //_dependencies.fsm.GoDie();

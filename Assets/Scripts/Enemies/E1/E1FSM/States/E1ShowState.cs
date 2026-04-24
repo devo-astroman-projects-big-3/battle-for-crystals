@@ -20,17 +20,31 @@ public class E1ShowState : AbstractState
         _dependencies.preattackTimeout.SetTimeout(() =>
         {
          
-            _dependencies.fsm.GoAttack();
+            //_dependencies.fsm.GoAttack();
+            _dependencies.fsm.GoAttackNetwork();
 
         },1f);
 
         if (_dependencies.e1.IsTargetNull())
         {
             _dependencies.e1.HideEnemy();
-            _dependencies.fsm.GoHide();
+            //_dependencies.fsm.GoHide();
+            _dependencies.e1.SetTargetNull();
+            _dependencies.fsm.GoHideNetwork();
         }
 
-        _dependencies.e1.LookAtTarget();
+        //_dependencies.e1.LookAtTarget();
+        Transform playerTransform = _dependencies.e1.GetTarget();
+        if (playerTransform)
+        {
+            Vector3 lookAtPos = playerTransform.position;
+            _dependencies.fsm.SetLookAtNetwork(lookAtPos);
+        }
+        else
+        {
+            Debug.Log("No player transform!");
+        }
+        
     }
 
     public override void OnUpdate()
@@ -53,7 +67,9 @@ public class E1ShowState : AbstractState
         /* Debug.Log("GO HIDE"); */
         _dependencies.e1.HideEnemy();
         _dependencies.e1.SetTarget(null);
-        _dependencies.fsm.GoHide();
+        //_dependencies.fsm.GoHide();
+        _dependencies.fsm.GoHideNetwork();
+
     }
 
     private void HandleReceiveHit(int amount)
@@ -61,7 +77,9 @@ public class E1ShowState : AbstractState
         _dependencies.e1.ReceiveDamage(amount);
         //check life 
         //life > 0
-        _dependencies.fsm.GoReceiveHit();
+        //_dependencies.fsm.GoReceiveHit();
+        _dependencies.fsm.GoReceiveHitNetwork();
+        
         
         //life == 0
         //_dependencies.fsm.GoDie();

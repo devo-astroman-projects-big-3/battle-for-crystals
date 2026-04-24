@@ -6,17 +6,18 @@ public class E1 : MonoBehaviour
     #region Fields
     [SerializeField] private AnimatorE1 _animatorE1;
     [SerializeField] private PlayerRadarE1 _playerRadarE1;
-    //[SerializeField] private Transform _rootHeadTransform;
+    [SerializeField] private Transform _rootHeadTransform;
     [SerializeField] private FireEventHandler _fireEventHandler;
     [SerializeField] private EnemyFireShoot _enemyFireShoot;
     [SerializeField] private Transform _muzzle;
     [SerializeField] private EObjectCollider _eObjectCollider;
     [SerializeField] private HealthE1 _healthE1;
-    [SerializeField] private LookAtNetwork _lookAtNetwork;
+    //[SerializeField] private LookAtNetwork _lookAtNetwork;
 
     
     
     private Transform _target;
+    private Vector3 _lookAtPos;
     #endregion
     #region Public Fields
     public Action<GameObject> PlayerDetectedAction;
@@ -87,11 +88,24 @@ public class E1 : MonoBehaviour
         _target = target;
     }
 
+    public Transform GetTarget()
+    {
+        return _target;
+    }
+
+    public void SetLookAtPos(Vector3 lookAtPos)
+    {
+        _lookAtPos = lookAtPos;
+    }
+
     public void LookAtTarget()
     {
-        //_rootHeadTransform.LookAt(_target);
-        _lookAtNetwork.SetLookPosition(_target.position);
-
+        _rootHeadTransform.LookAt(_lookAtPos);
+        //_lookAtNetwork.SetLookPosition(_target.position);
+    }
+    public void SetTargetNull()
+    {
+        _target = null;
     }
     public bool IsTargetNull()
     {

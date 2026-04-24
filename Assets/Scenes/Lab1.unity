@@ -1942,9 +1942,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 2128663235}
   - {fileID: 1985733478}
   - {fileID: 1496027196}
-  - {fileID: 2128663235}
   - {fileID: 217601420}
   m_Father: {fileID: 419389819}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3285,6 +3285,50 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 650498504}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &663530807
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 663530808}
+  - component: {fileID: 663530809}
+  m_Layer: 0
+  m_Name: StateNetwork
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &663530808
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 663530807}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 747820510}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &663530809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 663530807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ad901fcdcae6e84f935cba23d55a60e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &685721998 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3619666286545144502, guid: a7283e0e0e7095046b5e1ad0a439552b,
@@ -3359,12 +3403,12 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 663530808}
   - {fileID: 1024462431}
   - {fileID: 833821491}
   - {fileID: 390841223}
   - {fileID: 1369108573}
   - {fileID: 627129274}
-  - {fileID: 1343201240}
   m_Father: {fileID: 1999025312}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &760708112
@@ -4105,6 +4149,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1024462431}
   - component: {fileID: 1024462432}
+  - component: {fileID: 1024462433}
   m_Layer: 0
   m_Name: Animator
   m_TagString: Untagged
@@ -4141,6 +4186,25 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animator: {fileID: 1999025311}
   _networkMecanimAnimator: {fileID: 1999025316}
+--- !u!114 &1024462433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1024462430}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -1552182283, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SortKey: 3136345431
+  ObjectInterest: 1
+  Flags: 262145
+  NestedObjects: []
+  NetworkedBehaviours:
+  - {fileID: 1024462432}
+  ForceRemoteRenderTimeframe: 0
 --- !u!1 &1041660243
 GameObject:
   m_ObjectHideFlags: 0
@@ -5665,51 +5729,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1336250719}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1343201239
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1343201240}
-  - component: {fileID: 1343201241}
-  m_Layer: 0
-  m_Name: LookAtNetwork
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1343201240
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1343201239}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 747820510}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1343201241
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1343201239}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97431c305bc7b7f4dbe15e6059e4abe4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _rootHeadTransform: {fileID: 1999025312}
 --- !u!4 &1343331208 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3619666286545144502, guid: a7283e0e0e7095046b5e1ad0a439552b,
@@ -6256,6 +6275,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _e1: {fileID: 1999025313}
+  _stateNetworkE1: {fileID: 663530809}
 --- !u!4 &1418791943
 Transform:
   m_ObjectHideFlags: 0
@@ -7715,12 +7735,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _animatorE1: {fileID: 1024462432}
   _playerRadarE1: {fileID: 833821490}
+  _rootHeadTransform: {fileID: 1999025312}
   _fireEventHandler: {fileID: 1999025314}
   _enemyFireShoot: {fileID: 390841224}
   _muzzle: {fileID: 809001665}
   _eObjectCollider: {fileID: 967728116}
   _healthE1: {fileID: 627129276}
-  _lookAtNetwork: {fileID: 1343201241}
 --- !u!114 &1999025314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7749,12 +7769,12 @@ MonoBehaviour:
   ObjectInterest: 1
   Flags: 262145
   NestedObjects:
+  - {fileID: 1024462433}
   - {fileID: 390841222}
   - {fileID: 627129275}
   NetworkedBehaviours:
   - {fileID: 1999025316}
-  - {fileID: 1024462432}
-  - {fileID: 1343201241}
+  - {fileID: 663530809}
   ForceRemoteRenderTimeframe: 0
 --- !u!114 &1999025316
 MonoBehaviour:
@@ -7770,7 +7790,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Animator: {fileID: 1999025311}
   ApplyTiming: 2
-  SyncSettings: 8
+  SyncSettings: 79
   StateHashes: 000000004ce20227567338cddba6a83798089b3466f095b17c61af5bfedc7ccc3caebd6e6f5a4ade75cb70343a6f2e6a19df2dcc
   TriggerHashes: 00000000dba6a837f1a6ecf8fedc7ccc6f5a4ade
   TotalWords: 1
