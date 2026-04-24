@@ -14,9 +14,15 @@ public class StateNetworkE1 : NetworkBehaviour
     private Vector3 LookAtState { get; set; }
     public event Action<Vector3> LookAtChangedAction;
 
+
+    [Networked, OnChangedRender(nameof(OnNHitsReceivedChanged))] private int NHitsReceived { get; set; }
+    public event Action<int> NHitsReceivedChangedAction;
+
+
     public override void Spawned()
     {
         FsmChangedAction?.Invoke(FsmState);
+        NHitsReceived = 0;
     }
 
     public void ChangeFsmState(int newState)
@@ -43,6 +49,30 @@ public class StateNetworkE1 : NetworkBehaviour
     private void OnLookAtStateChanged()
     {
         LookAtChangedAction?.Invoke(LookAtState);
+    }
+
+
+    public void RequestReceiveHit()
+    {
+        if (Object == null)
+        {
+            Debug.LogWarning("E1 is not spawned yet.");
+            return;
+        }
+
+        RPC_ReceiveHit();
+    }
+
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    private void RPC_ReceiveHit()
+    {
+        NHitsReceived++;
+    }
+    
+    private void OnNHitsReceivedChanged()
+    {
+        NHitsReceivedChangedAction?.Invoke(NHitsReceived);
     }
 
     

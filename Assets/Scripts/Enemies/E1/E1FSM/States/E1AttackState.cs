@@ -61,7 +61,8 @@ public class E1AttackState : AbstractState
         //check life 
         //life > 0
         //_dependencies.fsm.GoReceiveHit();
-        _dependencies.fsm.GoReceiveHitNetwork();
+        //_dependencies.fsm.GoReceiveHitNetwork();
+        _dependencies.fsm.NotifyReceiveHitNetwork();
         
         //life == 0
         //_dependencies.fsm.GoDie();

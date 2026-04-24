@@ -74,11 +74,13 @@ public class E1ShowState : AbstractState
 
     private void HandleReceiveHit(int amount)
     {
-        _dependencies.e1.ReceiveDamage(amount);
+
+        //_dependencies.e1.ReceiveDamage(amount);
         //check life 
         //life > 0
         //_dependencies.fsm.GoReceiveHit();
-        _dependencies.fsm.GoReceiveHitNetwork();
+        _dependencies.fsm.NotifyReceiveHitNetwork();
+        //_dependencies.fsm.GoReceiveHitNetwork();
         
         
         //life == 0

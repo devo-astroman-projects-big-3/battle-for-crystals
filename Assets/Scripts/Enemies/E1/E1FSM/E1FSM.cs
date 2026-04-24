@@ -58,6 +58,9 @@ public class E1FSM : AbstractFiniteStateMachine
 
         _stateNetworkE1.FsmChangedAction += HandleFsmChanged;
         _stateNetworkE1.LookAtChangedAction += HandleLookAtChanged;
+        _stateNetworkE1.NHitsReceivedChangedAction += HandleNHitsReceivedChanged;
+
+        
 
     }
 
@@ -65,6 +68,7 @@ public class E1FSM : AbstractFiniteStateMachine
     {
         _stateNetworkE1.FsmChangedAction -= HandleFsmChanged;
         _stateNetworkE1.LookAtChangedAction -= HandleLookAtChanged;
+        _stateNetworkE1.NHitsReceivedChangedAction -= HandleNHitsReceivedChanged;
     }
 
     public void GoShow()
@@ -133,6 +137,15 @@ public class E1FSM : AbstractFiniteStateMachine
         _stateNetworkE1.ChangeLookAtState(lookAtPos);
         //TransitionToState(E1States.DIE_STATE);
     }
+
+    public void NotifyReceiveHitNetwork()
+    {
+        _stateNetworkE1.RequestReceiveHit();
+        //TransitionToState(E1States.DIE_STATE);
+    }
+
+
+
     //
 
     private void HandleFsmChanged(int newState)
@@ -164,6 +177,15 @@ public class E1FSM : AbstractFiniteStateMachine
         _e1.SetLookAtPos(lookAtPos);
         _e1.LookAtTarget();
     }
+
+    private void HandleNHitsReceivedChanged(int nHits)
+    {
+        //check health if > 0 go receive hit 
+        GoReceiveHitNetwork();
+        //check health if == 0 go die
+    }
+
+    
 
     
 }
