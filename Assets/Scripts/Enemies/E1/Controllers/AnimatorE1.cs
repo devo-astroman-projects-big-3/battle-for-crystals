@@ -1,10 +1,12 @@
 using System;
+using Fusion;
 using UnityEngine;
 
-public class AnimatorE1 : MonoBehaviour
+public class AnimatorE1 : NetworkBehaviour
 {
     #region Fields
     [SerializeField] private Animator _animator;
+    [SerializeField] private NetworkMecanimAnimator  _networkMecanimAnimator ;
     #endregion
     #region Public Fields
     public Action FireAnimationEndsAction;
@@ -29,21 +31,33 @@ public class AnimatorE1 : MonoBehaviour
     #region Public Methods
     public void PlayIdleHideDown()
     {
-        _animator.SetTrigger("HideDown");
+        if (!Object.HasStateAuthority)
+            return;
+
+        _networkMecanimAnimator.SetTrigger("HideDown");
     }
 
     public void PlayIdleShowUp()
     {
-        _animator.SetTrigger("ShowUp");
+        if (!Object.HasStateAuthority)
+            return;
+
+        _networkMecanimAnimator.SetTrigger("ShowUp");
     }
 
     public void PlayFire()
     {
-        _animator.SetTrigger("Fire");
+        if (!Object.HasStateAuthority)
+            return;
+
+        _networkMecanimAnimator.SetTrigger("Fire");
     }
     public void PlayReceiveDamage()
     {
-        _animator.SetTrigger("ReceiveDamage");
+        if (!Object.HasStateAuthority)
+            return;
+
+        _networkMecanimAnimator.SetTrigger("ReceiveDamage");
     }
     #endregion
     #region Private Methods

@@ -6,12 +6,15 @@ public class E1 : MonoBehaviour
     #region Fields
     [SerializeField] private AnimatorE1 _animatorE1;
     [SerializeField] private PlayerRadarE1 _playerRadarE1;
-    [SerializeField] private Transform _rootHeadTransform;
+    //[SerializeField] private Transform _rootHeadTransform;
     [SerializeField] private FireEventHandler _fireEventHandler;
     [SerializeField] private EnemyFireShoot _enemyFireShoot;
     [SerializeField] private Transform _muzzle;
     [SerializeField] private EObjectCollider _eObjectCollider;
     [SerializeField] private HealthE1 _healthE1;
+    [SerializeField] private LookAtNetwork _lookAtNetwork;
+
+    
     
     private Transform _target;
     #endregion
@@ -86,7 +89,9 @@ public class E1 : MonoBehaviour
 
     public void LookAtTarget()
     {
-        _rootHeadTransform.LookAt(_target);
+        //_rootHeadTransform.LookAt(_target);
+        _lookAtNetwork.SetLookPosition(_target.position);
+
     }
     public bool IsTargetNull()
     {

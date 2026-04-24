@@ -29,12 +29,14 @@ public class E1ShowState : AbstractState
             _dependencies.e1.HideEnemy();
             _dependencies.fsm.GoHide();
         }
+
+        _dependencies.e1.LookAtTarget();
     }
 
     public override void OnUpdate()
     {
         // When key "1" is pressed
-        _dependencies.e1.LookAtTarget();
+        //_dependencies.e1.LookAtTarget();
     }
 
 
