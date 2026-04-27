@@ -1,5 +1,6 @@
 using UnityEngine;
 using KevinCastejon.FiniteStateMachine;
+using System.Linq.Expressions;
 
 public class E1HideState : AbstractState
 {
@@ -12,7 +13,7 @@ public class E1HideState : AbstractState
 
     public override void OnEnter()
     {
-        /* Debug.Log("HideState - OnEnter"); */
+        Debug.Log("HideState - OnEnter"); 
         _dependencies.e1.PlayerDetectedAction += HandlePlayerDetected;
         
 
@@ -20,7 +21,7 @@ public class E1HideState : AbstractState
 
     public override void OnExit()
     {
-        /* Debug.Log("HideState - OnExit"); */
+        Debug.Log("HideState - OnExit");
         _dependencies.e1.PlayerDetectedAction -= HandlePlayerDetected;
     }
 
@@ -28,7 +29,6 @@ public class E1HideState : AbstractState
     {
         _dependencies.e1.ShowEnemy();
         _dependencies.e1.SetTarget(playerDetected.transform);
-        //_dependencies.fsm.GoShow();
         _dependencies.fsm.GoShowNetwork();
 
     }

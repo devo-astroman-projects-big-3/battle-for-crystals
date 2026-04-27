@@ -37,9 +37,6 @@ public class PlayerRadarE1 : MonoBehaviour
     {
         PlayerUndetectedAction?.Invoke();
     }
-
-
-
     
     #endregion
 

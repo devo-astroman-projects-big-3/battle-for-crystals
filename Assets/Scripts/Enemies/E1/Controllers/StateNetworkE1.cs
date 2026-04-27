@@ -33,6 +33,11 @@ public class StateNetworkE1 : NetworkBehaviour
         FsmState = newState;
     }
 
+    public int GetNHitsReceived()
+    {
+        return NHitsReceived;
+    }
+
     private void OnFsmStateChanged()
     {        
         FsmChangedAction?.Invoke(FsmState);
@@ -67,6 +72,23 @@ public class StateNetworkE1 : NetworkBehaviour
     private void RPC_ReceiveHit()
     {
         NHitsReceived++;
+    }
+
+    public void RequestResetNHits()
+    {
+        if (Object == null)
+        {
+            Debug.LogWarning("E1 is not spawned yet.");
+            return;
+        }
+
+        RPC_ResetNHits();
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    private void RPC_ResetNHits()
+    {
+        NHitsReceived = 0;
     }
     
     private void OnNHitsReceivedChanged()

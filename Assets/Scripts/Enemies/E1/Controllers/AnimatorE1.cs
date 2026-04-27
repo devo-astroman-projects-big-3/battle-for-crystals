@@ -6,7 +6,8 @@ public class AnimatorE1 : NetworkBehaviour
 {
     #region Fields
     [SerializeField] private Animator _animator;
-    [SerializeField] private NetworkMecanimAnimator  _networkMecanimAnimator ;
+    [SerializeField] private NetworkMecanimAnimator  _networkMecanimAnimator;
+    [SerializeField] private SkinnedMeshRenderer[]  _skinMeshes;
     #endregion
     #region Public Fields
     public Action FireAnimationEndsAction;
@@ -58,6 +59,22 @@ public class AnimatorE1 : NetworkBehaviour
             return;
 
         _networkMecanimAnimator.SetTrigger("ReceiveDamage");
+    }
+
+    public void HideSkin()
+    {
+        for(int i = 0; i<_skinMeshes.Length; i++)
+        {
+            _skinMeshes[i].enabled = false;
+        }
+    }
+
+    public void ShowSkin()
+    {
+        for(int i = 0; i<_skinMeshes.Length; i++)
+        {
+            _skinMeshes[i].enabled = true;
+        }
     }
     #endregion
     #region Private Methods

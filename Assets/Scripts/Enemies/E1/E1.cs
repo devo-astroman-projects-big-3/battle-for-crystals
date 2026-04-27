@@ -19,6 +19,7 @@ public class E1 : MonoBehaviour
     
     private Transform _target;
     private Vector3 _lookAtPos;
+    private int _health = 5;
     #endregion
     #region Public Fields
     public Action<GameObject> PlayerDetectedAction;
@@ -131,7 +132,20 @@ public class E1 : MonoBehaviour
     {   
         _hitGlowE1.MakeGlowHitOff();
     }
+    public bool IsDead(int nHitsReceived)
+    {   
+        return nHitsReceived >= _health;
+    } 
 
+    public void HideSkin()
+    {   
+        _animatorE1.HideSkin();
+    } 
+
+    public void ShowSkin()
+    {   
+        _animatorE1.ShowSkin();
+    } 
     
 
     /* public int SetNHits(int nHits)

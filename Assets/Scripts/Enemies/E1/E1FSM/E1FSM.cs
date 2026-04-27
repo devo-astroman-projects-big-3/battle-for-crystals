@@ -6,7 +6,9 @@ public class DepsE1FSM
     public int id;
     public E1 e1;
     public E1FSM fsm;
-    public SetTimeoutUtility preattackTimeout;    
+    public SetTimeoutUtility preattackTimeout;
+    public SetTimeoutUtility prerestartTimeout;
+    public SetTimeoutUtility extraTimeout;
 }
 
 public class E1FSM : AbstractFiniteStateMachine
@@ -21,6 +23,7 @@ public class E1FSM : AbstractFiniteStateMachine
         ATTACK_STATE,
         RECEIVE_HIT_STATE,
         DIE_STATE,
+        RESTART_STATE,
     }
 
     public DepsE1FSM deps = new DepsE1FSM
@@ -28,7 +31,9 @@ public class E1FSM : AbstractFiniteStateMachine
         id = 0,
         e1 = null,
         fsm = null,
-        preattackTimeout = null,        
+        preattackTimeout = null,
+        prerestartTimeout = null,
+        extraTimeout = null,
     };
 
     private void Awake()
@@ -37,6 +42,8 @@ public class E1FSM : AbstractFiniteStateMachine
         deps.e1 = _e1;
         deps.fsm = this;
         deps.preattackTimeout = new SetTimeoutUtility(this);
+        deps.prerestartTimeout = new SetTimeoutUtility(this);
+        deps.extraTimeout = new SetTimeoutUtility(this);
         
 
         E1HideState e1Hide = AbstractState.Create<E1HideState, E1States>(E1States.HIDE_STATE, this);
@@ -54,13 +61,14 @@ public class E1FSM : AbstractFiniteStateMachine
         E1DieState e1Die = AbstractState.Create<E1DieState, E1States>(E1States.DIE_STATE, this);
         e1Die.Setup(ref deps);
 
-        Init(E1States.HIDE_STATE, e1Hide, e1Show, e1Attack, e1ReceiveHit, e1Die);
+        E1RestartState e1Restart = AbstractState.Create<E1RestartState, E1States>(E1States.RESTART_STATE, this);
+        e1Restart.Setup(ref deps);
+
+        Init(E1States.HIDE_STATE, e1Hide, e1Show, e1Attack, e1ReceiveHit, e1Die,e1Restart);
 
         _stateNetworkE1.FsmChangedAction += HandleFsmChanged;
         _stateNetworkE1.LookAtChangedAction += HandleLookAtChanged;
         _stateNetworkE1.NHitsReceivedChangedAction += HandleNHitsReceivedChanged;
-
-        
 
     }
 
@@ -101,6 +109,12 @@ public class E1FSM : AbstractFiniteStateMachine
         TransitionToState(E1States.DIE_STATE);
     }
 
+    public void GoRestart()
+    {
+        //_stateNetworkE1.RequestChangeFsm(5);
+        TransitionToState(E1States.RESTART_STATE);
+    }
+
     //Network calls
     public void GoShowNetwork()
     {
@@ -132,6 +146,12 @@ public class E1FSM : AbstractFiniteStateMachine
         //TransitionToState(E1States.DIE_STATE);
     }
 
+    public void GoRestartNetwork()
+    {
+        _stateNetworkE1.ChangeFsmState(5);
+        //TransitionToState(E1States.RESTART_STATE);
+    }
+
     public void SetLookAtNetwork(Vector3 lookAtPos)
     {
         _stateNetworkE1.ChangeLookAtState(lookAtPos);
@@ -144,7 +164,19 @@ public class E1FSM : AbstractFiniteStateMachine
         //TransitionToState(E1States.DIE_STATE);
     }
 
+    public void ResetHitNetwork()
+    {
+        _stateNetworkE1.RequestResetNHits();
+        //TransitionToState(E1States.DIE_STATE);
+    }
 
+
+    
+
+    public int GetNHitsReceived()
+    {
+        return _stateNetworkE1.GetNHitsReceived();        
+    }
 
     //
 
@@ -169,6 +201,10 @@ public class E1FSM : AbstractFiniteStateMachine
         }else if (newState == 4)
         {
             GoDie();
+        
+        }else if (newState == 5)
+        {
+            GoRestart();
         }
     }
 
@@ -180,9 +216,18 @@ public class E1FSM : AbstractFiniteStateMachine
 
     private void HandleNHitsReceivedChanged(int nHits)
     {   
+        Debug.Log("nHits " + nHits);
+        if(nHits > 0)
+        {
+            GoReceiveHitNetwork();
+        }
+        else
+        {
+            GoRestartNetwork();
+        }
+
         //check health if > 0 go receive hit
         //_e1.ReceiveDamage();
-        GoReceiveHitNetwork();
         //check health if == 0 go die
     }
 

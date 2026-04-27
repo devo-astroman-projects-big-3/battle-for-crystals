@@ -12,7 +12,7 @@ public class E1ReceiveHitState : AbstractState
 
     public override void OnEnter()
     {
-        /* Debug.Log("ReceiveHitState - OnEnter"); */
+        Debug.Log("ReceiveHitState - OnEnter");
         _dependencies.e1.ReceiveHitAnimationEndsAction += HandleReceiveHitAnimationEnds;
         _dependencies.e1.ReceiveDamage();
         _dependencies.e1.ShowHitFlickerGlow();
@@ -28,20 +28,16 @@ public class E1ReceiveHitState : AbstractState
 
     private void HandleReceiveHitAnimationEnds()
     {        
-        _dependencies.fsm.GoShowNetwork();
-
-        /* if(_dependencies.e1.GetLife() > 0)
+        
+        int nHitsReceived = _dependencies.fsm.GetNHitsReceived();
+        if (_dependencies.e1.IsDead(nHitsReceived))
         {
-            //_dependencies.fsm.GoShow();
-            _dependencies.fsm.GoShowNetwork();
+            _dependencies.fsm.GoDieNetwork();
         }
         else
         {
-            _dependencies.e1.Die();
-            //_dependencies.fsm.GoDie();
-            _dependencies.fsm.GoDieNetwork();
-        } */
-        
+            _dependencies.fsm.GoShowNetwork();
+        }
 
     }
 }

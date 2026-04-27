@@ -11,11 +11,18 @@ public class E1DieState : AbstractState
 
     public override void OnEnter()
     {
-        /* Debug.Log("DieState - OnEnter"); */
+        Debug.Log("DieState - OnEnter");
+        _dependencies.prerestartTimeout.Reset();
+
+        _dependencies.e1.HideSkin();
+        _dependencies.prerestartTimeout.SetTimeout(() =>
+        {
+            _dependencies.fsm.ResetHitNetwork();
+        },5f);
     }
 
     public override void OnExit()
     {
-        /* Debug.Log("DieState - OnExit"); */
+        _dependencies.prerestartTimeout.Pause();
     }
 }
