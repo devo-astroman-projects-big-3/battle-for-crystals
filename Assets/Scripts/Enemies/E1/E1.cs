@@ -12,6 +12,7 @@ public class E1 : MonoBehaviour
     [SerializeField] private Transform _muzzle;
     [SerializeField] private EObjectCollider _eObjectCollider;
     [SerializeField] private HealthE1 _healthE1;
+    [SerializeField] private HitGlowE1 _hitGlowE1;
     //[SerializeField] private LookAtNetwork _lookAtNetwork;
 
     
@@ -120,6 +121,18 @@ public class E1 : MonoBehaviour
     {   
         Debug.Log("E1 Die");
     }
+
+    public void ShowHitFlickerGlow()
+    {   
+        _hitGlowE1.MakeGlowHitOn();
+    }
+
+    public void StopHitFlickerGlow()
+    {   
+        _hitGlowE1.MakeGlowHitOff();
+    }
+
+    
 
     /* public int SetNHits(int nHits)
     {   

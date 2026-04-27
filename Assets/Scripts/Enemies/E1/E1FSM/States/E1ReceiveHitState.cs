@@ -15,6 +15,7 @@ public class E1ReceiveHitState : AbstractState
         /* Debug.Log("ReceiveHitState - OnEnter"); */
         _dependencies.e1.ReceiveHitAnimationEndsAction += HandleReceiveHitAnimationEnds;
         _dependencies.e1.ReceiveDamage();
+        _dependencies.e1.ShowHitFlickerGlow();
     }
 
 
@@ -22,6 +23,7 @@ public class E1ReceiveHitState : AbstractState
     {
         /* Debug.Log("ReceiveHitState - OnExit"); */
         _dependencies.e1.ReceiveHitAnimationEndsAction -= HandleReceiveHitAnimationEnds;
+        _dependencies.e1.StopHitFlickerGlow();
     }
 
     private void HandleReceiveHitAnimationEnds()
