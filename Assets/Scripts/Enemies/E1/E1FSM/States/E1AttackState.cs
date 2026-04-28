@@ -46,6 +46,7 @@ public class E1AttackState : AbstractState
 
     private void HandlePlayerUndetected()
     {
+        Debug.Log("NO PLAYER ANY MORE");
         _dependencies.e1.SetTarget(null);
     }
 

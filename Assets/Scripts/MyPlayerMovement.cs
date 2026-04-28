@@ -13,6 +13,8 @@ public class MyPlayerMovement : NetworkBehaviour
     private float _coyoteTimeCounter;
     private float _jumpBufferCounter;
 
+    private bool _inputsBlocked = false;
+
     public Camera Camera;
 
     public Action JustSpawnAction;
@@ -38,13 +40,14 @@ public class MyPlayerMovement : NetworkBehaviour
     private void Awake()
     {
         _controller = GetComponent<CharacterController>();
+
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
     private void Update()
     {
-        if (!HasStateAuthority)
+        if (!HasStateAuthority || _inputsBlocked)
             return;
 
         if (Input.GetButtonDown("Jump"))
@@ -61,7 +64,7 @@ public class MyPlayerMovement : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        if (!HasStateAuthority)
+        if (!HasStateAuthority || _inputsBlocked)
             return;
 
         if (_firePressed)
@@ -97,22 +100,34 @@ public class MyPlayerMovement : NetworkBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
 
-        Transform camRoot = _cameraPivotController != null ? _cameraPivotController.CameraRoot : null;
+        Transform camRoot = _cameraPivotController != null
+            ? _cameraPivotController.CameraRoot
+            : null;
 
-        Vector3 forward = camRoot != null ? camRoot.forward : transform.forward;
-        Vector3 right = camRoot != null ? camRoot.right : transform.right;
+        Vector3 forward = camRoot != null
+            ? camRoot.forward
+            : transform.forward;
+
+        Vector3 right = camRoot != null
+            ? camRoot.right
+            : transform.right;
 
         forward.y = 0f;
         right.y = 0f;
+
         forward.Normalize();
         right.Normalize();
 
-        Vector3 moveDirection = (forward * vertical + right * horizontal).normalized;
-        Vector3 move = moveDirection * PlayerSpeed * Runner.DeltaTime;
+        Vector3 moveDirection =
+            (forward * vertical + right * horizontal).normalized;
+
+        Vector3 move =
+            moveDirection * PlayerSpeed * Runner.DeltaTime;
 
         if (_jumpBufferCounter > 0f && _coyoteTimeCounter > 0f)
         {
             _velocity.y = JumpForce;
+
             _jumpBufferCounter = 0f;
             _coyoteTimeCounter = 0f;
             _jumpPressed = false;
@@ -124,7 +139,9 @@ public class MyPlayerMovement : NetworkBehaviour
 
         if (moveDirection.sqrMagnitude > 0.0001f)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
+            Quaternion targetRotation =
+                Quaternion.LookRotation(moveDirection);
+
             transform.rotation = Quaternion.Slerp(
                 transform.rotation,
                 targetRotation,
@@ -142,7 +159,10 @@ public class MyPlayerMovement : NetworkBehaviour
 
         Camera = Camera.main;
 
-        CameraManager cameraManager = Camera != null ? Camera.GetComponent<CameraManager>() : null;
+        CameraManager cameraManager =
+            Camera != null
+            ? Camera.GetComponent<CameraManager>()
+            : null;
 
         if (cameraManager != null && _cameraPivotController != null)
         {
@@ -154,4 +174,38 @@ public class MyPlayerMovement : NetworkBehaviour
 
         JustSpawnAction?.Invoke();
     }
+
+    #region Input Control Methods
+
+    public void BlockInputs()
+    {
+        if (!HasStateAuthority)
+            return;
+
+        _inputsBlocked = true;
+
+        _jumpPressed = false;
+        _firePressed = false;
+
+        _jumpBufferCounter = 0f;
+        _coyoteTimeCounter = 0f;
+
+        _velocity = Vector3.zero;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
+
+    public void UnblockInputs()
+    {
+        if (!HasStateAuthority)
+            return;
+
+        _inputsBlocked = false;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    #endregion
 }

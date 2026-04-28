@@ -6,7 +6,8 @@ public class MainHeroPlayerCharacter : MonoBehaviour
     [SerializeField] ThirdPersonAim _thirdPersonAim;
     [SerializeField] FireShoot _fireShoot;
     [SerializeField] HeroHealth _heroHealth;
-
+    [SerializeField] HeroHitGlow _heroHitGlow;
+    [SerializeField] HeroDead _heroDead;
     
     #endregion
 
@@ -29,12 +30,26 @@ public class MainHeroPlayerCharacter : MonoBehaviour
 
    public void ReceiveDamage(int damageValue)
     {
-       _heroHealth.DecreaseLife(1);
-
-      if(_heroHealth.Life == 0)
+      if(_heroHealth.Life > 0)
       {
-         Debug.Log("Hero Dead");
+         _heroHealth.DecreaseLife(1);
+
+         _heroHitGlow.MakeGlowHitOn();
+         if(_heroHealth.Life == 0)
+         {
+            Debug.Log(">>>>>>>Hero Dead");
+            gameObject.layer = LayerMask.NameToLayer("DeadPlayer");
+            gameObject.tag = "DeadPlayer";
+            _heroDead.DeadDelay(2);
+         }
+         else
+         {
+            Debug.Log(">>>>>>>Hero Health " + _heroHealth.Life);
+            _heroHealth.IgnoreHurtForSecs(1);
+         }
       }
+
+       
     }
     #endregion
 
