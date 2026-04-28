@@ -63,10 +63,6 @@ public class HeroMovement : NetworkBehaviour
     {
         if (!HasStateAuthority || _inputsBlocked)
             return;
-        else
-        {
-            Debug.Log("FLAAAG");
-        }
 
         if (_firePressed)
         {
@@ -99,7 +95,7 @@ public class HeroMovement : NetworkBehaviour
         }
 
         float horizontal = Input.GetAxis("Horizontal");
-        Debug.Log("HOR: " + horizontal);
+
         float vertical = Input.GetAxis("Vertical");
 
         Transform camRoot = _thirdPersonCameraPivot != null
