@@ -21,6 +21,9 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
                 Quaternion.identity
             );
 
+            /* MainHero mainHero = playerObject.GetComponent<MainHero>();
+            mainHero.ActiveCamera(); */
+
             // Set parent AFTER spawn
             if (_playerParent != null)
             {
