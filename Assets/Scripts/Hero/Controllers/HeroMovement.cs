@@ -13,8 +13,6 @@ public class HeroMovement : NetworkBehaviour
 
     private bool _inputsBlocked = false;
 
-    public Camera Camera;
-
     public Action JustSpawnAction;
 
     [Header("Movement")]
@@ -46,7 +44,7 @@ public class HeroMovement : NetworkBehaviour
 
     private void Update()
     {
-        if (!Object.HasInputAuthority || _inputsBlocked)
+        if (!HasStateAuthority || _inputsBlocked)
             return;
 
         if (Input.GetButtonDown("Jump"))
@@ -60,10 +58,15 @@ public class HeroMovement : NetworkBehaviour
         }
     }
 
+
     public override void FixedUpdateNetwork()
     {
-        if (!Object.HasInputAuthority || _inputsBlocked)
+        if (!HasStateAuthority || _inputsBlocked)
             return;
+        else
+        {
+            Debug.Log("FLAAAG");
+        }
 
         if (_firePressed)
         {
@@ -96,6 +99,7 @@ public class HeroMovement : NetworkBehaviour
         }
 
         float horizontal = Input.GetAxis("Horizontal");
+        Debug.Log("HOR: " + horizontal);
         float vertical = Input.GetAxis("Vertical");
 
         Transform camRoot = _thirdPersonCameraPivot != null
@@ -150,7 +154,7 @@ public class HeroMovement : NetworkBehaviour
 
     public override void Spawned()
     {
-        if (!Object.HasInputAuthority)
+        if (!HasStateAuthority)
             return;
 
         /* Camera = Camera.main;
@@ -175,7 +179,7 @@ public class HeroMovement : NetworkBehaviour
 
     public void BlockInputs()
     {
-        if (!Object.HasInputAuthority)
+        if (!HasStateAuthority)
             return;
 
         _inputsBlocked = true;
@@ -193,7 +197,7 @@ public class HeroMovement : NetworkBehaviour
 
     public void UnblockInputs()
     {
-        if (!Object.HasInputAuthority)
+        if (!HasStateAuthority)
             return;
 
         _inputsBlocked = false;
