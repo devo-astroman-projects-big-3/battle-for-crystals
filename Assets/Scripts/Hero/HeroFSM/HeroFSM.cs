@@ -6,6 +6,7 @@ public class DepsHeroFSM
     public int id;
     public MainHero mainHero;
     public HeroFSM fsm;
+    public SetTimeoutUtility bornToMoveTimeout;
 }
 
 public class HeroFSM : AbstractFiniteStateMachine
@@ -26,6 +27,7 @@ public class HeroFSM : AbstractFiniteStateMachine
         id = 0,
         mainHero = null,
         fsm = null,
+        bornToMoveTimeout = null,
     };
 
     private void Awake()
@@ -33,6 +35,7 @@ public class HeroFSM : AbstractFiniteStateMachine
         deps.id = 0;
         deps.mainHero = _mainHero;
         deps.fsm = this;
+        deps.bornToMoveTimeout = new SetTimeoutUtility(this);
 
         HeroBornState heroBorn = AbstractState.Create<HeroBornState, HeroStates>(HeroStates.BORN_STATE, this);
         heroBorn.Setup(ref deps);

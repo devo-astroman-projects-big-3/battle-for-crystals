@@ -699,7 +699,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7759208735882887876
 Transform:
   m_ObjectHideFlags: 0
@@ -773,6 +773,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9123b9785c5bc1440a1dcfa5df745dfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _heroMovement: {fileID: 8064101059113127876}
 --- !u!1 &4948565728573301299
 GameObject:
   m_ObjectHideFlags: 0
@@ -1162,6 +1163,7 @@ MonoBehaviour:
   _cameraPivot: {fileID: 2318227336345843488}
   _thirdPersonAim: {fileID: 1058351391153692897}
   _heroParent: {fileID: 4606074858945325451}
+  _heroFsm: {fileID: 2908894187469440542}
 --- !u!1 &7391088156948509578
 GameObject:
   m_ObjectHideFlags: 0
