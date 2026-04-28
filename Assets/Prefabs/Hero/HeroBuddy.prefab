@@ -831,7 +831,7 @@ GameObject:
   - component: {fileID: 5821527107051034294}
   - component: {fileID: 8618042101713453388}
   m_Layer: 0
-  m_Name: HeroBuddyAll
+  m_Name: HeroBuddy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
