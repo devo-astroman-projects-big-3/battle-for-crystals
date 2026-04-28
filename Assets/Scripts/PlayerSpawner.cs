@@ -25,17 +25,11 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
             if (_playerParent != null)
             {
                 //playerObject.transform.SetParent(_playerParent);
-                playerObject.GetComponent<MainHeroPlayerCharacter>().SetCamera(_camera);
+                /* playerObject.GetComponent<MainHeroPlayerCharacter>().SetCamera(_camera);
                 playerObject.GetComponent<MainHeroPlayerCharacter>().SetBulletPool(_objectPool);
 
-                PlayerSpawwnedAction?.Invoke(playerObject.gameObject);
+                PlayerSpawwnedAction?.Invoke(playerObject.gameObject); */
             }
         }
-        else
-        {
-            
-        }
-
-
     }
 }
