@@ -12,7 +12,7 @@ public class E1ReceiveHitState : AbstractState
 
     public override void OnEnter()
     {
-        Debug.Log("ReceiveHitState - OnEnter");
+        /* Debug.Log("ReceiveHitState - OnEnter"); */
         _dependencies.e1.ReceiveHitAnimationEndsAction += HandleReceiveHitAnimationEnds;
         _dependencies.e1.ReceiveDamage();
         _dependencies.e1.ShowHitFlickerGlow();

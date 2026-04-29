@@ -12,11 +12,21 @@ public class HeroReceiveHitState : AbstractState
 
     public override void OnEnter()
     {
-        Debug.Log("ReceiveHitState - OnEnter");
+        Debug.Log("////// ReceiveHitState - OnEnter");
+
+        _dependencies.mainHero.ReceiveHitAnimationEndsAction += HandleReceiveHitAnimationEnds;
+        _dependencies.mainHero.PlayReceiveHit();
+
     }
 
     public override void OnExit()
     {
         Debug.Log("ReceiveHitState - OnExit");
+        _dependencies.mainHero.ReceiveHitAnimationEndsAction -= HandleReceiveHitAnimationEnds;
+    }
+
+    private void HandleReceiveHitAnimationEnds()
+    {
+        _dependencies.fsm.GoMoveNetwork();
     }
 }

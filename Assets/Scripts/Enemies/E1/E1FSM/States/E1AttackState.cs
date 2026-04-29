@@ -11,7 +11,7 @@ public class E1AttackState : AbstractState
 
     public override void OnEnter()
     {
-        Debug.Log("AttackState - OnEnter");
+        /* Debug.Log("AttackState - OnEnter"); */
 
         _dependencies.e1.MiddleFireEventAction += HandleMiddleFireEvent;
         _dependencies.e1.FireAnimationEndsAction += HandleFireAnimationEnds;        

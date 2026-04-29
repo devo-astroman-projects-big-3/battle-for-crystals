@@ -12,7 +12,7 @@ public class HeroMoveState : AbstractState
 
     public override void OnEnter()
     {
-        Debug.Log("MoveState - OnEnter");
+        Debug.Log("MoveState - OnEnter");        
         _dependencies.mainHero.ReceiveHitAction += HandleReceiveHit;
     }
 

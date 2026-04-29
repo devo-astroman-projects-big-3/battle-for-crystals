@@ -11,7 +11,7 @@ public class E1RestartState : AbstractState
 
     public override void OnEnter()
     {
-        Debug.Log("RestartState - OnEnter");
+        /* Debug.Log("RestartState - OnEnter"); */
         _dependencies.extraTimeout.Reset();
 
         _dependencies.e1.HideEnemy();
@@ -23,7 +23,7 @@ public class E1RestartState : AbstractState
 
     public override void OnExit()
     {
-        Debug.Log("RestartState - OnExit");
+        /* Debug.Log("RestartState - OnExit"); */
         _dependencies.e1.ShowSkin();
         _dependencies.extraTimeout.Pause();
     }

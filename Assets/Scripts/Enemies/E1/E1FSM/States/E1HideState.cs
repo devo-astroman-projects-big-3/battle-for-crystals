@@ -13,7 +13,7 @@ public class E1HideState : AbstractState
 
     public override void OnEnter()
     {
-        Debug.Log("HideState - OnEnter"); 
+        /* Debug.Log("HideState - OnEnter");  */
         _dependencies.e1.PlayerDetectedAction += HandlePlayerDetected;
         
 
@@ -21,7 +21,7 @@ public class E1HideState : AbstractState
 
     public override void OnExit()
     {
-        Debug.Log("HideState - OnExit");
+        /* Debug.Log("HideState - OnExit"); */
         _dependencies.e1.PlayerDetectedAction -= HandlePlayerDetected;
     }
 

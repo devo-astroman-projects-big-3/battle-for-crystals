@@ -7,10 +7,14 @@ public class MainHero : MonoBehaviour
     #region Fields
     [SerializeField] private HeroMovement _heroMovement;
     [SerializeField] private HeroBuddy _heroBuddy;
+    [SerializeField] AnimatorH1 _animatorH1;
     #endregion
 
     #region Public Fields
     public Action<int> ReceiveHitAction;
+    public Action ReceiveHitAnimationEndsAction;
+
+    
     #endregion
 
 
@@ -18,10 +22,13 @@ public class MainHero : MonoBehaviour
     void Start()
     {
         _heroBuddy.ReceiveHitAction += HandleReceiveHit;
+        _animatorH1.ReceiveHitAnimationEndsAction += HandleReceiveHitAnimationEnds;
+        
     }
     void OnDestroy()
     {
         _heroBuddy.ReceiveHitAction -= HandleReceiveHit;
+        _animatorH1.ReceiveHitAnimationEndsAction -= HandleReceiveHitAnimationEnds;
     }
     #endregion
 
@@ -35,11 +42,24 @@ public class MainHero : MonoBehaviour
     {
         _heroMovement.UnblockInputs();
     }
+
+    public void PlayReceiveHit()
+    {
+        _animatorH1.PlayReceiveHit();
+    }
+    
     #endregion
      #region Private Methods
     public void HandleReceiveHit(int damage)
     {
         ReceiveHitAction?.Invoke(damage);
     }
+
+    public void HandleReceiveHitAnimationEnds()
+    {
+        ReceiveHitAnimationEndsAction?.Invoke();
+    }
+
+    
     #endregion
 }

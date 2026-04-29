@@ -11,7 +11,7 @@ public class E1DieState : AbstractState
 
     public override void OnEnter()
     {
-        Debug.Log("DieState - OnEnter");
+        /* Debug.Log("DieState - OnEnter"); */
         _dependencies.prerestartTimeout.Reset();
 
         _dependencies.e1.HideSkin();
