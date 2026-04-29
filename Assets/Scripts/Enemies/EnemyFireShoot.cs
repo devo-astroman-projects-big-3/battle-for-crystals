@@ -109,8 +109,8 @@ public class EnemyFireShoot : NetworkBehaviour
                     damageableObject.TakeDamage(1);
                 } */
 
-                MainHeroPlayerCharacter mainHeroPlayerCharacter  = hit.collider.GetComponent<MainHeroPlayerCharacter>();
-                mainHeroPlayerCharacter.ReceiveDamage(1);
+                HeroBuddy heroBuddy  = hit.collider.GetComponent<HeroBuddy>();
+                heroBuddy.ReceiveDamage(1);
 
 
                 bufferData.IsAlive = false;

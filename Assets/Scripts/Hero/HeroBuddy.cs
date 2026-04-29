@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class HeroBuddy : MonoBehaviour
 {
@@ -6,7 +7,8 @@ public class HeroBuddy : MonoBehaviour
     [SerializeField] private ThirdPersonAim _thirdPersonAim;
     [SerializeField] private GameObject _heroParent;
     [SerializeField] private GameObject _heroFsm;
-    
+
+    public Action<int> ReceiveHitAction;    
 
     public void SetupParent(Transform parent)
     {
@@ -25,6 +27,11 @@ public class HeroBuddy : MonoBehaviour
     public GameObject GetCameraPivot()
     {   
         return _cameraPivot;
+    }
+
+    public void ReceiveDamage(int damage)
+    {   
+        ReceiveHitAction?.Invoke(damage);
     }
 
     

@@ -12,7 +12,7 @@ public class DepsHeroFSM
 public class HeroFSM : AbstractFiniteStateMachine
 {
     [SerializeField] private MainHero _mainHero;
-    //[SerializeField] private StateNetworkE1 _stateNetworkE1;
+    [SerializeField] private HeroStateNetwork _heroStateNetwork;
 
     public enum HeroStates
     {
@@ -50,14 +50,83 @@ public class HeroFSM : AbstractFiniteStateMachine
         heroDie.Setup(ref deps);
 
         Init(HeroStates.BORN_STATE, heroBorn, heroMove, heroReceiveHit, heroDie);
+
+        _heroStateNetwork.FsmChangedAction += HandleFsmChanged;
+
     }
 
     private void OnDestroy()
     {
+        _heroStateNetwork.FsmChangedAction -= HandleFsmChanged;
     }
 
+    public void GoMove()
+    {
+        //_stateNetworkE1.RequestChangeFsm(1);
+        TransitionToState(HeroStates.MOVE_STATE);
+    }
 
-    
+    public void GoReceiveHit()
+    {
+        //_stateNetworkE1.RequestChangeFsm(2);
+        TransitionToState(HeroStates.RECEIVE_HIT_STATE);
+    }
 
+    public void GoDie()
+    {
+        //_stateNetworkE1.RequestChangeFsm(3);
+        TransitionToState(HeroStates.DIE_STATE);
+    }
+
+    public void GoBorn()
+    {
+        //_stateNetworkE1.RequestChangeFsm(0);
+        TransitionToState(HeroStates.BORN_STATE);
+    }
+
+    //Network calls
+    public void GoMoveNetwork()
+    {
+        _heroStateNetwork.ChangeFsmState(1);
+        //TransitionToState(_heroStateNetwork.MOVE_STATE);
+    }
+
+    public void GoReceiveHitNetwork()
+    {
+        _heroStateNetwork.ChangeFsmState(2);
+        //TransitionToState(_heroStateNetwork.RECEIVE_HIT_STATE);
+    }
+
+    public void GoDieNetwork()
+    {
+        _heroStateNetwork.ChangeFsmState(3);
+        //TransitionToState(_heroStateNetwork.DIE_STATE);
+    }
+
+    public void GoBornNetwork()
+    {
+        _heroStateNetwork.ChangeFsmState(0);
+        //TransitionToState(_heroStateNetwork.BORN_STATE);
+    }
+
+    private void HandleFsmChanged(int newState)
+    {
+        if(newState == 0)
+        {
+            GoBorn();
+
+        }else if (newState == 1)
+        {
+            GoMove();
+
+        }else if (newState == 2)
+        {
+            GoReceiveHit();
+
+        }else if (newState == 3)
+        {
+            GoDie();
+        }
+    }
     
 }
