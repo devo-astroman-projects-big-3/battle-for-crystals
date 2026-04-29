@@ -87,25 +87,30 @@ public class HeroFSM : AbstractFiniteStateMachine
     //Network calls
     public void GoMoveNetwork()
     {
-        _heroStateNetwork.ChangeFsmState(1);
+        //_heroStateNetwork.ChangeFsmState(1);
+        _heroStateNetwork.RequestChangeFsmState(1);
         //TransitionToState(_heroStateNetwork.MOVE_STATE);
     }
 
     public void GoReceiveHitNetwork()
     {
-        _heroStateNetwork.ChangeFsmState(2);
+        Debug.Log("HeroBuddy ReceiveDamage3");
+        //_heroStateNetwork.ChangeFsmState(2);
+        _heroStateNetwork.RequestChangeFsmState(2);
         //TransitionToState(_heroStateNetwork.RECEIVE_HIT_STATE);
     }
 
     public void GoDieNetwork()
     {
-        _heroStateNetwork.ChangeFsmState(3);
+        //_heroStateNetwork.ChangeFsmState(3);
+        _heroStateNetwork.RequestChangeFsmState(3);
         //TransitionToState(_heroStateNetwork.DIE_STATE);
     }
 
     public void GoBornNetwork()
     {
-        _heroStateNetwork.ChangeFsmState(0);
+        //_heroStateNetwork.ChangeFsmState(0);
+        _heroStateNetwork.RequestChangeFsmState(0);
         //TransitionToState(_heroStateNetwork.BORN_STATE);
     }
 

@@ -21,17 +21,7 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
             );
 
             HeroBuddy heroBuddy = playerObject.GetComponent<HeroBuddy>();
-            heroBuddy.SetupParent(_playerParent);            
-
-            // Set parent AFTER spawn
-            if (_playerParent != null)
-            {
-                //playerObject.transform.SetParent(_playerParent);
-                /* playerObject.GetComponent<MainHeroPlayerCharacter>().SetCamera(_camera);
-                playerObject.GetComponent<MainHeroPlayerCharacter>().SetBulletPool(_objectPool);
-
-                PlayerSpawwnedAction?.Invoke(playerObject.gameObject); */
-            }
+            heroBuddy.SetupParent(_playerParent);
         }
     }
 }

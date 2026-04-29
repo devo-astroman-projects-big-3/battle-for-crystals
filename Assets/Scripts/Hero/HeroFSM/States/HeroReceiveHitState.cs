@@ -12,17 +12,21 @@ public class HeroReceiveHitState : AbstractState
 
     public override void OnEnter()
     {
-        Debug.Log("////// ReceiveHitState - OnEnter");
+        /* Debug.Log("////// ReceiveHitState - OnEnter"); */
+        _dependencies.mainHero.BlockInputs();
 
         _dependencies.mainHero.ReceiveHitAnimationEndsAction += HandleReceiveHitAnimationEnds;
         _dependencies.mainHero.PlayReceiveHit();
+        _dependencies.mainHero.ShowHitFlickerGlow();
 
     }
 
     public override void OnExit()
     {
-        Debug.Log("ReceiveHitState - OnExit");
+        /* Debug.Log("ReceiveHitState - OnExit"); */
         _dependencies.mainHero.ReceiveHitAnimationEndsAction -= HandleReceiveHitAnimationEnds;
+        _dependencies.mainHero.UnblockInputs();
+        _dependencies.mainHero.StopHitFlickerGlow();
     }
 
     private void HandleReceiveHitAnimationEnds()

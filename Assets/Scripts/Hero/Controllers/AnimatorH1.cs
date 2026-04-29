@@ -35,7 +35,11 @@ public class AnimatorH1 : NetworkBehaviour
     public void PlayReceiveHit()
     {
         if (!Object.HasStateAuthority)
-            return;
+        {
+            Debug.Log("No authority");
+            return; 
+        }
+            
 
         _networkMecanimAnimator.SetTrigger("ReceiveHit");
     }

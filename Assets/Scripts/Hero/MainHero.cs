@@ -8,6 +8,7 @@ public class MainHero : MonoBehaviour
     [SerializeField] private HeroMovement _heroMovement;
     [SerializeField] private HeroBuddy _heroBuddy;
     [SerializeField] AnimatorH1 _animatorH1;
+    [SerializeField] HitGlowE1 _hitGlowE1;
     #endregion
 
     #region Public Fields
@@ -58,6 +59,16 @@ public class MainHero : MonoBehaviour
     public void HandleReceiveHitAnimationEnds()
     {
         ReceiveHitAnimationEndsAction?.Invoke();
+    }
+
+    public void ShowHitFlickerGlow()
+    {   
+        _hitGlowE1.MakeGlowHitOn();
+    }
+
+    public void StopHitFlickerGlow()
+    {   
+        _hitGlowE1.MakeGlowHitOff();
     }
 
     

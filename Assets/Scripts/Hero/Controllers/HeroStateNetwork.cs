@@ -9,12 +9,6 @@ public class HeroStateNetwork : NetworkBehaviour
     public event Action<int> FsmChangedAction;
 
 
-
-/*     [Networked, OnChangedRender(nameof(OnLookAtStateChanged))]
-    private Vector3 LookAtState { get; set; }
-    public event Action<Vector3> LookAtChangedAction; */
-
-
     [Networked, OnChangedRender(nameof(OnNHitsReceivedChanged))] private int NHitsReceived { get; set; }
     public event Action<int> NHitsReceivedChangedAction;
 
@@ -25,10 +19,18 @@ public class HeroStateNetwork : NetworkBehaviour
         NHitsReceived = 0;
     }
 
-    public void ChangeFsmState(int newState)
+    public void RequestChangeFsmState(int newState)
     {
-        if (Object == null || !Object.HasStateAuthority)            
+        if (Object == null)
             return;
+
+        RPC_ChangeFsmState(newState);
+    }
+
+    [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
+    private void RPC_ChangeFsmState(int newState)
+    {
+        Debug.Log($"State changed on authority {Object.InputAuthority}");
 
         FsmState = newState;
     }
@@ -42,19 +44,6 @@ public class HeroStateNetwork : NetworkBehaviour
     {        
         FsmChangedAction?.Invoke(FsmState);
     }
-
-/*     public void ChangeLookAtState(Vector3 newLookAt)
-    {
-        if (Object == null || !Object.HasStateAuthority)
-            return;
-
-        LookAtState = newLookAt;
-    }
-
-    private void OnLookAtStateChanged()
-    {
-        LookAtChangedAction?.Invoke(LookAtState);
-    } */
 
 
     public void RequestReceiveHit()

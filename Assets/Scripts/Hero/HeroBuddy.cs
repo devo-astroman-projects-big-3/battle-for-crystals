@@ -7,6 +7,7 @@ public class HeroBuddy : MonoBehaviour
     [SerializeField] private ThirdPersonAim _thirdPersonAim;
     [SerializeField] private GameObject _heroParent;
     [SerializeField] private GameObject _heroFsm;
+    [SerializeField] private GameObject _cameras;
 
     public Action<int> ReceiveHitAction;    
 
@@ -15,8 +16,7 @@ public class HeroBuddy : MonoBehaviour
         _heroParent.transform.parent = parent;
         _heroFsm.transform.parent = parent;
         transform.parent = _heroParent.transform;
-        _heroParent.SetActive(true);
-        _heroFsm.SetActive(true);
+        _cameras.SetActive(true);
     }
 
     public void SetupMainCamera(Camera mainCamera)
