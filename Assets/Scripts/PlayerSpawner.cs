@@ -29,25 +29,21 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
             
             HeroBuddy heroBuddy = playerObject.GetComponent<HeroBuddy>();
             
-            Vector3 bornPosition = GetSpawnPosition(player);
+            Vector3 bornPosition = GetSpawnPosition();
             heroBuddy.SetupBornPosition(bornPosition);
-
-            heroBuddy.SetupParent(_playerParent);
-            
+            heroBuddy.SetupParent(_playerParent);            
         }
     }
-    private Vector3 GetSpawnPosition(PlayerRef player)
+    private Vector3 GetSpawnPosition()
     {
-        int index = 0;
+        int playerCount = 0;
 
-        foreach (PlayerRef activePlayer in Runner.ActivePlayers)
+        foreach (PlayerRef p in Runner.ActivePlayers)
         {
-            if (activePlayer == player)
-                break;
-
-            index++;
+            playerCount++;
         }
 
+        int index = playerCount - 1;
         index = Mathf.Clamp(index, 0, _spawnPositions.Length - 1);
 
         return _spawnPositions[index].position;
