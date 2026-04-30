@@ -13,6 +13,7 @@ public class HeroBornState : AbstractState
     public override void OnEnter()
     {
         Debug.Log("BornState - OnEnter");
+        _dependencies.mainHero.PlaceAtCheckpoint();
         _dependencies.mainHero.BlockInputs();
         _dependencies.bornToMoveTimeout.Reset();
 

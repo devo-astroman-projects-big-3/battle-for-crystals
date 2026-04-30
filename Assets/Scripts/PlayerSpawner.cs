@@ -17,7 +17,8 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
             NetworkObject playerObject = Runner.Spawn(
                 PlayerPrefab,
                 new Vector3(0, 0, 0),
-                Quaternion.identity
+                Quaternion.identity,
+                player
             );
 
             HeroBuddy heroBuddy = playerObject.GetComponent<HeroBuddy>();

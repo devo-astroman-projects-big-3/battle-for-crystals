@@ -35,7 +35,6 @@ public class PlayerRadarE1 : MonoBehaviour
 
     private void HandleUndetectedAction()
     {
-        Debug.Log("PLAYER UNDETECTED _____ RADAR");
         PlayerUndetectedAction?.Invoke();
     }
     

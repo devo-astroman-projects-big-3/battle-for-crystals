@@ -9,13 +9,16 @@ public class MainHero : MonoBehaviour
     [SerializeField] private HeroBuddy _heroBuddy;
     [SerializeField] AnimatorH1 _animatorH1;
     [SerializeField] HitGlowE1 _hitGlowE1;
+    [SerializeField] HeroDead _heroDead;    
+    #endregion
+    #region Private Fields
+    private int _health = 5;
+    private Transform _lastCheckpoint;
     #endregion
 
     #region Public Fields
     public Action<int> ReceiveHitAction;
     public Action ReceiveHitAnimationEndsAction;
-
-    
     #endregion
 
 
@@ -24,7 +27,6 @@ public class MainHero : MonoBehaviour
     {
         _heroBuddy.ReceiveHitAction += HandleReceiveHit;
         _animatorH1.ReceiveHitAnimationEndsAction += HandleReceiveHitAnimationEnds;
-        
     }
     void OnDestroy()
     {
@@ -48,9 +50,18 @@ public class MainHero : MonoBehaviour
     {
         _animatorH1.PlayReceiveHit();
     }
-    
+
+    public int GetHealth()
+    {
+        return _health;
+    }
+
+    public void ApplyDead()
+    {
+        _heroDead.ApplyDead();
+    }    
     #endregion
-     #region Private Methods
+    #region Private Methods
     public void HandleReceiveHit(int damage)
     {
         ReceiveHitAction?.Invoke(damage);
@@ -71,6 +82,23 @@ public class MainHero : MonoBehaviour
         _hitGlowE1.MakeGlowHitOff();
     }
 
-    
+    public void HideSkin()
+    {   
+        _animatorH1.HideSkin();
+    }
+    public void ShowSkin()
+    {   
+        _animatorH1.ShowSkin();
+    }
+
+    public void PlaceAtCheckpoint()
+    {
+        //_heroBuddy.PlaceAtPoint(_lastCheckpoint.position);
+    }
+
+    public void SetLastCheckpoint(Transform newCheckpoint)
+    {
+        _lastCheckpoint = newCheckpoint;
+    }
     #endregion
 }

@@ -7,6 +7,7 @@ public class DepsHeroFSM
     public MainHero mainHero;
     public HeroFSM fsm;
     public SetTimeoutUtility bornToMoveTimeout;
+    public SetTimeoutUtility deadTimeout;
 }
 
 public class HeroFSM : AbstractFiniteStateMachine
@@ -36,6 +37,7 @@ public class HeroFSM : AbstractFiniteStateMachine
         deps.mainHero = _mainHero;
         deps.fsm = this;
         deps.bornToMoveTimeout = new SetTimeoutUtility(this);
+        deps.deadTimeout = new SetTimeoutUtility(this);        
 
         HeroBornState heroBorn = AbstractState.Create<HeroBornState, HeroStates>(HeroStates.BORN_STATE, this);
         heroBorn.Setup(ref deps);
@@ -112,6 +114,27 @@ public class HeroFSM : AbstractFiniteStateMachine
         //_heroStateNetwork.ChangeFsmState(0);
         _heroStateNetwork.RequestChangeFsmState(0);
         //TransitionToState(_heroStateNetwork.BORN_STATE);
+    }
+
+    public void NotifyReceiveHitNetwork()
+    {
+        _heroStateNetwork.RequestReceiveHit();
+        //TransitionToState(E1States.DIE_STATE);
+    }
+
+    public void ResetHitNetwork()
+    {
+        _heroStateNetwork.RequestResetNHits();
+        //TransitionToState(E1States.DIE_STATE);
+    }
+
+    public bool IsDead()
+    {
+        int nHitsReceived = _heroStateNetwork.GetNHitsReceived();
+
+        return nHitsReceived >= _mainHero.GetHealth();
+        //_heroStateNetwork.RequestResetNHits();
+        //TransitionToState(E1States.DIE_STATE);
     }
 
     private void HandleFsmChanged(int newState)

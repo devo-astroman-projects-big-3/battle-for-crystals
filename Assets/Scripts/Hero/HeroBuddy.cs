@@ -34,5 +34,10 @@ public class HeroBuddy : MonoBehaviour
         ReceiveHitAction?.Invoke(damage);
     }
 
+    public void PlaceAtPoint(Vector3 point)
+    {   
+        gameObject.transform.position = point;
+    }
+
     
 }

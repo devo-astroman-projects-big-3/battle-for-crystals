@@ -23,6 +23,12 @@ public class HeroDead : MonoBehaviour
 
         _deadRoutine = StartCoroutine(DeadDelayRoutine(secs));
     }
+
+    public void ApplyDead(){
+        _heroSkin.HideSkin();
+        _myPlayerMovement.BlockInputs();
+
+    }
     #endregion
 
     #region Private Methods
@@ -34,10 +40,6 @@ public class HeroDead : MonoBehaviour
         _deadRoutine = null;
     }
 
-    private void ApplyDead(){
-        _heroSkin.HideSkin();
-        _myPlayerMovement.BlockInputs();
 
-    }
     #endregion
 }

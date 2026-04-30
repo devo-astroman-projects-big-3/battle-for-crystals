@@ -18,6 +18,7 @@ public class HeroReceiveHitState : AbstractState
         _dependencies.mainHero.ReceiveHitAnimationEndsAction += HandleReceiveHitAnimationEnds;
         _dependencies.mainHero.PlayReceiveHit();
         _dependencies.mainHero.ShowHitFlickerGlow();
+        _dependencies.fsm.NotifyReceiveHitNetwork();
 
     }
 
@@ -31,6 +32,17 @@ public class HeroReceiveHitState : AbstractState
 
     private void HandleReceiveHitAnimationEnds()
     {
-        _dependencies.fsm.GoMoveNetwork();
+
+        if (_dependencies.fsm.IsDead())
+        {
+            _dependencies.fsm.GoDieNetwork();
+        }
+        else
+        {
+            _dependencies.fsm.GoMoveNetwork();
+        }
+
+        //NHitsReceivedChangedAction
+        
     }
 }

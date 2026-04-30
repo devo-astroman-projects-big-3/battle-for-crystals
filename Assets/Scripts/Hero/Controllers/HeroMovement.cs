@@ -44,7 +44,7 @@ public class HeroMovement : NetworkBehaviour
 
     private void Update()
     {
-        if (!HasStateAuthority || _inputsBlocked)
+        if (!Object.HasInputAuthority || _inputsBlocked)
             return;
 
         if (Input.GetButtonDown("Jump"))
@@ -61,7 +61,7 @@ public class HeroMovement : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        if (!HasStateAuthority || _inputsBlocked)
+        if (!Object.HasInputAuthority || _inputsBlocked)
             return;
 
         if (_firePressed)
@@ -150,7 +150,7 @@ public class HeroMovement : NetworkBehaviour
 
     public override void Spawned()
     {
-        if (!HasStateAuthority)
+        if (!Object.HasInputAuthority)
             return;
 
         /* Camera = Camera.main;
@@ -175,7 +175,7 @@ public class HeroMovement : NetworkBehaviour
 
     public void BlockInputs()
     {
-        if (!HasStateAuthority)
+        if (!Object.HasInputAuthority)
             return;
 
         _inputsBlocked = true;
@@ -193,7 +193,7 @@ public class HeroMovement : NetworkBehaviour
 
     public void UnblockInputs()
     {
-        if (!HasStateAuthority)
+        if (!Object.HasInputAuthority)
             return;
 
         _inputsBlocked = false;

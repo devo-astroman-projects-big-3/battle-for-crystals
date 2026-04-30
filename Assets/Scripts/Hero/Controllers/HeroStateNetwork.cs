@@ -30,7 +30,7 @@ public class HeroStateNetwork : NetworkBehaviour
     [Rpc(RpcSources.All, RpcTargets.StateAuthority)]
     private void RPC_ChangeFsmState(int newState)
     {
-        Debug.Log($"State changed on authority {Object.InputAuthority}");
+        //Debug.Log($"State changed on authority {Object.InputAuthority}");
 
         FsmState = newState;
     }
