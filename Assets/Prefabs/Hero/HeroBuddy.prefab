@@ -186,6 +186,8 @@ MonoBehaviour:
   _heroBuddy: {fileID: 971524179792758106}
   _animatorH1: {fileID: 6777363380278293011}
   _hitGlowE1: {fileID: 8219586537387861351}
+  _heroDead: {fileID: 0}
+  _heroTeleporter: {fileID: 966876218066941223}
 --- !u!1 &1559049284844139794
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,6 +224,7 @@ Transform:
   - {fileID: 7290760351453359017}
   - {fileID: 1626272264987722556}
   - {fileID: 6916071030134954916}
+  - {fileID: 8213866125172127350}
   m_Father: {fileID: 7469519978792568448}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1611638685159047462
@@ -572,6 +575,51 @@ MonoBehaviour:
   - {fileID: 2645719214617712644}
   - {fileID: 4226667423679839041}
   - {fileID: 4170634167235879934}
+--- !u!1 &4290591964346705815
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8213866125172127350}
+  - component: {fileID: 966876218066941223}
+  m_Layer: 0
+  m_Name: HeroTeleporter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8213866125172127350
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4290591964346705815}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5543957146820381615}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &966876218066941223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4290591964346705815}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fbc36811c079674e8496d330e4c32d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _controller: {fileID: 2126202121706796504}
 --- !u!1 &4543199061258956367
 GameObject:
   m_ObjectHideFlags: 0
@@ -1021,7 +1069,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5210820338912843709
 Transform:
   m_ObjectHideFlags: 0
@@ -1511,6 +1559,7 @@ MonoBehaviour:
   - {fileID: 5148624302561077776}
   - {fileID: 6844538821519704010}
   - {fileID: 6777363380278293011}
+  - {fileID: 966876218066941223}
   ForceRemoteRenderTimeframe: 0
 --- !u!114 &9122134479679890671
 MonoBehaviour:

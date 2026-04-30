@@ -13,15 +13,22 @@ public class HeroBuddy : MonoBehaviour
 
     public void SetupParent(Transform parent)
     {
-        _heroParent.transform.parent = parent;
-        _heroFsm.transform.parent = parent;
-        transform.parent = _heroParent.transform;
+        _heroParent.transform.SetParent(parent);
+        _heroFsm.transform.SetParent(parent);
+        transform.SetParent(_heroParent.transform);
+
         _cameras.SetActive(true);
+        _heroFsm.SetActive(true);
     }
 
     public void SetupMainCamera(Camera mainCamera)
     {
         _thirdPersonAim.SetCamera(mainCamera);
+    }
+
+    public void SetupBornPosition(Vector3 position)
+    {
+        _heroParent.GetComponent<MainHero>().SetLastCheckpoint(position);
     }
 
     public GameObject GetCameraPivot()
@@ -36,7 +43,9 @@ public class HeroBuddy : MonoBehaviour
 
     public void PlaceAtPoint(Vector3 point)
     {   
-        gameObject.transform.position = point;
+        //gameObject.transform.position = point;
+
+        //gameObject.transform.position = new Vector3(5,5,5);
     }
 
     

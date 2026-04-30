@@ -17,6 +17,7 @@ public class HeroFSM : AbstractFiniteStateMachine
 
     public enum HeroStates
     {
+        //FIRST_BORN_STATE,
         BORN_STATE,
         MOVE_STATE,
         RECEIVE_HIT_STATE,
@@ -39,6 +40,9 @@ public class HeroFSM : AbstractFiniteStateMachine
         deps.bornToMoveTimeout = new SetTimeoutUtility(this);
         deps.deadTimeout = new SetTimeoutUtility(this);        
 
+       /*  HeroFirstBornState heroFirstBorn = AbstractState.Create<HeroFirstBornState, HeroStates>(HeroStates.FIRST_BORN_STATE, this);
+        heroFirstBorn.Setup(ref deps); */
+
         HeroBornState heroBorn = AbstractState.Create<HeroBornState, HeroStates>(HeroStates.BORN_STATE, this);
         heroBorn.Setup(ref deps);
 
@@ -51,6 +55,7 @@ public class HeroFSM : AbstractFiniteStateMachine
         HeroDieState heroDie = AbstractState.Create<HeroDieState, HeroStates>(HeroStates.DIE_STATE, this);
         heroDie.Setup(ref deps);
 
+        //Init(HeroStates.FIRST_BORN_STATE, heroFirstBorn,heroBorn, heroMove, heroReceiveHit, heroDie);
         Init(HeroStates.BORN_STATE, heroBorn, heroMove, heroReceiveHit, heroDie);
 
         _heroStateNetwork.FsmChangedAction += HandleFsmChanged;

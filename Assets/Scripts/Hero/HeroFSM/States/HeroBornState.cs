@@ -19,7 +19,6 @@ public class HeroBornState : AbstractState
 
         _dependencies.bornToMoveTimeout.SetTimeout(() =>
         {
-            Debug.Log("Should go to move");
             _dependencies.fsm.GoMoveNetwork();
         }, 2f);
     }
