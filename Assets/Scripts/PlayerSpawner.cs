@@ -31,7 +31,7 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
             
             Vector3 bornPosition = GetSpawnPosition();
             heroBuddy.SetupBornPosition(bornPosition);
-            heroBuddy.SetupParent(_playerParent);            
+            heroBuddy.SetupParent(_playerParent);
         }
     }
     private Vector3 GetSpawnPosition()

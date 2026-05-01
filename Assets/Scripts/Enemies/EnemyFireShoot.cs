@@ -81,6 +81,9 @@ public class EnemyFireShoot : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
+         if (!Object.HasStateAuthority)
+            return;
+
         for (int i = 0; i < _totalFiredCount; i++)
         {
             var entryIndex = i % _projectilesBuffer.Length;
@@ -103,21 +106,25 @@ public class EnemyFireShoot : NetworkBehaviour
                     moveDirection.magnitude,
                     targetLayer))
             {
-                /* var damageableObject = hit.collider.GetComponentInParent<IDamageable>();
-                if (damageableObject != null)
+                Debug.Log($"Flag0 hit {hit.collider.name} layer {LayerMask.LayerToName(hit.collider.gameObject.layer)}");
+
+                HeroBuddy heroBuddy = hit.collider.GetComponentInParent<HeroBuddy>();
+
+                if (heroBuddy != null)
                 {
-                    damageableObject.TakeDamage(1);
-                } */
-
-                HeroBuddy heroBuddy  = hit.collider.GetComponent<HeroBuddy>();
-                heroBuddy.ReceiveDamage(1);
-
+                    heroBuddy.ReceiveDamage(1);
+                }
+                else
+                {
+                    Debug.LogWarning("Hit object has no HeroBuddy in parent.");
+                }
 
                 bufferData.IsAlive = false;
                 _projectilesBuffer.Set(entryIndex, bufferData);
             }
             else if ((Runner.Tick - bufferData.FireTick) * Runner.DeltaTime > lifeTime)
             {
+
                 bufferData.IsAlive = false;
                 _projectilesBuffer.Set(entryIndex, bufferData);
             }
@@ -132,7 +139,7 @@ public class EnemyFireShoot : NetworkBehaviour
             return;
         }
 
-        var renderTime = HasStateAuthority
+        var renderTime = Object.HasInputAuthority
             ? Runner.LocalRenderTime
             : Runner.RemoteRenderTime;
 

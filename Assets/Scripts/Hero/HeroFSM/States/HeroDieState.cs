@@ -14,8 +14,11 @@ public class HeroDieState : AbstractState
         Debug.Log("DieState - OnEnter");
         _dependencies.deadTimeout.Reset();
 
-        //_dependencies.mainHero.BlockInputs();
-        _dependencies.mainHero.ApplyDead();
+        _dependencies.mainHero.BlockInputs();
+        //_dependencies.mainHero.ApplyDead();
+        _dependencies.mainHero.HideSkin();
+        _dependencies.mainHero.DisableCollider();
+        _dependencies.mainHero.ChangeTagAndLayerToDead();
 
         //_dependencies.h1.HideSkin();
         _dependencies.deadTimeout.SetTimeout(() =>
@@ -28,7 +31,9 @@ public class HeroDieState : AbstractState
     public override void OnExit()
     {
         Debug.Log("DieState - OnExit");
+        _dependencies.mainHero.ChangeTagAndLayerToPlayer();
         _dependencies.mainHero.UnblockInputs();
         _dependencies.deadTimeout.Pause();
+        _dependencies.mainHero.ShowSkin();
     }
 }

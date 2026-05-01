@@ -113,8 +113,20 @@ public class E1 : MonoBehaviour
         return _target == null;
     }
 
+    public bool IsTargetFar()
+    {
+        if (_target == null)
+            return true;
+            
+        return Vector3.Distance(transform.position, _target.position) > 20f;
+        //return false;
+    }
+
     public void FireBullet()
     {
+        if(!_target)
+            return;
+
         Debug.DrawRay(_muzzle.position, (_target.position - _muzzle.position).normalized * 3f, Color.yellow, 1f);
         _enemyFireShoot.Fire(_muzzle.position, _target.position - _muzzle.position);
     }

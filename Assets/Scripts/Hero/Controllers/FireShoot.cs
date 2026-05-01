@@ -52,7 +52,7 @@ public class FireShoot : NetworkBehaviour
 
     public void Fire(Vector3 firePosition, Vector3 fireDirection)
     {
-        if (!HasStateAuthority)
+        if (!Object.HasInputAuthority)
             return;
 
         var entry = _totalFiredCount % _projectilesBuffer.Length;
@@ -129,7 +129,7 @@ public class FireShoot : NetworkBehaviour
             return;
         }
 
-        var renderTime = HasStateAuthority
+        var renderTime = Object.HasInputAuthority
             ? Runner.LocalRenderTime
             : Runner.RemoteRenderTime;
 

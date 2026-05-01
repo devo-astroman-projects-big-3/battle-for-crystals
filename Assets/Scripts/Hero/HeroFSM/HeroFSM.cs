@@ -101,7 +101,7 @@ public class HeroFSM : AbstractFiniteStateMachine
 
     public void GoReceiveHitNetwork()
     {
-        Debug.Log("HeroBuddy ReceiveDamage3");
+        Debug.Log("Flag4");
         //_heroStateNetwork.ChangeFsmState(2);
         _heroStateNetwork.RequestChangeFsmState(2);
         //TransitionToState(_heroStateNetwork.RECEIVE_HIT_STATE);

@@ -16,6 +16,7 @@ public class HeroBornState : AbstractState
         _dependencies.mainHero.PlaceAtCheckpoint();
         _dependencies.mainHero.BlockInputs();
         _dependencies.bornToMoveTimeout.Reset();
+        _dependencies.mainHero.EnableCollider();
 
         _dependencies.bornToMoveTimeout.SetTimeout(() =>
         {

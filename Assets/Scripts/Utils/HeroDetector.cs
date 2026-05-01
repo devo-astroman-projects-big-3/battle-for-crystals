@@ -11,6 +11,8 @@ public class HeroDetector : MonoBehaviour
     [SerializeField] private bool _testDetectd = false;    
     [SerializeField] private GameObject _testHeroDetecter;
 
+    private GameObject _currentHero;
+
     // Action to notify detection
     public Action<GameObject> detectedAction;
     public Action undetectedAction;
@@ -26,6 +28,15 @@ public class HeroDetector : MonoBehaviour
         }
     }
 
+    public void ForceUndetect(GameObject hero)
+    {
+        if (_currentHero == hero)
+        {
+            _currentHero = null;
+            undetectedAction?.Invoke();
+        }
+    }
+
     private void Awake()
     {
         _heroLayer = LayerMask.NameToLayer(_heroLayerName);
@@ -37,9 +48,10 @@ public class HeroDetector : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other)
-    {        
+    {
         if (IsHero(other.gameObject))
-        {            
+        {
+            _currentHero = other.gameObject;
             detectedAction?.Invoke(other.gameObject);
         }
     }
@@ -48,6 +60,7 @@ public class HeroDetector : MonoBehaviour
     {
         if (IsHero(other.gameObject))
         {
+            _currentHero = null;
             undetectedAction?.Invoke();
         }
     }

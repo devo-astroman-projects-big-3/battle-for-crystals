@@ -25,7 +25,7 @@ public class E1ShowState : AbstractState
 
         },1f);
 
-        if (_dependencies.e1.IsTargetNull())
+        if (_dependencies.e1.IsTargetNull() || _dependencies.e1.IsTargetFar())
         {
             _dependencies.e1.HideEnemy();
             //_dependencies.fsm.GoHide();

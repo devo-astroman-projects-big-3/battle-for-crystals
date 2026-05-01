@@ -9,8 +9,9 @@ public class MainHero : MonoBehaviour
     [SerializeField] private HeroBuddy _heroBuddy;
     [SerializeField] AnimatorH1 _animatorH1;
     [SerializeField] HitGlowE1 _hitGlowE1;
-    [SerializeField] HeroDead _heroDead;
+    [SerializeField] HeroTagLayerManager _heroTagLayerManager;
     [SerializeField] HeroTeleporter _heroTeleporter;
+
     #endregion
     #region Private Fields
     private int _health = 5;
@@ -57,14 +58,22 @@ public class MainHero : MonoBehaviour
         return _health;
     }
 
-    public void ApplyDead()
+    public void DisableCollider()
     {
-        _heroDead.ApplyDead();
-    }    
+        CapsuleCollider c = _heroBuddy.GetComponent<CapsuleCollider>();
+        c.enabled = false;
+    }
+
+    public void EnableCollider()
+    {
+        CapsuleCollider c = _heroBuddy.GetComponent<CapsuleCollider>();
+        c.enabled = true;
+    }
     #endregion
     #region Private Methods
     public void HandleReceiveHit(int damage)
     {
+        Debug.Log("Flag2");
         ReceiveHitAction?.Invoke(damage);
     }
 
@@ -94,14 +103,24 @@ public class MainHero : MonoBehaviour
 
     public void PlaceAtCheckpoint()
     {
-        Debug.Log("PlaceAtCheckpoint_ 1 " + _lastCheckpoint);
         _heroTeleporter.Teleport(_lastCheckpoint);
     }
 
     public void SetLastCheckpoint(Vector3 lastPosition)
     {
-        Debug.Log("SetLastCheckpoint 0 " + lastPosition);
         _lastCheckpoint = lastPosition;
+    }
+
+    public void ChangeTagAndLayerToDead()
+    {
+        _heroTagLayerManager.ChangeToDeadTag();
+        _heroTagLayerManager.ChangeToDeadLayer();
+    }
+
+    public void ChangeTagAndLayerToPlayer()
+    {
+        _heroTagLayerManager.ChangeToPlayerTag();
+        _heroTagLayerManager.ChangeToPlayerLayer();
     }
     #endregion
 }

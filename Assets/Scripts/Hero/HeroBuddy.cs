@@ -18,7 +18,7 @@ public class HeroBuddy : MonoBehaviour
         transform.SetParent(_heroParent.transform);
 
         _cameras.SetActive(true);
-        _heroFsm.SetActive(true);
+        //_heroFsm.SetActive(true);
     }
 
     public void SetupMainCamera(Camera mainCamera)
@@ -38,6 +38,7 @@ public class HeroBuddy : MonoBehaviour
 
     public void ReceiveDamage(int damage)
     {   
+        Debug.Log("Flag1");
         ReceiveHitAction?.Invoke(damage);
     }
     

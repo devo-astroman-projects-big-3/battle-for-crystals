@@ -22,7 +22,10 @@ public class HeroStateNetwork : NetworkBehaviour
     public void RequestChangeFsmState(int newState)
     {
         if (Object == null)
+        {
+            Debug.Log("FLAG0");
             return;
+        }
 
         RPC_ChangeFsmState(newState);
     }

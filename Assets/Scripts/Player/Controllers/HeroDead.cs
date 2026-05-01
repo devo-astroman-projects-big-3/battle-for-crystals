@@ -5,7 +5,6 @@ public class HeroDead : MonoBehaviour
 {
     #region Fields    
     [SerializeField] private HeroSkin _heroSkin;
-    [SerializeField] private MyPlayerMovement _myPlayerMovement;    
     #endregion
 
     #region Private Fields
@@ -26,8 +25,6 @@ public class HeroDead : MonoBehaviour
 
     public void ApplyDead(){
         _heroSkin.HideSkin();
-        _myPlayerMovement.BlockInputs();
-
     }
     #endregion
 

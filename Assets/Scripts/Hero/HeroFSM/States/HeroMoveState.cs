@@ -24,6 +24,7 @@ public class HeroMoveState : AbstractState
 
     private void HandleReceiveHit(int damage)
     {
+        Debug.Log("Flag3");
         _dependencies.fsm.GoReceiveHitNetwork();
         
     }

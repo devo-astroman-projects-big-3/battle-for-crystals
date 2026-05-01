@@ -19,6 +19,7 @@ public class HeroReceiveHitState : AbstractState
         _dependencies.mainHero.PlayReceiveHit();
         _dependencies.mainHero.ShowHitFlickerGlow();
         _dependencies.fsm.NotifyReceiveHitNetwork();
+        _dependencies.mainHero.DisableCollider();
 
     }
 
