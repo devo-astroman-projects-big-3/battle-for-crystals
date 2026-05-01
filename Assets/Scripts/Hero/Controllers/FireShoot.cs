@@ -81,6 +81,10 @@ public class FireShoot : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
+
+        if (!Object.HasStateAuthority)
+            return;
+
         for (int i = 0; i < _totalFiredCount; i++)
         {
             var entryIndex = i % _projectilesBuffer.Length;
@@ -107,6 +111,7 @@ public class FireShoot : NetworkBehaviour
                 var damageableObject = hit.collider.GetComponentInParent<IDamageable>();
                 if (damageableObject != null)
                 {
+                    Debug.Log("SHOOT CONTACT!!!!");
                     damageableObject.TakeDamage(1);
                 }
 

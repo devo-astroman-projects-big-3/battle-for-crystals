@@ -1052,7 +1052,7 @@ MonoBehaviour:
   lifeTime: 6
   targetLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 320
   _bulletPool: {fileID: 0}
 --- !u!1 &5722845626205155731
 GameObject:
