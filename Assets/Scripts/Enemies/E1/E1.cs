@@ -117,9 +117,14 @@ public class E1 : MonoBehaviour
     {
         if (_target == null)
             return true;
-            
+
         return Vector3.Distance(transform.position, _target.position) > 20f;
         //return false;
+    }
+
+    public float GetDistance()
+    {       
+        return Vector3.Distance(transform.position, _target.position);
     }
 
     public void FireBullet()

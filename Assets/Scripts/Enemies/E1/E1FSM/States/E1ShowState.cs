@@ -17,33 +17,31 @@ public class E1ShowState : AbstractState
         _dependencies.e1.PlayerUndetectedAction += HandlePlayerUndetected;
         _dependencies.e1.ReceiveHitAction += HandleReceiveHit;
 
+        if(!_dependencies.e1.IsTargetNull() && _dependencies.e1.GetDistance() > 22)
+        {
+            _dependencies.e1.SetTargetNull();
+        }
+
+
         _dependencies.preattackTimeout.SetTimeout(() =>
         {
-         
-            //_dependencies.fsm.GoAttack();
-            _dependencies.fsm.GoAttackNetwork();
+            if (!_dependencies.e1.IsTargetNull())
+            {
+                Transform playerTransform = _dependencies.e1.GetTarget();
+                Vector3 lookAtPos = playerTransform.position;
+                _dependencies.fsm.SetLookAtNetwork(lookAtPos);
+                //_dependencies.fsm.GoAttack(); 
+                _dependencies.fsm.GoAttackNetwork();
+            }
+            else
+            {
+                 Debug.Log("No player transform!");
+                 _dependencies.e1.HideEnemy();
+                _dependencies.fsm.GoHideNetwork();
+            }
 
         },1f);
-
-        if (_dependencies.e1.IsTargetNull() || _dependencies.e1.IsTargetFar())
-        {
-            _dependencies.e1.HideEnemy();
-            //_dependencies.fsm.GoHide();
-            _dependencies.e1.SetTargetNull();
-            _dependencies.fsm.GoHideNetwork();
-        }
-
-        //_dependencies.e1.LookAtTarget();
-        Transform playerTransform = _dependencies.e1.GetTarget();
-        if (playerTransform)
-        {
-            Vector3 lookAtPos = playerTransform.position;
-            _dependencies.fsm.SetLookAtNetwork(lookAtPos);
-        }
-        else
-        {
-            Debug.Log("No player transform!");
-        }
+        
         
     }
 
