@@ -70,7 +70,6 @@ public class SharedLobby : MonoBehaviour, INetworkRunnerCallbacks
             return;
 
         await RestartRunner();
-        Debug.Log("CreateSharedRoom_1");
 
         var result = await _runner.StartGame(new StartGameArgs
         {
@@ -81,12 +80,10 @@ public class SharedLobby : MonoBehaviour, INetworkRunnerCallbacks
             SceneManager = GetOrCreateSceneManager()
         });
 
-        Debug.Log("CreateSharedRoom_2");
 
         if (!result.Ok)
             Debug.LogError($"Failed to create shared room '{roomName}': {result.ShutdownReason}", this);
 
-        Debug.Log("CreateSharedRoom_3");
     }
 
     public async void JoinSharedRoom(string roomName)

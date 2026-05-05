@@ -676,8 +676,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 368531696}
   m_HandleRect: {fileID: 368531695}
   m_Direction: 2
-  m_Value: 0.49999994
-  m_Size: 0.60505474
+  m_Value: 0.4999999
+  m_Size: 0.68496937
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -19364,6 +19364,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Prototype Runner
       objectReference: {fileID: 0}
+    - target: {fileID: 8347173465887638174, guid: b93af92bcf766ff4bb37a05b54da69e6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -19373,8 +19378,6 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 5906114884633065549}
-  - {fileID: 500929932}
   - {fileID: 1404298870}
   - {fileID: 673699883}
   - {fileID: 2352625923294852120}
@@ -19384,3 +19387,5 @@ SceneRoots:
   - {fileID: 1380805968}
   - {fileID: 955325490}
   - {fileID: 492047064}
+  - {fileID: 5906114884633065549}
+  - {fileID: 500929932}
