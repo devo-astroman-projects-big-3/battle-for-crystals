@@ -15,6 +15,7 @@ public class PlayerSpawner : SimulationBehaviour, IPlayerJoined
 
     void IPlayerJoined.PlayerJoined(PlayerRef player)
     {
+        Debug.Log("Gameplay " + "PlayerJoined");
         if (player == Runner.LocalPlayer)
         {
             
