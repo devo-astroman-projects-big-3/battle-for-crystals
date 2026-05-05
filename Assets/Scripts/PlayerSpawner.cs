@@ -104,9 +104,9 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
             
 
             HeroBuddy heroBuddy = playerObject.GetComponent<HeroBuddy>();
-            heroBuddy.SetupBornPosition(spawnPosition);
             heroBuddy.SetupParent(_playerParent);
             heroBuddy.ActiveCamera();
+            //heroBuddy.SetupBornPosition(spawnPosition);
 
             PlayerSpawwnedAction?.Invoke(playerObject.gameObject);
 

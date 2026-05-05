@@ -15,8 +15,8 @@ public class HeroBuddy : MonoBehaviour
     {
         Debug.Log("__SetupParent__");
 
-        _heroParent.transform.SetParent(parent);
-        _heroFsm.transform.SetParent(parent);
+        /* _heroParent.transform.SetParent(parent);
+        _heroFsm.transform.SetParent(parent); */
         transform.SetParent(_heroParent.transform);
 
         
