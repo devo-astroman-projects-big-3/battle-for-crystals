@@ -34,6 +34,7 @@ public class SharedLobby : MonoBehaviour, INetworkRunnerCallbacks
     {
         Debug.Log("CreateRunner");
         _runner = Instantiate(runnerPrefab);
+        DontDestroyOnLoad(_runner.gameObject);
         _runner.name = "Shared Network Runner";
         _runner.AddCallbacks(this);
         Debug.Log("After CreateRunner");
@@ -73,7 +74,7 @@ public class SharedLobby : MonoBehaviour, INetworkRunnerCallbacks
 
         var result = await _runner.StartGame(new StartGameArgs
         {
-            GameMode = GameMode.Single,
+            GameMode = GameMode.Shared,
             SessionName = roomName,
             PlayerCount = maxPlayers,
             Scene = SceneRef.FromIndex(gameSceneIndex),
@@ -88,20 +89,26 @@ public class SharedLobby : MonoBehaviour, INetworkRunnerCallbacks
 
     public async void JoinSharedRoom(string roomName)
     {
+        Debug.Log("Trying to join " + roomName);
         if (!CanStartRoom(roomName))
+        {
+            Debug.Log("Can't join room " + roomName);
             return;
-
+        }
+        Debug.Log("JoinSharedRoom flag0");
         await RestartRunner();
-
+        Debug.Log("JoinSharedRoom flag1");
         var result = await _runner.StartGame(new StartGameArgs
         {
             GameMode = GameMode.Shared,
             SessionName = roomName,
             SceneManager = GetOrCreateSceneManager()
         });
-
+        Debug.Log("JoinSharedRoom flag2");
         if (!result.Ok)
             Debug.LogError($"Failed to join shared room '{roomName}': {result.ShutdownReason}", this);
+        
+        Debug.Log("JoinSharedRoom flag3");
     }
 
     private bool CanStartRoom(string roomName)

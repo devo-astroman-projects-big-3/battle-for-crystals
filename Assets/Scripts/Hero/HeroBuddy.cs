@@ -13,12 +13,18 @@ public class HeroBuddy : MonoBehaviour
 
     public void SetupParent(Transform parent)
     {
+        Debug.Log("__SetupParent__");
+
         _heroParent.transform.SetParent(parent);
         _heroFsm.transform.SetParent(parent);
         transform.SetParent(_heroParent.transform);
 
-        _cameras.SetActive(true);
+        
         //_heroFsm.SetActive(true);
+    }
+    public void ActiveCamera()
+    {
+        _cameras.SetActive(true);
     }
 
     public void SetupMainCamera(Camera mainCamera)
