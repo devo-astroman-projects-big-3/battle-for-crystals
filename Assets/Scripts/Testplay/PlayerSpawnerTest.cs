@@ -57,7 +57,7 @@ public class PlayerSpawnerTest : MonoBehaviour, INetworkRunnerCallbacks
 
             NetworkObject playerObject = _runner.Spawn(
                 PlayerPrefab,
-                null,
+                new Vector3(0,3,0),
                 Quaternion.identity,
                 player
             );
