@@ -54,22 +54,6 @@ public class MainMenu : MonoBehaviour
 
         _sharedLobby.CreateSharedRoom(roomName);
     }
-    
-    /* 
-
-    public void OnJoinButtonClicked()
-    {
-        Debug.Log("OnJoinButtonClicked");
-        _sharedLobby.JoinSharedRoom("BBB");
-    }
-
-    public void OnJoinRoomButtonClicked()
-    {
-        Debug.Log("OnJoinRoomButtonClicked");
-        string roomName = GetRoomName();
-
-        _sharedLobby.JoinSharedRoom(roomName);
-    } */
 
     private string GetRoomName()
     {
