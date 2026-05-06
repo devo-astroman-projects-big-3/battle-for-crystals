@@ -61,16 +61,16 @@ public class HeroMovement : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-        if (!Object.HasInputAuthority || _inputsBlocked)
+        if (_inputsBlocked)
             return;
 
-        if (_firePressed)
-        {
-            Vector3 aimPoint = _thirdPersonAim.GetAimPoint();
-            Vector3 fireDirection = (aimPoint - _muzzle.position).normalized;
+        if (!GetInput(out NetworkInputData input))
+            return;
 
+        if (input.Fire)
+        {
+            Vector3 fireDirection = ((Vector3)input.AimPoint - _muzzle.position).normalized;
             _fireShoot.Fire(_muzzle.position, fireDirection);
-            _firePressed = false;
         }
 
         bool isGrounded = _characterController.isGrounded;
@@ -80,23 +80,18 @@ public class HeroMovement : NetworkBehaviour
             _coyoteTimeCounter = CoyoteTime;
 
             if (_velocity.y < 0f)
-            {
                 _velocity.y = -1f;
-            }
         }
         else
         {
             _coyoteTimeCounter -= Runner.DeltaTime;
         }
 
+        if (input.Jump)
+            _jumpBufferCounter = JumpBufferTime;
+
         if (_jumpBufferCounter > 0f)
-        {
             _jumpBufferCounter -= Runner.DeltaTime;
-        }
-
-        float horizontal = Input.GetAxis("Horizontal");
-
-        float vertical = Input.GetAxis("Vertical");
 
         Transform camRoot = _thirdPersonCameraPivot != null
             ? _thirdPersonCameraPivot.CameraRoot
@@ -117,15 +112,13 @@ public class HeroMovement : NetworkBehaviour
         right.Normalize();
 
         Vector3 moveDirection =
-            (forward * vertical + right * horizontal).normalized;
+            (forward * input.Move.y + right * input.Move.x).normalized;
 
-        Vector3 move =
-            moveDirection * PlayerSpeed * Runner.DeltaTime;
+        Vector3 move = moveDirection * PlayerSpeed * Runner.DeltaTime;
 
         if (_jumpBufferCounter > 0f && _coyoteTimeCounter > 0f)
         {
             _velocity.y = JumpForce;
-
             _jumpBufferCounter = 0f;
             _coyoteTimeCounter = 0f;
         }
@@ -136,8 +129,7 @@ public class HeroMovement : NetworkBehaviour
 
         if (moveDirection.sqrMagnitude > 0.0001f)
         {
-            Quaternion targetRotation =
-                Quaternion.LookRotation(moveDirection);
+            Quaternion targetRotation = Quaternion.LookRotation(moveDirection);
 
             _buddyTransform.rotation = Quaternion.Slerp(
                 _buddyTransform.rotation,
@@ -145,7 +137,6 @@ public class HeroMovement : NetworkBehaviour
                 RotationSpeed * Runner.DeltaTime
             );
         }
-
     }
 
     public override void Spawned()
