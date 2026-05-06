@@ -5,6 +5,14 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 
+public struct SessionData
+{
+    public string Name;
+    public int PlayerCount;
+    public int  MaxPlayers;
+    public bool IsOpen;
+}
+
 public class SharedLobby : MonoBehaviour, INetworkRunnerCallbacks
 {
     [SerializeField] private NetworkRunner runnerPrefab;
@@ -12,7 +20,36 @@ public class SharedLobby : MonoBehaviour, INetworkRunnerCallbacks
     [SerializeField] private int maxPlayers = 4;
 
     private NetworkRunner _runner;
-    public List<SessionInfo> CurrentSessions = new();
+    public List<SessionInfo> CurrentSessions = new();    
+    public Action<SessionData[]> SessionDataListChangeAction;
+
+    
+
+    public SessionData[] GetSessionData()
+    {
+        List<SessionInfo> sessionList = CurrentSessions;
+        
+        SessionData[] sessionData = new SessionData[sessionList.Count];
+        int i = 0;
+
+        foreach (var s in sessionList)
+        {
+            Debug.Log($"Room: {s.Name} {s.PlayerCount}/{s.MaxPlayers} Open:{s.IsOpen}");
+
+            sessionData[i] = new SessionData()
+            {
+                Name = s.Name,
+                PlayerCount = s.PlayerCount,
+                MaxPlayers = s.MaxPlayers,
+                IsOpen = s.IsOpen
+            };
+
+            i++;
+        }
+
+        return sessionData;
+        
+    }
 
     private async void Start()
     {
@@ -60,8 +97,9 @@ public class SharedLobby : MonoBehaviour, INetworkRunnerCallbacks
     {
         CurrentSessions = new List<SessionInfo>(sessionList);
 
-        foreach (var s in sessionList)
-            Debug.Log($"Room: {s.Name} {s.PlayerCount}/{s.MaxPlayers} Open:{s.IsOpen}");
+        SessionData[] sessionData = GetSessionData();
+
+        SessionDataListChangeAction?.Invoke(sessionData);
     }
 
     public async void CreateSharedRoom(string roomName)

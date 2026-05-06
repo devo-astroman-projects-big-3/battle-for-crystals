@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4635275937742253989}
   - component: {fileID: 6849155046805972045}
   - component: {fileID: 6200065963999802758}
+  - component: {fileID: 5825291910059455318}
   m_Layer: 5
   m_Name: PanelEntry
   m_TagString: Untagged
@@ -105,6 +106,21 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &5825291910059455318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 611450805640186366}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11c6dd43837cb1d4391b12fa7f1a55e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _roomNameText: {fileID: 9012491261338354117}
+  _roomPlayersText: {fileID: 2058956201434299988}
+  _joinButton: {fileID: 2176189137754772694}
 --- !u!1 &2215543195621324407
 GameObject:
   m_ObjectHideFlags: 0
@@ -118,7 +134,7 @@ GameObject:
   - component: {fileID: 2058956201434299988}
   - component: {fileID: 635422063233708622}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: RoomPlayersText (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -274,7 +290,7 @@ GameObject:
   - component: {fileID: 2176189137754772694}
   - component: {fileID: 5375466027864130227}
   m_Layer: 5
-  m_Name: Button
+  m_Name: JoinButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -549,7 +565,7 @@ GameObject:
   - component: {fileID: 9012491261338354117}
   - component: {fileID: 2077149637041385921}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: RoomNameText (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject _roomCreationPanelGO;
     [SerializeField] private GameObject _joinRoomPanelGO;
     [SerializeField] private TMP_InputField _nameRoomInput;
+    [SerializeField] private RoomList _roomList;
 
     void Awake()
     {
@@ -17,7 +18,18 @@ public class MainMenu : MonoBehaviour
     
     void Start()
     {
+        SessionData[] sessionData = _sharedLobby.GetSessionData();
+        _roomList.SetRooms(sessionData);
+
+        _roomList.RoomSelectedAction +=  HandleRoomSelected;
+        _sharedLobby.SessionDataListChangeAction += HandleSessionDataListChange;
         SetRoomCreationPanelActive(true);
+    }
+
+    void OnDestroy()
+    {
+        _roomList.RoomSelectedAction -=  HandleRoomSelected;
+        _sharedLobby.SessionDataListChangeAction -= HandleSessionDataListChange;
     }
 
     public void OnRoomCreationPanelButtonClicked()
@@ -38,11 +50,12 @@ public class MainMenu : MonoBehaviour
 
     public void OnCreateRoomButtonClicked()
     {
-        Debug.Log("OnCreateRoomButtonClicked");
         string roomName = GetRoomName();
 
         _sharedLobby.CreateSharedRoom(roomName);
     }
+    
+    /* 
 
     public void OnJoinButtonClicked()
     {
@@ -50,7 +63,7 @@ public class MainMenu : MonoBehaviour
         _sharedLobby.JoinSharedRoom("BBB");
     }
 
-/*     public void OnJoinRoomButtonClicked()
+    public void OnJoinRoomButtonClicked()
     {
         Debug.Log("OnJoinRoomButtonClicked");
         string roomName = GetRoomName();
@@ -79,6 +92,16 @@ public class MainMenu : MonoBehaviour
             _joinRoomPanelGO.SetActive(!isActive);
         else
             Debug.LogError($"{nameof(MainMenu)} is missing a join room panel reference.", this);
+    }
+
+    private void HandleSessionDataListChange(SessionData[] sessionData)
+    {
+        _roomList.SetRooms(sessionData);
+    }
+
+    private void HandleRoomSelected(string roomName)
+    {
+        _sharedLobby.JoinSharedRoom(roomName);
     }
 
 }
