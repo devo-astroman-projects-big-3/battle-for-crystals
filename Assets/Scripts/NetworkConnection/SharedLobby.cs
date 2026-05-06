@@ -100,6 +100,22 @@ public class SharedLobby : MonoBehaviour, INetworkRunnerCallbacks
         SessionDataListChangeAction?.Invoke(sessionData);
     }
 
+    public async void CreateSingle()
+    {
+        await RestartRunner();
+
+        var result = await _runner.StartGame(new StartGameArgs
+        {
+            GameMode = GameMode.Single,
+            Scene = SceneRef.FromIndex(gameSceneIndex),
+            SceneManager = GetOrCreateSceneManager()
+        });
+
+        if (!result.Ok)
+            Debug.LogError($"Failed to create single player game: {result.ShutdownReason}", this);
+
+    }
+
     public async void CreateSharedRoom(string roomName)
     {
         if (!CanStartRoom(roomName))

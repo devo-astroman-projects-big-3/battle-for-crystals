@@ -42,6 +42,11 @@ public class MainMenu : MonoBehaviour
         _sharedLobby.SessionDataListChangeAction -= HandleSessionDataListChange;
     }
 
+    public void OnSoloButtonClicked()
+    {
+        _sharedLobby.CreateSingle();
+    }
+
     public void OnRoomCreationPanelButtonClicked()
     {
         _seccionTitle.text = "Create Room";
