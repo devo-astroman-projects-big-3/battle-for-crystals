@@ -26,13 +26,11 @@ public class HeroTeleporter : NetworkBehaviour
 
         if (_controller != null)
             _controller.enabled = false;
-
-        //transform.position = _targetPosition;
+        
         _controller.transform.position = _targetPosition;
 
         if (_controller != null)
             _controller.enabled = true;
-
-        Debug.Log("Teleported to " + _targetPosition);
+        
     }
 }

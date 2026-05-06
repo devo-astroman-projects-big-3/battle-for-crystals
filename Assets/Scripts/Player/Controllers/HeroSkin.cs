@@ -6,8 +6,7 @@ public class HeroSkin : MonoBehaviour
     [SerializeField] private MeshRenderer[]  _skinMeshes;
     #endregion
 
-    #region Private Fields
-    private int _life = 10;
+    #region Private Fields    
     #endregion
 
     #region Unity Callbacks

@@ -10,8 +10,6 @@ public class Lever : MonoBehaviour
     #endregion
 
     #region Private Fields
-    private bool _EPressed = false;
-    private bool _leverAtLeft = false;
     #endregion
 
     #region Unity Callbacks

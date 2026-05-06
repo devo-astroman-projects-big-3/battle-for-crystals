@@ -3,7 +3,6 @@ using KevinCastejon.FiniteStateMachine;
 public class E1ShowState : AbstractState
 {
     private DepsE1FSM _dependencies;
-    private bool _ignoreTime = true;
 
     public void Setup(ref DepsE1FSM deps)
     {
@@ -30,12 +29,11 @@ public class E1ShowState : AbstractState
                 Transform playerTransform = _dependencies.e1.GetTarget();
                 Vector3 lookAtPos = playerTransform.position;
                 _dependencies.fsm.SetLookAtNetwork(lookAtPos);
-                //_dependencies.fsm.GoAttack(); 
+                
                 _dependencies.fsm.GoAttackNetwork();
             }
             else
             {
-                 Debug.Log("No player transform!");
                  _dependencies.e1.HideEnemy();
                 _dependencies.fsm.GoHideNetwork();
             }
@@ -43,12 +41,6 @@ public class E1ShowState : AbstractState
         },1f);
         
         
-    }
-
-    public override void OnUpdate()
-    {
-        // When key "1" is pressed
-        //_dependencies.e1.LookAtTarget();
     }
 
 
@@ -64,26 +56,15 @@ public class E1ShowState : AbstractState
     {
         /* Debug.Log("GO HIDE"); */
         _dependencies.e1.HideEnemy();
-        _dependencies.e1.SetTarget(null);
-        //_dependencies.fsm.GoHide();
+        _dependencies.e1.SetTarget(null);        
         _dependencies.fsm.GoHideNetwork();
 
     }
 
     private void HandleReceiveHit(int amount)
-    {
-
-        //_dependencies.e1.ReceiveDamage(amount);
-        //check life 
-        //life > 0
-        //_dependencies.fsm.GoReceiveHit();
-             
+    {    
         _dependencies.fsm.NotifyReceiveHitNetwork();
-        //_dependencies.fsm.GoReceiveHitNetwork();
-        
-        
-        //life == 0
-        //_dependencies.fsm.GoDie();
+       
     }
 
     

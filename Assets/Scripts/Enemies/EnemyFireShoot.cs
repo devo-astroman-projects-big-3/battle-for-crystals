@@ -106,7 +106,6 @@ public class EnemyFireShoot : NetworkBehaviour
                     moveDirection.magnitude,
                     targetLayer))
             {
-                Debug.Log($"Flag0 hit {hit.collider.name} layer {LayerMask.LayerToName(hit.collider.gameObject.layer)}");
 
                 HeroBuddy heroBuddy = hit.collider.GetComponentInParent<HeroBuddy>();
 

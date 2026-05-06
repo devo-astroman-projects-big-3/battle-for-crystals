@@ -13,14 +13,7 @@ public class HeroBuddy : MonoBehaviour
 
     public void SetupParent(Transform parent)
     {
-        Debug.Log("__SetupParent__");
-
-        /* _heroParent.transform.SetParent(parent);
-        _heroFsm.transform.SetParent(parent); */
         transform.SetParent(_heroParent.transform);
-
-        
-        //_heroFsm.SetActive(true);
     }
     public void ActiveCamera()
     {
@@ -44,7 +37,6 @@ public class HeroBuddy : MonoBehaviour
 
     public void ReceiveDamage(int damage)
     {   
-        Debug.Log("Flag1");
         ReceiveHitAction?.Invoke(damage);
     }
     

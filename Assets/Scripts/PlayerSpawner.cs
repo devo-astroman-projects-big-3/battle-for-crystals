@@ -7,7 +7,6 @@ using System.Collections.Generic;
 
 public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
 {
-    //public GameObject PlayerPrefab;
     [SerializeField] private NetworkPrefabRef PlayerPrefab;
     public Action<GameObject> PlayerSpawwnedAction;
 
@@ -16,14 +15,11 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
     private NetworkRunner _runner;
     private bool _localPlayerSpawned;
-    private bool _remotePlayerSpawned;
 
     
 
     private IEnumerator Start()
     {
-        Debug.Log("Waiting for running NetworkRunner...");
-
         yield return new WaitUntil(() =>
         {
             _runner = FindFirstObjectByType<NetworkRunner>();
@@ -31,34 +27,28 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
         });
 
         _runner.AddCallbacks(this);
-
-        Debug.Log("PlayerSpawner ready. Checking existing players...");
+     
 
         foreach (PlayerRef player in _runner.ActivePlayers)
         {
-            Debug.Log("player => " + player.PlayerId);
-
             TrySpawnPlayer(player);
         }
     }
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        Debug.Log($"FLLLAG FOR SECON PLAYER JOINNING Gameplay PlayerJoined: {player}");
         TrySpawnPlayer(player);
     }
 
     private void TrySpawnPlayer(PlayerRef player)
     {
-        TrySpawnPlayer2(player);
-        
-        /* if (_localPlayerSpawned)
-            return;
-
         if (player != _runner.LocalPlayer)
             return;
 
-         _localPlayerSpawned = true;
+        if (_localPlayerSpawned)
+            return;
+
+        _localPlayerSpawned = true;
 
         Vector3 spawnPosition = GetSpawnPosition();
 
@@ -71,77 +61,11 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
         
 
         HeroBuddy heroBuddy = playerObject.GetComponent<HeroBuddy>();
-        heroBuddy.SetupBornPosition(spawnPosition);
         heroBuddy.SetupParent(_playerParent);
         heroBuddy.ActiveCamera();
+        heroBuddy.SetupBornPosition(spawnPosition);
 
         PlayerSpawwnedAction?.Invoke(playerObject.gameObject);
-
-        Debug.Log("Local player spawned."); */
-        
-    }
-
-    private void TrySpawnPlayer2(PlayerRef player)
-    {
-        
-        if (player == _runner.LocalPlayer)
-        {
-            Debug.Log("LOCAL PLAYER " + player.PlayerId);
-
-            if (_localPlayerSpawned)
-                return;
-
-            _localPlayerSpawned = true;
-
-            Vector3 spawnPosition = GetSpawnPosition();
-
-            NetworkObject playerObject = _runner.Spawn(
-                PlayerPrefab,
-                spawnPosition,
-                Quaternion.identity,
-                player
-            );
-            
-
-            HeroBuddy heroBuddy = playerObject.GetComponent<HeroBuddy>();
-            heroBuddy.SetupParent(_playerParent);
-            heroBuddy.ActiveCamera();
-            heroBuddy.SetupBornPosition(spawnPosition);
-
-            PlayerSpawwnedAction?.Invoke(playerObject.gameObject);
-
-            Debug.Log("Local player spawned.");
-        }
-        /* else
-        {
-            Debug.Log("REMOTE PLAYER " + player.PlayerId);
-            if (_remotePlayerSpawned)
-                return;
-            _remotePlayerSpawned = true;
-
-
-            Vector3 spawnPosition = GetSpawnPosition();
-
-            NetworkObject playerObject = _runner.Spawn(
-                PlayerPrefab,
-                spawnPosition,
-                Quaternion.identity,
-                player
-            );
-            
-
-            HeroBuddy heroBuddy = playerObject.GetComponent<HeroBuddy>();
-            heroBuddy.SetupBornPosition(spawnPosition);
-            heroBuddy.SetupParent(_playerParent);
-
-            PlayerSpawwnedAction?.Invoke(playerObject.gameObject);
-
-            Debug.Log("Remote player spawned.");
-            
-        } */
-
-        
-        
         
     }
 

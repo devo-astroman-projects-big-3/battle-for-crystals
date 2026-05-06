@@ -81,104 +81,83 @@ public class E1FSM : AbstractFiniteStateMachine
 
     public void GoShow()
     {
-        //_stateNetworkE1.RequestChangeFsm(1);
         TransitionToState(E1States.SHOW_STATE);
     }
 
     public void GoAttack()
     {
-        //_stateNetworkE1.RequestChangeFsm(2);
         TransitionToState(E1States.ATTACK_STATE);
     }
 
     public void GoReceiveHit()
     {
-        //_stateNetworkE1.RequestChangeFsm(3);
         TransitionToState(E1States.RECEIVE_HIT_STATE);
     }
 
     public void GoHide()
     {
-        //_stateNetworkE1.RequestChangeFsm(0);
         TransitionToState(E1States.HIDE_STATE);
     }
 
     public void GoDie()
     {
-        //_stateNetworkE1.RequestChangeFsm(4);
         TransitionToState(E1States.DIE_STATE);
     }
 
     public void GoRestart()
     {
-        //_stateNetworkE1.RequestChangeFsm(5);
         TransitionToState(E1States.RESTART_STATE);
     }
 
-    //Network calls
     public void GoShowNetwork()
     {
         _stateNetworkE1.ChangeFsmState(1);
-        //TransitionToState(E1States.SHOW_STATE);
     }
 
     public void GoAttackNetwork()
     {
         _stateNetworkE1.ChangeFsmState(2);
-        //TransitionToState(E1States.ATTACK_STATE);
     }
 
     public void GoReceiveHitNetwork()
     {
         _stateNetworkE1.ChangeFsmState(3);
-        //TransitionToState(E1States.RECEIVE_HIT_STATE);
     }
 
     public void GoHideNetwork()
     {
         _stateNetworkE1.ChangeFsmState(0);
-        //TransitionToState(E1States.HIDE_STATE);
     }
 
     public void GoDieNetwork()
     {
         _stateNetworkE1.ChangeFsmState(4);
-        //TransitionToState(E1States.DIE_STATE);
     }
 
     public void GoRestartNetwork()
     {
         _stateNetworkE1.ChangeFsmState(5);
-        //TransitionToState(E1States.RESTART_STATE);
     }
 
     public void SetLookAtNetwork(Vector3 lookAtPos)
     {
         _stateNetworkE1.ChangeLookAtState(lookAtPos);
-        //TransitionToState(E1States.DIE_STATE);
     }
 
     public void NotifyReceiveHitNetwork()
     {
         _stateNetworkE1.RequestReceiveHit();
-        //TransitionToState(E1States.DIE_STATE);
     }
 
     public void ResetHitNetwork()
     {
         _stateNetworkE1.RequestResetNHits();
-        //TransitionToState(E1States.DIE_STATE);
     }
-
-
-    
 
     public int GetNHitsReceived()
     {
         return _stateNetworkE1.GetNHitsReceived();        
     }
-
-    //
 
     private void HandleFsmChanged(int newState)
     {
@@ -216,7 +195,6 @@ public class E1FSM : AbstractFiniteStateMachine
 
     private void HandleNHitsReceivedChanged(int nHits)
     {   
-        Debug.Log("nHits " + nHits);
         if(nHits > 0)
         {
             GoReceiveHitNetwork();
@@ -225,13 +203,6 @@ public class E1FSM : AbstractFiniteStateMachine
         {
             GoRestartNetwork();
         }
-
-        //check health if > 0 go receive hit
-        //_e1.ReceiveDamage();
-        //check health if == 0 go die
     }
-
-    
-
     
 }

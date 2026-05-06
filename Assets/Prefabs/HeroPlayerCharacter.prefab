@@ -668,7 +668,6 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 4349642921547374447}
-  - {fileID: 3178748062670222280}
   - {fileID: 3092725375323709543}
   ForceRemoteRenderTimeframe: 0
 --- !u!114 &4349642921547374447
@@ -700,17 +699,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11c2459e210d10f4f8ffbec429007d5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Camera: {fileID: 0}
-  PlayerSpeed: 24
-  RotationSpeed: 12
-  JumpForce: 50
-  GravityValue: -100
-  CoyoteTime: 0.12
-  JumpBufferTime: 0.12
-  _cameraPivotController: {fileID: 6007205808458913617}
-  _fireShoot: {fileID: 3092725375323709543}
-  _muzzle: {fileID: 4883221729751479770}
-  _thirdPersonAim: {fileID: 502609136928195582}
 --- !u!33 &1484053476752250070
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -890,7 +878,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _heroSkin: {fileID: 7670324150714345796}
-  _myPlayerMovement: {fileID: 3178748062670222280}
 --- !u!1 &7943936998563016587
 GameObject:
   m_ObjectHideFlags: 0

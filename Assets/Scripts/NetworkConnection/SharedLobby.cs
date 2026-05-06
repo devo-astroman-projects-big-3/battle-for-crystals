@@ -69,12 +69,10 @@ public class SharedLobby : MonoBehaviour, INetworkRunnerCallbacks
 
     private void CreateRunner()
     {
-        Debug.Log("CreateRunner");
         _runner = Instantiate(runnerPrefab);
         DontDestroyOnLoad(_runner.gameObject);
         _runner.name = "Shared Network Runner";
         _runner.AddCallbacks(this);
-        Debug.Log("After CreateRunner");
     }
 
     private async Task RestartRunner()
@@ -104,7 +102,6 @@ public class SharedLobby : MonoBehaviour, INetworkRunnerCallbacks
 
     public async void CreateSharedRoom(string roomName)
     {
-        Debug.Log("CreateSharedRoom");
         if (!CanStartRoom(roomName))
             return;
 

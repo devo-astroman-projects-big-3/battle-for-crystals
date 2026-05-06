@@ -73,7 +73,6 @@ public class MainHero : MonoBehaviour
     #region Private Methods
     public void HandleReceiveHit(int damage)
     {
-        Debug.Log("Flag2");
         ReceiveHitAction?.Invoke(damage);
     }
 

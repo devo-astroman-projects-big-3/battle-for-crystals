@@ -34,18 +34,12 @@ public class MainMenu : MonoBehaviour
 
     public void OnRoomCreationPanelButtonClicked()
     {
-        Debug.Log("OnRoomCreationPanelButtonClicked");
         SetRoomCreationPanelActive(true);
-
-        //_sharedLobby.CreateSharedRoom("room1");
     }
 
     public void OnJoinRoomPanelButtonClicked()
     {
-        Debug.Log("OnJoinRoomPanelButtonClicked");
         SetRoomCreationPanelActive(false);
-
-        //_sharedLobby.CreateSharedRoom("room1");
     }
 
     public void OnCreateRoomButtonClicked()

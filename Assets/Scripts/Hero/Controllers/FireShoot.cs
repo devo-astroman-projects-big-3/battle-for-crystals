@@ -111,7 +111,6 @@ public class FireShoot : NetworkBehaviour
                 var damageableObject = hit.collider.GetComponentInParent<IDamageable>();
                 if (damageableObject != null)
                 {
-                    Debug.Log("SHOOT CONTACT!!!!");
                     damageableObject.TakeDamage(1);
                 }
 

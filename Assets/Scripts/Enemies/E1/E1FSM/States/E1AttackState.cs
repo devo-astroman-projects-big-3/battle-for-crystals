@@ -11,7 +11,6 @@ public class E1AttackState : AbstractState
 
     public override void OnEnter()
     {
-        /* Debug.Log("AttackState - OnEnter"); */
 
         _dependencies.e1.MiddleFireEventAction += HandleMiddleFireEvent;
         _dependencies.e1.FireAnimationEndsAction += HandleFireAnimationEnds;        
@@ -34,34 +33,16 @@ public class E1AttackState : AbstractState
     }
     private void HandleFireAnimationEnds()
     {
-        //_dependencies.fsm.GoShow();
         _dependencies.fsm.GoShowNetwork();
-    }
-
-    private void HandleReceiveHitAnimationEnds()
-    {
-        //_dependencies.fsm.GoReceiveHit();
-        _dependencies.fsm.GoReceiveHitNetwork();
     }
 
     private void HandlePlayerUndetected()
     {
-        Debug.Log("NO PLAYER ANY MORE");
         _dependencies.e1.SetTarget(null);
     }
 
     private void HandleReceiveHit(int amount)
     {
-        //_dependencies.e1.ReceiveDamage(amount);
-        //check life 
-        //life > 0
-        //_dependencies.fsm.GoReceiveHit();
-        //_dependencies.fsm.GoReceiveHitNetwork();
-        
-        //_dependencies.e1.ReceiveDamage();
         _dependencies.fsm.NotifyReceiveHitNetwork();
-        
-        //life == 0
-        //_dependencies.fsm.GoDie();
     }
 }
