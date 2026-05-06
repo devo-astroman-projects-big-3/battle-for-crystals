@@ -10,6 +10,9 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private TMP_InputField _nameRoomInput;
     [SerializeField] private RoomList _roomList;
 
+    [SerializeField] private GameObject _openJoinPanelButtonGO;
+    [SerializeField] private GameObject _openCreationPanelButtonGO;
+
     void Awake()
     {
         if (_nameRoomInput == null)
@@ -35,11 +38,15 @@ public class MainMenu : MonoBehaviour
     public void OnRoomCreationPanelButtonClicked()
     {
         SetRoomCreationPanelActive(true);
+        _openJoinPanelButtonGO.SetActive(true);
+        _openCreationPanelButtonGO.SetActive(false);
     }
 
     public void OnJoinRoomPanelButtonClicked()
     {
         SetRoomCreationPanelActive(false);
+        _openJoinPanelButtonGO.SetActive(false);
+        _openCreationPanelButtonGO.SetActive(true);
     }
 
     public void OnCreateRoomButtonClicked()
