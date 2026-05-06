@@ -4,6 +4,13 @@ using UnityEngine;
 
 public class MainMenu : MonoBehaviour
 {
+
+    [SerializeField] private GameObject _mainPanelGO;
+    [SerializeField] private GameObject _secondPanelGO;
+
+    [SerializeField] private TMP_Text _seccionTitle;
+    
+
     [SerializeField] private SharedLobby _sharedLobby;
     [SerializeField] private GameObject _roomCreationPanelGO;
     [SerializeField] private GameObject _joinRoomPanelGO;
@@ -37,16 +44,21 @@ public class MainMenu : MonoBehaviour
 
     public void OnRoomCreationPanelButtonClicked()
     {
+        _seccionTitle.text = "Create Room";
+        _mainPanelGO.SetActive(false);
+        _secondPanelGO.SetActive(true);
+
         SetRoomCreationPanelActive(true);
-        _openJoinPanelButtonGO.SetActive(true);
-        _openCreationPanelButtonGO.SetActive(false);
     }
 
     public void OnJoinRoomPanelButtonClicked()
     {
+        _seccionTitle.text = "Join Room";
+        _mainPanelGO.SetActive(false);
+        _secondPanelGO.SetActive(true);
+
         SetRoomCreationPanelActive(false);
-        _openJoinPanelButtonGO.SetActive(false);
-        _openCreationPanelButtonGO.SetActive(true);
+        
     }
 
     public void OnCreateRoomButtonClicked()
@@ -54,6 +66,12 @@ public class MainMenu : MonoBehaviour
         string roomName = GetRoomName();
 
         _sharedLobby.CreateSharedRoom(roomName);
+    }
+
+    public void OnGoBackMainMenu()
+    {
+        _mainPanelGO.SetActive(true);
+        _secondPanelGO.SetActive(false);
     }
 
     private string GetRoomName()
