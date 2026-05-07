@@ -9,7 +9,7 @@ public struct NetworkInputData : INetworkInput
     public Vector2 Move;
     public NetworkBool Jump;
     public NetworkBool Fire;
-    public Vector3 AimPoint;
+    public Vector3Compressed AimPoint;
 }
 public class PlayerInputProvider : SimulationBehaviour, INetworkRunnerCallbacks
 {
@@ -55,8 +55,9 @@ public class PlayerInputProvider : SimulationBehaviour, INetworkRunnerCallbacks
         data.Jump = _jumpPressed;
         data.Fire = _firePressed;
 
-        if (_thirdPersonAim != null)
-            data.AimPoint = _thirdPersonAim.GetAimPoint();
+        data.AimPoint = _thirdPersonAim.GetAimPoint();
+        if(_firePressed)
+            Debug.Log("data.AimPoint - " + data.AimPoint);
 
         _jumpPressed = false;
         _firePressed = false;

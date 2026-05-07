@@ -36,6 +36,12 @@ public class HeroMovement : NetworkBehaviour
     [SerializeField] private ThirdPersonAim _thirdPersonAim;
     [SerializeField] private Transform _buddyTransform;
 
+
+    private Vector2 _moveInput;
+private bool _jumpPressed;
+//private bool _firePressed;
+private Vector3 _cachedAimPoint;
+
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -47,14 +53,20 @@ public class HeroMovement : NetworkBehaviour
         if (!Object.HasInputAuthority || _inputsBlocked)
             return;
 
+        _moveInput = new Vector2(
+            Input.GetAxisRaw("Horizontal"),
+            Input.GetAxisRaw("Vertical")
+        );
+
+        _moveInput = Vector2.ClampMagnitude(_moveInput, 1f);
+
         if (Input.GetButtonDown("Jump"))
-        {
-            _jumpBufferCounter = JumpBufferTime;
-        }
+            _jumpPressed = true;
 
         if (Input.GetMouseButtonDown(0))
         {
             _firePressed = true;
+            _cachedAimPoint = _thirdPersonAim.GetAimPoint();
         }
     }
 
@@ -64,13 +76,15 @@ public class HeroMovement : NetworkBehaviour
         if (_inputsBlocked)
             return;
 
-        if (!GetInput(out NetworkInputData input))
+        if (!Object.HasStateAuthority)
             return;
 
-        if (input.Fire)
+        if (_firePressed)
         {
-            Vector3 fireDirection = ((Vector3)input.AimPoint - _muzzle.position).normalized;
+            Vector3 fireDirection = (_cachedAimPoint - _muzzle.position).normalized;
             _fireShoot.Fire(_muzzle.position, fireDirection);
+
+            _firePressed = false;
         }
 
         bool isGrounded = _characterController.isGrounded;
@@ -87,8 +101,11 @@ public class HeroMovement : NetworkBehaviour
             _coyoteTimeCounter -= Runner.DeltaTime;
         }
 
-        if (input.Jump)
+        if (_jumpPressed)
+        {
             _jumpBufferCounter = JumpBufferTime;
+            _jumpPressed = false;
+        }
 
         if (_jumpBufferCounter > 0f)
             _jumpBufferCounter -= Runner.DeltaTime;
@@ -112,7 +129,7 @@ public class HeroMovement : NetworkBehaviour
         right.Normalize();
 
         Vector3 moveDirection =
-            (forward * input.Move.y + right * input.Move.x).normalized;
+            (forward * _moveInput.y + right * _moveInput.x).normalized;
 
         Vector3 move = moveDirection * PlayerSpeed * Runner.DeltaTime;
 
@@ -166,20 +183,9 @@ public class HeroMovement : NetworkBehaviour
 
     public void BlockInputs()
     {
-        if (!Object.HasInputAuthority)
-            return;
-
-        _inputsBlocked = true;
-
-        _firePressed = false;
-
-        _jumpBufferCounter = 0f;
-        _coyoteTimeCounter = 0f;
-
-        _velocity = Vector3.zero;
-
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+       _firePressed = false;
+       _jumpPressed = false;
+       _moveInput = Vector2.zero;
     }
 
     public void UnblockInputs()
