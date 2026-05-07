@@ -10,6 +10,9 @@ EditorBuildSettings:
     guid: e0aa2db0e01ce9b46b8b36e4f7163a45
   - enabled: 1
     path: Assets/Scenes/Gameplay.unity
+    guid: cf779b7d819e78840b7d9d440d8f45b8
+  - enabled: 1
+    path: Assets/Scenes/Gameplay Backup 0.unity
     guid: 57fd7910dc58ffa42aa7ce28c11d171f
   - enabled: 1
     path: Assets/Scenes/Gameplay Backup 1.unity
@@ -26,9 +29,6 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
-    path: Assets/Scenes/Gameplay Backup 2.unity
-    guid: cf779b7d819e78840b7d9d440d8f45b8
   - enabled: 1
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
