@@ -5,7 +5,7 @@ using System;
 public class StateNetworkCrystal : NetworkBehaviour
 {
 
-    private int[] _allCrystalsData = new int[]{0,0};
+    private int[] _allCrystalsData = new int[]{-1,-1};
 
     [Networked, OnChangedRender(nameof(OnNCrystalTakenStateChanged))]
     private int NCrystalTaken { get; set; }
@@ -26,7 +26,7 @@ public class StateNetworkCrystal : NetworkBehaviour
         return _allCrystalsData;
     }
 
-    public void RequestCrystalTaken(int crystalId)
+    public void RequestCrystalTaken(int crystalId, int heroId)
     {
         if (Object == null)
         {
@@ -34,13 +34,13 @@ public class StateNetworkCrystal : NetworkBehaviour
             return;
         }
 
-        RPC_CrystalTaken(crystalId);
+        RPC_CrystalTaken(crystalId, heroId);
     }
     
     [Rpc(RpcSources.All, RpcTargets.All)]
-    private void RPC_CrystalTaken(int crystalId)
+    private void RPC_CrystalTaken(int crystalId, int heroId)
     {
-        _allCrystalsData[crystalId] = 1;
+        _allCrystalsData[crystalId] = heroId;
         NCrystalTaken++;
     }
     

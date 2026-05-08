@@ -8,8 +8,27 @@ public class HeroBuddy : MonoBehaviour
     [SerializeField] private GameObject _heroParent;
     [SerializeField] private GameObject _heroFsm;
     [SerializeField] private GameObject _cameras;
+    [SerializeField] private GameObject _canvasGO;
+    [SerializeField] private GameObject _controllersGO;
+    [SerializeField] private GameObject _mainHeroGO;
+    [SerializeField] private GameObject _heroFsmGO;
 
-    public Action<int> ReceiveHitAction;    
+    private int _id = -100;
+    private bool _isActive = false;
+
+    public Action<int> ReceiveHitAction;
+
+    public void SetId(int id)
+    {
+        Debug.Log("_SetId_ " + id);
+        _id = id;
+        _heroParent.GetComponent<MainHero>().SetId(_id);        
+    }
+
+    public int GetId()
+    {
+        return _id;
+    }
 
     public void SetupParent(Transform parent)
     {
@@ -18,6 +37,32 @@ public class HeroBuddy : MonoBehaviour
     public void ActiveCamera()
     {
         _cameras.SetActive(true);
+    }
+
+    public void ActiveCanvas()
+    {
+        _canvasGO.SetActive(true);
+    }
+
+    public void ActiveHeroFsm()
+    {
+        _heroFsmGO.SetActive(true);
+    }
+
+    public void ActiveMainHero()
+    {
+        _mainHeroGO.SetActive(true);
+    }
+
+    public void ActiveControllers()
+    {
+        _controllersGO.SetActive(true);
+    }
+
+    public void ActiveHeroTagAndLayer()
+    {
+        gameObject.tag = "Player";
+        gameObject.layer = LayerMask.NameToLayer("Player");
     }
 
     public void SetupMainCamera(Camera mainCamera)
@@ -37,7 +82,8 @@ public class HeroBuddy : MonoBehaviour
 
     public void ReceiveDamage(int damage)
     {   
-        ReceiveHitAction?.Invoke(damage);
+        if(_isActive)
+            ReceiveHitAction?.Invoke(damage);
     }
     
 }

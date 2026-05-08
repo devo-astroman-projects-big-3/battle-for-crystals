@@ -11,11 +11,14 @@ public class MainHero : MonoBehaviour
     [SerializeField] HitGlowE1 _hitGlowE1;
     [SerializeField] HeroTagLayerManager _heroTagLayerManager;
     [SerializeField] HeroTeleporter _heroTeleporter;
+    [SerializeField] CrystalsUI _crystalsUI;
 
     #endregion
     #region Private Fields
     private int _health = 5;
     private Vector3 _lastCheckpoint;
+
+    private int _id = -100;
     #endregion
 
     #region Public Fields
@@ -38,6 +41,16 @@ public class MainHero : MonoBehaviour
     #endregion
 
     #region Public Methods
+    public void SetId(int id)
+    {
+        _id = id;
+    }
+
+    public int GetId()
+    {
+        return _id;
+    }
+
     public void BlockInputs()
     {
         _heroMovement.BlockInputs();
@@ -120,6 +133,21 @@ public class MainHero : MonoBehaviour
     {
         _heroTagLayerManager.ChangeToPlayerTag();
         _heroTagLayerManager.ChangeToPlayerLayer();
+    }
+
+    public void SetCrystalsData(int[] crystalsData)
+    {
+        int nCrystalsByHero = 0;
+        for (int i = 0; i<crystalsData.Length; i++)
+        {
+            if (crystalsData[i] == _id)
+            {
+                nCrystalsByHero++;     
+            }
+        }        
+
+        _crystalsUI.SetCrystals(nCrystalsByHero);
+
     }
     #endregion
 }

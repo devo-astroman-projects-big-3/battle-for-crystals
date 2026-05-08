@@ -14,7 +14,7 @@ public class Crystal : MonoBehaviour
     #endregion
 
     #region Public Fields
-    public Action<int> CrystalTouchedAction;
+    public Action<int,int> CrystalTouchedAction;
     #endregion    
 
     #region Unity Callbacks
@@ -40,7 +40,9 @@ public class Crystal : MonoBehaviour
     #region Private Methods
     private void HandleDetected(GameObject hero)
     {
-        CrystalTouchedAction?.Invoke(_id);
+        int heroId = hero.GetComponent<HeroBuddy>().GetId();
+        CrystalTouchedAction?.Invoke(_id,heroId);
+        _heroDetector.detectedAction -= HandleDetected;
     }
     #endregion
     #region Public Methods
