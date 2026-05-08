@@ -8,6 +8,7 @@ public class Crystal : MonoBehaviour
     [SerializeField] private int _id;
     [SerializeField] private HeroDetector _heroDetector;
     [SerializeField] private MeshRenderer _meshRenderer;
+    [SerializeField] private GameObject _radarSymbolGO;
     #endregion
 
     #region Private Fields
@@ -33,6 +34,7 @@ public class Crystal : MonoBehaviour
     public void Hide()
     {
         _meshRenderer.enabled = false;
+        _radarSymbolGO.SetActive(false);
         _heroDetector.detectedAction -= HandleDetected;
     }
     #endregion

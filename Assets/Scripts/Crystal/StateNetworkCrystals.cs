@@ -5,7 +5,7 @@ using System;
 public class StateNetworkCrystal : NetworkBehaviour
 {
 
-    private int[] _allCrystalsData = new int[]{-1,-1};
+    private int[] _allCrystalsData = new int[]{-1,-1,-1,-1,-1,-1,-1,-1,-1};
 
     [Networked, OnChangedRender(nameof(OnNCrystalTakenStateChanged))]
     private int NCrystalTaken { get; set; }
