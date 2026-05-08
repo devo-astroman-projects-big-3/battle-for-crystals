@@ -12,7 +12,7 @@ public class CrystalManager : MonoBehaviour
     #endregion
 
     #region Public Fields
-    public Action CrystalsChangedAction;
+    public Action<bool> CrystalsChangedAction;
     #endregion
 
 
@@ -51,7 +51,7 @@ public class CrystalManager : MonoBehaviour
         _stateNetworkCrystal.RequestCrystalTaken(crystalId,heroId);
     }
 
-    private void HandleCrystalsChanged()
+    private void HandleCrystalsChanged(bool allTaken)
     {
         int[] allCrystalsData = _stateNetworkCrystal.GetAllCrystalsData();
 
@@ -61,7 +61,7 @@ public class CrystalManager : MonoBehaviour
                 _crystals[i].Hide();
         }
 
-        CrystalsChangedAction?.Invoke();
+        CrystalsChangedAction?.Invoke(allTaken);
 
     }
     #endregion

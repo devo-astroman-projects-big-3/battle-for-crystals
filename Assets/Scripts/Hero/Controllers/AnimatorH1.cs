@@ -25,9 +25,14 @@ public class AnimatorH1 : NetworkBehaviour
 
     private void OnDestroy()
     {
-        var behaviours = _animator.GetBehaviours<EndStateBehaviour>();
-        foreach (var b in behaviours)
-            b.StateExitAction -= HandleAnimationFinished;
+
+        if (_animator)
+        {
+            var behaviours = _animator.GetBehaviours<EndStateBehaviour>();
+            foreach (var b in behaviours)
+                b.StateExitAction -= HandleAnimationFinished;    
+        }
+        
     }
     #endregion
 

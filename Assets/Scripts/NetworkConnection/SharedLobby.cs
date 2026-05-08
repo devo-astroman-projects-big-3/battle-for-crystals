@@ -162,6 +162,8 @@ public class SharedLobby : MonoBehaviour, INetworkRunnerCallbacks
         Debug.Log("JoinSharedRoom flag3");
     }
 
+
+
     private bool CanStartRoom(string roomName)
     {
         if (_runner == null)

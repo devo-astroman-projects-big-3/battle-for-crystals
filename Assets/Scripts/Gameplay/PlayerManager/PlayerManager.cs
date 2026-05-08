@@ -33,17 +33,23 @@ public class PlayerManager : MonoBehaviour
     }
     
     public void UpdateCrystalData(int[] crystalData)
-    {
-        /* Debug.Log("--> UpdateCrystalData " + crystalData);
-
-        for (int i = 0; i < crystalData.Length; i++)
-        {
-            Debug.Log($"index: {i} _  data: {crystalData[i]} ");
-        } */
-
-        
+    {   
         MainHero mainHero = _playerInputAthority.GetComponentInChildren<MainHero>(true);
         mainHero.SetCrystalsData(crystalData);
+    }
+
+    public void DeactivateControlInputs()
+    {   
+        MainHero mainHero = _playerInputAthority.GetComponentInChildren<MainHero>(true);
+
+        mainHero.BlockInputs();
+    }
+
+    public int GetNCrystalsCollected()
+    {
+        MainHero mainHero = _playerInputAthority.GetComponentInChildren<MainHero>(true);
+
+        return mainHero.GetNCrystalsCollected();
     }
     #endregion
 }

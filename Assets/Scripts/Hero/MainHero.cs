@@ -17,8 +17,8 @@ public class MainHero : MonoBehaviour
     #region Private Fields
     private int _health = 5;
     private Vector3 _lastCheckpoint;
-
     private int _id = -100;
+    private int _nCrystalCollected = 0;
     #endregion
 
     #region Public Fields
@@ -144,10 +144,16 @@ public class MainHero : MonoBehaviour
             {
                 nCrystalsByHero++;     
             }
-        }        
+        }
 
+        _nCrystalCollected = nCrystalsByHero;
         _crystalsUI.SetCrystals(nCrystalsByHero);
 
+    }
+
+    public int GetNCrystalsCollected()
+    {
+        return _nCrystalCollected;
     }
     #endregion
 }

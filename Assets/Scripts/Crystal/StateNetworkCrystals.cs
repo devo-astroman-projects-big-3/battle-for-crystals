@@ -9,7 +9,7 @@ public class StateNetworkCrystal : NetworkBehaviour
 
     [Networked, OnChangedRender(nameof(OnNCrystalTakenStateChanged))]
     private int NCrystalTaken { get; set; }
-    public event Action CrystalsChangedAction;
+    public event Action<bool> CrystalsChangedAction;
 
     public override void Spawned()
     {
@@ -46,7 +46,7 @@ public class StateNetworkCrystal : NetworkBehaviour
     
     private void OnNCrystalTakenStateChanged()
     {
-        CrystalsChangedAction?.Invoke();
+        CrystalsChangedAction?.Invoke(NCrystalTaken == _allCrystalsData.Length);
     }
 
     

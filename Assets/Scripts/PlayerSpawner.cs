@@ -40,6 +40,12 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
         TrySpawnPlayer(player);
     }
 
+    
+    public void RestartGameplay()
+    {
+        _runner.LoadScene(SceneRef.FromIndex(1));
+    }
+
     private void TrySpawnPlayer(PlayerRef player)
     {
         if (player != _runner.LocalPlayer)
