@@ -12,7 +12,7 @@ public class MainResults : MonoBehaviour
     [SerializeField] private GameSceneManager _gameSceneManager;
     [SerializeField] private TMP_Text _winStatusText;
     [SerializeField] private TMP_Text _descriptionText;
-    [SerializeField] private TMP_Text _waitForOtherPlayerText;
+    //[SerializeField] private TMP_Text _waitForOtherPlayerText;
     [SerializeField] private TMP_Text _waitForAdminToPlayAgainText;
     [SerializeField] private Button _playAgainButton;
     [SerializeField] private Button _exitButton;
@@ -42,7 +42,7 @@ public class MainResults : MonoBehaviour
         int otherPlayerCrystals = Mathf.Max(totalCrystals - playerCrystals, 0);
         int crystalsDifference = Mathf.Abs(playerCrystals - otherPlayerCrystals);
         
-        _waitForOtherPlayerText.gameObject.SetActive(false);
+        //_waitForOtherPlayerText.gameObject.SetActive(false);
 
         if (playerCrystals > otherPlayerCrystals)
         {

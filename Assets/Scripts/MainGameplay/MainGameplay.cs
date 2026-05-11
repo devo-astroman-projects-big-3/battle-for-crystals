@@ -59,25 +59,10 @@ public class MainGameplay : MonoBehaviour
         nCrystals++;
 
         if(nCrystals == 2)
+        //if (allCrystalsTaken)
         {
             ProcessEndBattle();
-            /* Debug.Log("TIME TO RESTART");
-            AllGameData.nCrystalTaken = _playerManager.GetNCrystalsCollected(); */
-
-            //_gameSceneManager.GoResults();
         }
-        /* if (allCrystalsTaken)
-        {
-            _playerManager.DeactivateControlInputs();
-            //_playerManager
-            
-            //_resultsManager.ShowResults();
-
-            //deactivate inputs
-            //show who is the winner
-            //show time
-            //go back to lobby
-        } */
 
     }
 
