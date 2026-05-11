@@ -51,5 +51,27 @@ public class PlayerManager : MonoBehaviour
 
         return mainHero.GetNCrystalsCollected();
     }
+
+    public void NotifyPlayerLeft()
+    {
+        MainHero mainHero = _playerInputAthority.GetComponentInChildren<MainHero>(true);
+
+        mainHero.SetNetMsg("other player has left");
+    }
+
+    public void NotifyPlayerJoined()
+    {
+        MainHero mainHero = _playerInputAthority.GetComponentInChildren<MainHero>(true);
+
+        mainHero.SetNetMsg("other arrived");
+    }
+
+    public void NotifyRedirectingToLobby()
+    {
+        MainHero mainHero = _playerInputAthority.GetComponentInChildren<MainHero>(true);
+
+        mainHero.SetNetMsg("Admin left - so redirecting to Lobby");
+
+    }
     #endregion
 }

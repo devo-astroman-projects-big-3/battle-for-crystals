@@ -46,6 +46,11 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
         _runner.LoadScene(SceneRef.FromIndex(1));
     }
 
+    public NetworkRunner GetNetworkRunner()
+    {
+        return _runner;
+    }
+
     private void TrySpawnPlayer(PlayerRef player)
     {
         if (player != _runner.LocalPlayer)

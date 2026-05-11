@@ -53,6 +53,9 @@ public class SharedLobby : MonoBehaviour, INetworkRunnerCallbacks
 
     private async void Start()
     {
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
         if (runnerPrefab == null)
         {
             Debug.LogError($"{nameof(SharedLobby)} is missing a NetworkRunner prefab reference.", this);

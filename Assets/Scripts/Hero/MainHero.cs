@@ -12,6 +12,7 @@ public class MainHero : MonoBehaviour
     [SerializeField] HeroTagLayerManager _heroTagLayerManager;
     [SerializeField] HeroTeleporter _heroTeleporter;
     [SerializeField] CrystalsUI _crystalsUI;
+    [SerializeField] NetUI _netUI;
 
     #endregion
     #region Private Fields
@@ -154,6 +155,11 @@ public class MainHero : MonoBehaviour
     public int GetNCrystalsCollected()
     {
         return _nCrystalCollected;
+    }
+
+    public void SetNetMsg(string msg)
+    {
+        _netUI.SetNetMsg(msg);
     }
     #endregion
 }
