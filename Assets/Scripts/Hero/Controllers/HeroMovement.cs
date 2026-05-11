@@ -79,13 +79,13 @@ private Vector3 _cachedAimPoint;
         if (!Object.HasStateAuthority)
             return;
 
-        if (_firePressed)
+        /* if (_firePressed)
         {
             Vector3 fireDirection = (_cachedAimPoint - _muzzle.position).normalized;
             _fireShoot.Fire(_muzzle.position, fireDirection);
 
             _firePressed = false;
-        }
+        } */
 
         bool isGrounded = _characterController.isGrounded;
 
