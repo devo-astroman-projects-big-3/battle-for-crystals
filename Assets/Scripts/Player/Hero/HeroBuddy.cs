@@ -20,7 +20,6 @@ public class HeroBuddy : MonoBehaviour
 
     public void SetId(int id)
     {
-        Debug.Log("_SetId_ " + id);
         _id = id;
         _heroParent.GetComponent<MainHero>().SetId(_id);        
     }

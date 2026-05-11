@@ -4,7 +4,6 @@ public class MainHeroPlayerCharacter : MonoBehaviour
 {
     #region Fields
     [SerializeField] ThirdPersonAim _thirdPersonAim;
-    [SerializeField] FireShoot _fireShoot;
     [SerializeField] HeroHealth _heroHealth;
     [SerializeField] HeroHitGlow _heroHitGlow;
     [SerializeField] HeroDead _heroDead;
@@ -21,11 +20,6 @@ public class MainHeroPlayerCharacter : MonoBehaviour
     public void SetCamera(Camera camera)
     {
        _thirdPersonAim.SetCamera(camera);
-    }
-
-    public void SetBulletPool(ObjectPool bulletPool)
-    {
-       _fireShoot.SetBulletPool(bulletPool);
     }
 
    public void ReceiveDamage(int damageValue)

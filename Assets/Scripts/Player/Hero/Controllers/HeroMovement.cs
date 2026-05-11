@@ -5,8 +5,6 @@ using System;
 public class HeroMovement : NetworkBehaviour
 {
     private Vector3 _velocity;
-    private bool _firePressed;
-    //private CharacterController _controller;
 
     private float _coyoteTimeCounter;
     private float _jumpBufferCounter;
@@ -38,9 +36,9 @@ public class HeroMovement : NetworkBehaviour
 
 
     private Vector2 _moveInput;
-private bool _jumpPressed;
-//private bool _firePressed;
-private Vector3 _cachedAimPoint;
+    private bool _jumpPressed;
+
+    private Vector3 _cachedAimPoint;
 
     private void Awake()
     {
@@ -63,11 +61,6 @@ private Vector3 _cachedAimPoint;
         if (Input.GetButtonDown("Jump"))
             _jumpPressed = true;
 
-        if (Input.GetMouseButtonDown(0))
-        {
-            _firePressed = true;
-            _cachedAimPoint = _thirdPersonAim.GetAimPoint();
-        }
     }
 
 
@@ -79,13 +72,6 @@ private Vector3 _cachedAimPoint;
         if (!Object.HasStateAuthority)
             return;
 
-        /* if (_firePressed)
-        {
-            Vector3 fireDirection = (_cachedAimPoint - _muzzle.position).normalized;
-            _fireShoot.Fire(_muzzle.position, fireDirection);
-
-            _firePressed = false;
-        } */
 
         bool isGrounded = _characterController.isGrounded;
 
@@ -161,21 +147,6 @@ private Vector3 _cachedAimPoint;
         if (!Object.HasInputAuthority)
             return;
 
-        /* Camera = Camera.main;
-
-        CameraManager cameraManager =
-            Camera != null
-            ? Camera.GetComponent<CameraManager>()
-            : null;
-
-        if (cameraManager != null && _cameraPivotController != null)
-        {
-            cameraManager.SetVirtualTargets(
-                _cameraPivotController.CameraPivot,
-                _cameraPivotController.CameraPivot
-            );
-        } */
-
         JustSpawnAction?.Invoke();
     }
 
@@ -183,18 +154,11 @@ private Vector3 _cachedAimPoint;
 
     public void BlockInputs()
     {
-        Debug.Log("should block inputs");
 
         if (!Object.HasInputAuthority)
             return;
 
-        Debug.Log("should block inputs2");
-
         _inputsBlocked = true;
-
-       /* _firePressed = false;
-       _jumpPressed = false;
-       _moveInput = Vector2.zero; */
     }
 
     public void UnblockInputs()
