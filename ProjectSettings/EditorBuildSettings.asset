@@ -14,10 +14,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Results.unity
     guid: f73444082fc935941aef77ce1633dd74
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Gameplay Backup 0.unity
     guid: 57fd7910dc58ffa42aa7ce28c11d171f
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Gameplay Backup 1.unity
     guid: 16d81c6601fc038489b52b5a4dea5cc4
   - enabled: 0
@@ -32,7 +32,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
   m_configObjects: {}
