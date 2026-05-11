@@ -1,4 +1,3 @@
-using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,18 +5,17 @@ using UnityEngine.UI;
 public class MainResults : MonoBehaviour
 {
     #region Fields
-    #endregion
-
-    #region Private Fields
     [SerializeField] private GameSceneManager _gameSceneManager;
     [SerializeField] private TMP_Text _winStatusText;
     [SerializeField] private TMP_Text _descriptionText;
-    //[SerializeField] private TMP_Text _waitForOtherPlayerText;
     [SerializeField] private TMP_Text _waitForAdminToPlayAgainText;
     [SerializeField] private Button _playAgainButton;
     [SerializeField] private Button _exitButton;
     [SerializeField] private SfxManager _sfxManagerWin;
     [SerializeField] private SfxManager _sfxManagerLoose;
+    #endregion
+
+    #region Private Fields    
     #endregion
 
     #region Public Fields
@@ -30,21 +28,24 @@ public class MainResults : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        Debug.Log("_playAgainButton.gameObject " + AllGameData.isAdmin);
         _playAgainButton.gameObject.SetActive(AllGameData.isAdmin);
         _waitForAdminToPlayAgainText.gameObject.SetActive(!AllGameData.isAdmin);
 
         SetResultMessages();
     }
+    private void OnDestroy()
+    {
+    }
+    #endregion
 
+    #region Private Methods
     private void SetResultMessages()
     {
         int playerCrystals = Mathf.RoundToInt(AllGameData.nCrystalTaken);
         int totalCrystals = Mathf.RoundToInt(AllGameData.totalCrystals);
         int otherPlayerCrystals = Mathf.Max(totalCrystals - playerCrystals, 0);
-        int crystalsDifference = Mathf.Abs(playerCrystals - otherPlayerCrystals);
+        int crystalsDifference = Mathf.Abs(playerCrystals - otherPlayerCrystals);        
         
-        //_waitForOtherPlayerText.gameObject.SetActive(false);
 
         if (playerCrystals > otherPlayerCrystals)
         {
@@ -80,13 +81,6 @@ public class MainResults : MonoBehaviour
             _winStatusText.text = "Draw!";
             _descriptionText.text = $"Both players collected {nCrystals} crystals";
     }
-
-    private void OnDestroy()
-    {
-    }
-    #endregion
-
-    #region Private Methods
     #endregion
     #region Public Methods
     public void OnPlayAgainButtonClick()

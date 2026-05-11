@@ -7,25 +7,18 @@ using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 public class GameSceneManager : MonoBehaviour, INetworkRunnerCallbacks
 {
-    
+    #region Fields
     [Header("Scene Names (must match Build Settings)")]
     [SerializeField] private int sceneLobbyIndex = 0;
     [SerializeField] private int gameplayIndex = 1;
     [SerializeField] private int resultIndex = 2;
+    #endregion
 
+    #region Private Fields
     private NetworkRunner _runner;
+    #endregion
 
-    private IEnumerator Start()
-    {
-        yield return new WaitUntil(() =>
-        {
-            _runner = FindFirstObjectByType<NetworkRunner>();
-            return _runner != null && _runner.IsRunning;
-        });
-
-        _runner.AddCallbacks(this);
-    }
-    
+    #region Public Fields
     public void GoLobby()
     {
         //LoadScene(sceneLobbyIndex);
@@ -42,20 +35,34 @@ public class GameSceneManager : MonoBehaviour, INetworkRunnerCallbacks
         LoadScene(resultIndex);
     }
 
-
-    private void LoadScene(int sceneIndex)
-    {
-       _runner.LoadScene(SceneRef.FromIndex(sceneIndex));
-    }
-
     public async void ReturnToLobby()
     {
         await _runner.Shutdown();
 
         SceneManager.LoadScene(sceneLobbyIndex);
     }
+    #endregion
 
-    
+    #region Private Fields
+    private IEnumerator Start()
+    {
+        yield return new WaitUntil(() =>
+        {
+            _runner = FindFirstObjectByType<NetworkRunner>();
+            return _runner != null && _runner.IsRunning;
+        });
+
+        _runner.AddCallbacks(this);
+    }
+
+    private void LoadScene(int sceneIndex)
+    {
+       _runner.LoadScene(SceneRef.FromIndex(sceneIndex));
+    }
+    #endregion
+
+
+    #region Photon Callbacks
     public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player) {}
     public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player) {}
     public void OnConnectedToServer(NetworkRunner runner) {}
@@ -75,5 +82,7 @@ public class GameSceneManager : MonoBehaviour, INetworkRunnerCallbacks
     public void OnSceneLoadStart(NetworkRunner runner) {}
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) {}
     public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message) {}
+    #endregion
+
 
 }
