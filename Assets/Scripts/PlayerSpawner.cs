@@ -56,7 +56,14 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
         _localPlayerSpawned = true;
 
-        Vector3 spawnPosition = GetSpawnPosition();
+        Debug.Log("isAdmin -> " + AllGameData.isAdmin);
+        Debug.Log("nCrystals taken -> " + AllGameData.nCrystalTaken);        
+
+        int index=1;
+        if(AllGameData.isAdmin)
+            index = 0;
+
+        Vector3 spawnPosition = GetSpawnPositionByIndex(index);
 
         NetworkObject playerObject = _runner.Spawn(
             PlayerPrefab,
@@ -94,6 +101,11 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
 
         int index = Mathf.Clamp(playerCount - 1, 0, _spawnPositions.Length - 1);
 
+        return _spawnPositions[index].position;
+    }
+
+    private Vector3 GetSpawnPositionByIndex(int index)
+    {
         return _spawnPositions[index].position;
     }
 

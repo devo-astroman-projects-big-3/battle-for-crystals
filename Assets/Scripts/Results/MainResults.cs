@@ -13,6 +13,7 @@ public class MainResults : MonoBehaviour
     [SerializeField] private TMP_Text _winStatusText;
     [SerializeField] private TMP_Text _descriptionText;
     [SerializeField] private TMP_Text _waitForOtherPlayerText;
+    [SerializeField] private TMP_Text _waitForAdminToPlayAgainText;
     [SerializeField] private Button _playAgainButton;
     [SerializeField] private Button _exitButton;
     #endregion
@@ -21,12 +22,16 @@ public class MainResults : MonoBehaviour
     #endregion
 
 
-
     #region Unity Callbacks
     private void Start()
     {
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
+
+        Debug.Log("_playAgainButton.gameObject " + AllGameData.isAdmin);
+        _playAgainButton.gameObject.SetActive(AllGameData.isAdmin);
+        _waitForAdminToPlayAgainText.gameObject.SetActive(!AllGameData.isAdmin);
+
         SetResultMessages();
     }
 

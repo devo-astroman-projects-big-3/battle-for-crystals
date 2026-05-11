@@ -17,7 +17,7 @@ public class SharedLobby : MonoBehaviour, INetworkRunnerCallbacks
 {
     [SerializeField] private NetworkRunner runnerPrefab;
     [SerializeField] private int gameSceneIndex = 1;
-    [SerializeField] private int maxPlayers = 4;
+    [SerializeField] private int maxPlayers = 2;
 
     private NetworkRunner _runner;
     public List<SessionInfo> CurrentSessions = new();    
@@ -132,6 +132,7 @@ public class SharedLobby : MonoBehaviour, INetworkRunnerCallbacks
             SceneManager = GetOrCreateSceneManager()
         });
 
+        AllGameData.isAdmin = true;
 
         if (!result.Ok)
             Debug.LogError($"Failed to create shared room '{roomName}': {result.ShutdownReason}", this);
@@ -140,26 +141,27 @@ public class SharedLobby : MonoBehaviour, INetworkRunnerCallbacks
 
     public async void JoinSharedRoom(string roomName)
     {
-        Debug.Log("Trying to join " + roomName);
+        
         if (!CanStartRoom(roomName))
         {
             Debug.Log("Can't join room " + roomName);
             return;
         }
-        Debug.Log("JoinSharedRoom flag0");
+        
         await RestartRunner();
-        Debug.Log("JoinSharedRoom flag1");
+        
         var result = await _runner.StartGame(new StartGameArgs
         {
             GameMode = GameMode.Shared,
             SessionName = roomName,
             SceneManager = GetOrCreateSceneManager()
         });
-        Debug.Log("JoinSharedRoom flag2");
+        
+        AllGameData.isAdmin = false;
+
         if (!result.Ok)
             Debug.LogError($"Failed to join shared room '{roomName}': {result.ShutdownReason}", this);
         
-        Debug.Log("JoinSharedRoom flag3");
     }
 
 

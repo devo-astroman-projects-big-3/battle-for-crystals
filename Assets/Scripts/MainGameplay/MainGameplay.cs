@@ -1,5 +1,5 @@
 using UnityEngine;
-using System;
+using System.Collections;
 
 public class MainGameplay : MonoBehaviour
 {
@@ -12,6 +12,7 @@ public class MainGameplay : MonoBehaviour
     #endregion
     #region Private Fields
     private int nCrystals = 0;
+    private Coroutine _goResultsRoutine;
     #endregion
 
     #region Unity Callbacks
@@ -47,17 +48,17 @@ public class MainGameplay : MonoBehaviour
 
         if(nCrystals == 2)
         {
-            Debug.Log("TIME TO RESTART");
-            AllGameData.nCrystalTaken = _playerManager.GetNCrystalsCollected();
+            ProcessEndBattle();
+            /* Debug.Log("TIME TO RESTART");
+            AllGameData.nCrystalTaken = _playerManager.GetNCrystalsCollected(); */
 
-            _gameSceneManager.GoResults();
+            //_gameSceneManager.GoResults();
         }
         /* if (allCrystalsTaken)
         {
             _playerManager.DeactivateControlInputs();
             //_playerManager
             
-
             //_resultsManager.ShowResults();
 
             //deactivate inputs
@@ -65,7 +66,29 @@ public class MainGameplay : MonoBehaviour
             //show time
             //go back to lobby
         } */
-        
+
+    }
+
+    private void ProcessEndBattle()
+    {
+        Debug.Log("TIME TO RESTART is admin: " + AllGameData.isAdmin);
+        _playerManager.DeactivateControlInputs();
+
+        AllGameData.nCrystalTaken = _playerManager.GetNCrystalsCollected();
+        Debug.Log("AllGameData.nCrystalTaken -> " + AllGameData.nCrystalTaken);
+
+        //show a message of battle finished
+
+        _goResultsRoutine = StartCoroutine(GoShowResultsRoutine(2));
+
+    }
+
+    private IEnumerator GoShowResultsRoutine(int secs)
+    {
+        yield return new WaitForSeconds(secs);
+
+        _gameSceneManager.GoResults();
+        _goResultsRoutine = null;
     }
     
     #endregion

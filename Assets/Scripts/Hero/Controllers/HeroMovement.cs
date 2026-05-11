@@ -50,7 +50,7 @@ private Vector3 _cachedAimPoint;
 
     private void Update()
     {
-        if (!Object.HasInputAuthority || _inputsBlocked)
+        if ((Object && !Object.HasInputAuthority) || _inputsBlocked)
             return;
 
         _moveInput = new Vector2(
@@ -183,9 +183,18 @@ private Vector3 _cachedAimPoint;
 
     public void BlockInputs()
     {
-       _firePressed = false;
+        Debug.Log("should block inputs");
+
+        if (!Object.HasInputAuthority)
+            return;
+
+        Debug.Log("should block inputs2");
+
+        _inputsBlocked = true;
+
+       /* _firePressed = false;
        _jumpPressed = false;
-       _moveInput = Vector2.zero;
+       _moveInput = Vector2.zero; */
     }
 
     public void UnblockInputs()
