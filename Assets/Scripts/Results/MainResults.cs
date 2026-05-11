@@ -16,6 +16,8 @@ public class MainResults : MonoBehaviour
     [SerializeField] private TMP_Text _waitForAdminToPlayAgainText;
     [SerializeField] private Button _playAgainButton;
     [SerializeField] private Button _exitButton;
+    [SerializeField] private SfxManager _sfxManagerWin;
+    [SerializeField] private SfxManager _sfxManagerLoose;
     #endregion
 
     #region Public Fields
@@ -47,14 +49,17 @@ public class MainResults : MonoBehaviour
         if (playerCrystals > otherPlayerCrystals)
         {
             SetWinMessages(crystalsDifference);
+            _sfxManagerWin.PlayClip1();
         }
         else if (playerCrystals < otherPlayerCrystals)
         {
             SetLoseMessages(crystalsDifference);
+            _sfxManagerLoose.PlayClip1();
         }
         else
         {
             SetDrawMessages(playerCrystals);
+            _sfxManagerWin.PlayClip1();
         }
     }
 

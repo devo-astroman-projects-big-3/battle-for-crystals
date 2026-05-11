@@ -68,16 +68,11 @@ public class MainGameplay : MonoBehaviour
 
     private void ProcessEndBattle()
     {
-        Debug.Log("TIME TO RESTART is admin: " + AllGameData.isAdmin);
         _playerManager.DeactivateControlInputs();
 
         AllGameData.nCrystalTaken = _playerManager.GetNCrystalsCollected();
-        Debug.Log("AllGameData.nCrystalTaken -> " + AllGameData.nCrystalTaken);
-
-        //show a message of battle finished
 
         _goResultsRoutine = StartCoroutine(GoShowResultsRoutine(2));
-
     }
 
     private IEnumerator GoShowResultsRoutine(int secs)

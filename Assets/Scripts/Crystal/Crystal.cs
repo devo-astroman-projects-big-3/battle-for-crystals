@@ -8,7 +8,8 @@ public class Crystal : MonoBehaviour
     [SerializeField] private int _id;
     [SerializeField] private HeroDetector _heroDetector;
     [SerializeField] private MeshRenderer _meshRenderer;
-    [SerializeField] private GameObject _radarSymbolGO;
+    [SerializeField] private GameObject _radarSymbolGO;    
+    [SerializeField] private SfxManager _sfxManager;
     #endregion
 
     #region Private Fields
@@ -42,6 +43,7 @@ public class Crystal : MonoBehaviour
     #region Private Methods
     private void HandleDetected(GameObject hero)
     {
+        _sfxManager.PlayClip1();
         int heroId = hero.GetComponent<HeroBuddy>().GetId();
         CrystalTouchedAction?.Invoke(_id,heroId);
         _heroDetector.detectedAction -= HandleDetected;
