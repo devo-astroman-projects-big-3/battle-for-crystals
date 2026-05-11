@@ -7,17 +7,21 @@ using System.Collections.Generic;
 
 public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
 {
+    #region Fields
     [SerializeField] private NetworkPrefabRef PlayerPrefab;
-    public Action<GameObject> PlayerSpawwnedAction;
-
     [SerializeField] private Transform _playerParent;
     [SerializeField] private Transform[] _spawnPositions;
-
+    #endregion
+    
+    #region Private Fields
     private NetworkRunner _runner;
     private bool _localPlayerSpawned;
+    #endregion
+    #region Public Fields
+    public Action<GameObject> PlayerSpawwnedAction;
+    #endregion
 
-    
-
+    #region Unity Callbacks
     private IEnumerator Start()
     {
         yield return new WaitUntil(() =>
@@ -34,13 +38,14 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
             TrySpawnPlayer(player);
         }
     }
-
-    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
+    private void OnDestroy()
     {
-        TrySpawnPlayer(player);
+        if (_runner != null)
+            _runner.RemoveCallbacks(this);
     }
+    #endregion
 
-    
+    #region Public Methods
     public void RestartGameplay()
     {
         _runner.LoadScene(SceneRef.FromIndex(1));
@@ -50,7 +55,9 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
     {
         return _runner;
     }
+    #endregion
 
+    #region Private Methods
     private void TrySpawnPlayer(PlayerRef player)
     {
         if (player != _runner.LocalPlayer)
@@ -60,9 +67,6 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
             return;
 
         _localPlayerSpawned = true;
-
-        Debug.Log("isAdmin -> " + AllGameData.isAdmin);
-        Debug.Log("nCrystals taken -> " + AllGameData.nCrystalTaken);        
 
         int index=1;
         if(AllGameData.isAdmin)
@@ -93,32 +97,18 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
         PlayerSpawwnedAction?.Invoke(playerObject.gameObject);
         
     }
-
-    private Vector3 GetSpawnPosition()
-    {
-        if (_spawnPositions == null || _spawnPositions.Length == 0)
-            return Vector3.zero;
-
-        int playerCount = 0;
-
-        foreach (PlayerRef p in _runner.ActivePlayers)
-            playerCount++;
-
-        int index = Mathf.Clamp(playerCount - 1, 0, _spawnPositions.Length - 1);
-
-        return _spawnPositions[index].position;
-    }
-
     private Vector3 GetSpawnPositionByIndex(int index)
     {
         return _spawnPositions[index].position;
     }
+    #endregion
 
-    private void OnDestroy()
+    
+    #region Photon Callbacks
+    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        if (_runner != null)
-            _runner.RemoveCallbacks(this);
-    }
+        TrySpawnPlayer(player);
+    }    
 
     public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player) {}
     public void OnObjectExitAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player) {}
@@ -138,4 +128,6 @@ public class PlayerSpawner : MonoBehaviour, INetworkRunnerCallbacks
     public void OnSceneLoadStart(NetworkRunner runner) {}
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) {}
     public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message) {}
+    #endregion
+
 }

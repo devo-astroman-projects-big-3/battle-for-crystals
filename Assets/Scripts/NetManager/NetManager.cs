@@ -2,36 +2,21 @@ using Fusion;
 using Fusion.Sockets;
 using UnityEngine;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 public class NetManager : MonoBehaviour, INetworkRunnerCallbacks
 {   
-
+    #region Public Fields
     public Action PlayerLeftAction;
     public Action PlayerJoinedAction;
+    #endregion
 
+    #region Private Fields
     private NetworkRunner _runner;
+    #endregion
 
+    #region Unity Callbacks
     private void Start(){}
-
-    public void SetNetworkRunner(NetworkRunner runner)
-    {
-        _runner = runner;
-        _runner.AddCallbacks(this);
-    }
-
-    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
-    {
-        Debug.Log("_OnPlayerLeft_");
-        PlayerLeftAction?.Invoke();
-    }
-
-    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
-    {
-        Debug.Log("_OnPlayerJoined_");
-        PlayerJoinedAction?.Invoke();
-    }
 
     private void OnDestroy()
     {
@@ -39,6 +24,27 @@ public class NetManager : MonoBehaviour, INetworkRunnerCallbacks
         {
             _runner.RemoveCallbacks(this);
         }
+    }
+
+    #endregion
+
+    #region Public Methods
+    public void SetNetworkRunner(NetworkRunner runner)
+    {
+        _runner = runner;
+        _runner.AddCallbacks(this);
+    }
+    #endregion
+
+    #region Photon Callbacks
+    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
+    {        
+        PlayerLeftAction?.Invoke();
+    }
+
+    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
+    {
+        PlayerJoinedAction?.Invoke();
     }
 
     public void OnObjectEnterAOI(NetworkRunner runner, NetworkObject obj, PlayerRef player) {}
@@ -59,6 +65,9 @@ public class NetManager : MonoBehaviour, INetworkRunnerCallbacks
     public void OnSceneLoadStart(NetworkRunner runner) {}
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) {}
     public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message) {}
+
+    #endregion
+    
 
     
 }

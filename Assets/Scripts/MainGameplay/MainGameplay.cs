@@ -11,8 +11,8 @@ public class MainGameplay : MonoBehaviour
     [SerializeField] GameSceneManager _gameSceneManager;
     [SerializeField] NetManager _netManager;
     private NetworkRunner _runner;
-
     #endregion
+    
     #region Private Fields
     private int nCrystals = 0;
     private Coroutine _goResultsRoutine;
