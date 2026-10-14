@@ -5,7 +5,7 @@ In this project the player can create rooms, and play with a friend, or play sol
 
 The idea of the game is to compite in order to collect the major number of crystals by controlling a Third person character.
 
-Multiplayer was created with photonengine
+Unity3d and Multiplayer was created with photonengine
 
 To play it you can go to:
 https://devoastroman.itch.io/crystal-collector
